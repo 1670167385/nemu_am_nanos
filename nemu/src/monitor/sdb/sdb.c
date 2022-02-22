@@ -40,7 +40,11 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
-
+	int exec_step;
+	if(sscanf(args,"%d",&exec_step) == 0  &&  exec_step > 0)
+		cpu_exec(exec_step);
+	else
+		printf("Invalid argument!");
 	return 0;
 }
 
