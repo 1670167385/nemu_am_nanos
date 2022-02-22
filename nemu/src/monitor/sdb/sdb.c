@@ -82,12 +82,12 @@ static struct {
 
   /* TODO: Add more commands */
   
-  { "si [N]","Execute the program for N step ,then pause it ( default N = 1" ,cmd_si},
-  { "info SUBCMD", "print status of regs/watchpoint", cmd_info},
-  { "x N EXPR", "print the value of a block of memory", cmd_x},
-  { "p EXPR", "compute the expression", cmd_p},
-  { "w EXPR", "pause the program when the value of EXPR change", cmd_w},
-  { "d N", "delete NO.N watchopoint", cmd_d}
+  { "si","Execute the program for N step ,then pause it ( default N = 1" ,cmd_si},
+  { "info", "print status of regs/watchpoint", cmd_info},
+  { "x", "print the value of a block of memory", cmd_x},
+  { "p", "compute the expression", cmd_p},
+  { "w", "pause the program when the value of EXPR change", cmd_w},
+  { "d", "delete NO.N watchopoint", cmd_d}
 };
 
 #define NR_CMD ARRLEN(cmd_table)
