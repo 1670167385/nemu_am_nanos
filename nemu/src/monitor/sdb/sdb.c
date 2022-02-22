@@ -40,32 +40,32 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
-	printf("this is si ,arg is %s",args);
+
 	return 0;
 }
 
 static int cmd_info(char *args) {
-	printf("this is info ,arg is %s",args);
+
 	return 0;
 }
 
 static int cmd_x(char *args) {
-	printf("this is x ,arg is %s",args);
+
 	return 0;
 }
 
 static int cmd_p(char *args) {
-	printf("this is p ,arg is %s",args);
+
 	return 0;
 }
 
 static int cmd_w(char *args) {
-	printf("this is w ,arg is %s",args);
+
 	return 0;
 }
 
 static int cmd_d(char *args) {
-	printf("this is d ,arg is %s",args);
+
 	return 0;
 }
 
