@@ -39,6 +39,38 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args) {
+	printf("this is si ,arg is %s",args);
+	return 0;
+}
+
+static int cmd_info(char *args) {
+	printf("this is info ,arg is %s",args);
+	return 0;
+}
+
+static int cmd_x(char *args) {
+	printf("this is x ,arg is %s",args);
+	return 0;
+}
+
+static int cmd_p(char *args) {
+	printf("this is p ,arg is %s",args);
+	return 0;
+}
+
+static int cmd_w(char *args) {
+	printf("this is w ,arg is %s",args);
+	return 0;
+}
+
+static int cmd_d(char *args) {
+	printf("this is d ,arg is %s",args);
+	return 0;
+}
+
+
+
 static struct {
   const char *name;
   const char *description;
@@ -49,7 +81,13 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-
+  
+  { "si [N]","Execute the program for N step ,then pause it ( default N = 1" ,cmd_si},
+  { "info SUBCMD", "print status of regs/watchpoint", cmd_info},
+  { "x N EXPR", "print the value of a block of memory", cmd_x},
+  { "p EXPR", "compute the expression", cmd_p},
+  { "w EXPR", "pause the program when the value of EXPR change", cmd_w},
+  { "d N", "delete NO.N watchopoint", cmd_d}
 };
 
 #define NR_CMD ARRLEN(cmd_table)
@@ -93,6 +131,7 @@ void sdb_mainloop() {
     /* extract the first token as the command */
     char *cmd = strtok(str, " ");
     if (cmd == NULL) { continue; }
+	
 
     /* treat the remaining string as the arguments,
      * which may need further parsing
@@ -101,6 +140,7 @@ void sdb_mainloop() {
     if (args >= str_end) {
       args = NULL;
     }
+
 
 #ifdef CONFIG_DEVICE
     extern void sdl_clear_event_queue();
