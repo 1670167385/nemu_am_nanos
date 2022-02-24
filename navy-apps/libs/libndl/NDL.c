@@ -27,13 +27,8 @@ int NDL_PollEvent(char *buf, int len) {
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
-  char gpu_info[40];
-  read(gpu_proc, gpu_info, sizeof(gpu_info) - 1);
-  sscanf(gpu_info,"WIDTH :%d\nHEIGHT:%d",&wholew, &wholeh);
-  printf("whole : w=%d h=%d\n",wholew, wholeh);
   if(*w == 0 || *w > wholew) *w = wholew;
   if(*h == 0 || *h > wholeh) *h = wholeh;
-  printf("canvas : w=%d h=%d\n",*w, *h);
   screen_h = *h; screen_w = *w;
 
   if (getenv("NWM_APP")) {
@@ -87,6 +82,13 @@ int NDL_Init(uint32_t flags) {
   kb_dev = open("/dev/events");
   gpu_proc = open("/proc/dispinfo");
   fbdev = open("/dev/fb");
+
+  char gpu_info[40];
+  read(gpu_proc, gpu_info, sizeof(gpu_info) - 1);
+  sscanf(gpu_info,"WIDTH :%d\nHEIGHT:%d",&wholew, &wholeh);
+  screen_h = wholeh;
+  screen_w = wholew;
+
   return 0;
 }
 

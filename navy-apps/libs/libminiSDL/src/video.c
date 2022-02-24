@@ -4,15 +4,60 @@
 #include <string.h>
 #include <stdlib.h>
 
+/* copy a piece of rectangle from src to dst */
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
+  uint32_t w, h;
+  if(srcrect == NULL){
+    w = src->w;
+    h = src->h;
+  }
+  else{
+    w = srcrect->w;
+    h = srcrect->h;
+  }
+  uint32_t x, y;
+  if(dstrect == NULL){
+    x = 0;
+    y = 0;
+  }
+  else {
+    x = dstrect->x;
+    y = dstrect->y;
+  }
+  assert(w<dst->w && h<dst->h);
+  for(int i=0 ; i<h ; i++){
+    memcpy((char *)dst->pixels+((y+i)*dst->w)+x, src->pixels, w);
+  }
 }
 
+/* fill with one color */
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
+  uint32_t x, y, h, w;
+  if(dstrect == NULL){
+    x=0; y=0; w=dst->w; h=dst->h;
+  }
+  else{
+    x=dstrect->x; y=dstrect->y;
+    w=dstrect->w; h=dstrect->h;
+  }
+  assert(w > dst->w);
+  for(int i=y; i<y+h; i++){
+    for(int j=x; j<x+w; j++){
+      *(uint32_t *)((char *)dst->pixels + i*dst->w + j) = color;
+    }
+  }
 }
 
+/* update to screen */
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
+  if(x==0 && y==0 && w==0 && h==0){
+    w=s->w;
+    h=s->h;
+  }
+
+  NDL_DrawRect(s->pixels, x, y, w, h);
 }
 
 // APIs below are already implemented.

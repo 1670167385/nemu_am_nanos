@@ -3,16 +3,20 @@
 #include <stdio.h>
 
 SDL_TimerID SDL_AddTimer(uint32_t interval, SDL_NewTimerCallback callback, void *param) {
+  printf("add timer need a single thread!!!\n");
   return NULL;
 }
 
 int SDL_RemoveTimer(SDL_TimerID id) {
-  return 1;
-}
-
-uint32_t SDL_GetTicks() {
+  printf("remove timer need a single thread!!!\n");
   return 0;
 }
 
+uint32_t SDL_GetTicks() {
+  return NDL_GetTicks();
+}
+
 void SDL_Delay(uint32_t ms) {
+  uint32_t st_time = NDL_GetTicks();
+  while(NDL_GetTicks() - st_time < ms);
 }
