@@ -49,11 +49,10 @@ static int cmd_si(char *args) {
 }
 
 static int cmd_info(char *args) {
-	printf("%s\n",args);
-	if(strcmp(args,"info r")==0){
+	if(strcmp(args,"r")==0){
 		isa_reg_display();
 	}
-	else if(strcmp(args,"info w")==0){
+	else if(strcmp(args,"w")==0){
 		
 	}
 	else{
