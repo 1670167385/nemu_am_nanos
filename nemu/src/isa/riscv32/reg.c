@@ -1,5 +1,6 @@
 #include <isa.h>
 #include "local-include/reg.h"
+#define REGS_LEN sizeof(regs)/sizeof(const char *)
 
 const char *regs[] = {
   "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
@@ -9,6 +10,10 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
+	for(int i=0;i<REGS_LEN;i++){
+		printf("%-15s%-15x%-15d\n",regs[i],cpu.gpr[i]._32,cpu.gpr[i]._32);
+	}
+	printf("%-15s%-15x%-15d\n","pc",cpu.pc,cpu.pc);
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {

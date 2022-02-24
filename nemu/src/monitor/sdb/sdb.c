@@ -44,12 +44,20 @@ static int cmd_si(char *args) {
 	if(sscanf(args,"%d",&exec_step) == 1  &&  exec_step > 0)
 		cpu_exec(exec_step);
 	else
-		printf("Invalid argument!");
+		printf("Invalid argument!\n");
 	return 0;
 }
 
 static int cmd_info(char *args) {
-
+	if(strcmp(args,"info r")==0){
+		isa_reg_display();
+	}
+	else if(strcmp(args,"info w")==0){
+		
+	}
+	else{
+		printf("Invalid argument!\n");
+	}
 	return 0;
 }
 
