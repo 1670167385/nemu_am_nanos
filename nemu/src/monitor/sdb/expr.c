@@ -108,8 +108,9 @@ static bool make_token(char *e) {
 				memcpy(tokens[nr_token].str,substr_start,substr_len);
 				tokens[nr_token].type=0;
 				tokens[nr_token].str[substr_len]=0;
-        }		
+		}		
       nr_token++;
+	  break;								//break when found one exist
 	  }
     }
 	for(int j = 0; j < nr_token; j++){
