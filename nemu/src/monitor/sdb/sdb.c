@@ -68,8 +68,7 @@ static int cmd_x(char *args) {
 
 static int cmd_p(char *args) {
 	bool sucs = true;
-	char expression[100];
-	expr(expression,&sucs);
+	expr(args, &sucs);
 	return 0;
 }
 
