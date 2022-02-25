@@ -14,13 +14,14 @@ int SDL_PushEvent(SDL_Event *ev) {
 }
 
 int SDL_PollEvent(SDL_Event *ev) {
-  ev->type = SDL_KEYDOWN;
   char buf[64];
-  while(!NDL_PollEvent(buf, sizeof(buf)));
+  //while(!NDL_PollEvent(buf, sizeof(buf)));
+  if(NDL_PollEvent(buf, sizeof(buf)) == 0)
+    return 0;
   uint32_t l=0;
   while(buf[l]!='\n')l++;
   buf[l] = 0;
-
+  ev->type = (buf[1] == 'd')? SDL_KEYDOWN : SDL_KEYUP;
   for(int i=0;i<83;i++){
     if(strcmp(keyname[i], buf+3) == 0){
       ev->key.keysym.sym = i;
@@ -31,21 +32,18 @@ int SDL_PollEvent(SDL_Event *ev) {
 }
 
 int SDL_WaitEvent(SDL_Event *event) {
-  event->type = SDL_KEYDOWN;
   char buf[64];
   while(!NDL_PollEvent(buf, sizeof(buf)));
   uint32_t l=0;
   while(buf[l]!='\n')l++;
   buf[l] = 0;
-
+  event->type = (buf[1] == 'd')? SDL_KEYDOWN : SDL_KEYUP;
   for(int i=0;i<83;i++){
     if(strcmp(keyname[i], buf+3) == 0){
       event->key.keysym.sym = i;
       break;
     }
   }
-
-
   return 1;
 }
 

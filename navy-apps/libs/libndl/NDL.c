@@ -18,7 +18,7 @@ typedef struct{
 
 uint32_t NDL_GetTicks() {
   timeval t;
-  _gettimeofday(&t, NULL);
+  gettimeofday(&t, NULL);
   return t.sec*1000+t.microsec;
 }
 
