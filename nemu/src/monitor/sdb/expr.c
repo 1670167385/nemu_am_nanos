@@ -215,6 +215,7 @@ int eval(int lf, int ri){
 		 * it should be a number
 		 * return the value of the number
 		 */
+		printf("1");
 		assert(tokens[lf].type==0);
 		return ch_to_int(tokens[lf].str); 
 	}
@@ -223,14 +224,14 @@ int eval(int lf, int ri){
 		/* The expression is surrounded by a matched pair of parentheses.
 		* If that is the case, just throw away the parentheses.
 		*/
-		return eval(lf + 1, ri - 1);
+			printf("2");	return eval(lf + 1, ri - 1);
 	}
 	else
 	{
 		/*miss matching of parenthess*/
 		if(match_st == MISS_MATCHING)
 			return MISS_MATCHING;
-		
+				printf("3");
 		/*find main token position*/
 		int lflag = 0, rflag = 0;
 		int op = fd_m_token(lf, ri, &lflag, &rflag);
