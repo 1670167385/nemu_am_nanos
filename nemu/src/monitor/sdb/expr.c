@@ -155,6 +155,7 @@ int check_parentheses(int l, int r)
 				false_flag = 1;
 			if(cnt<0)
 				return MISS_MATCHING;
+			printf("%d ",cnt);
 		}
 		if(cnt == 0 && false_flag == 0)
 			return true;
@@ -215,7 +216,7 @@ int eval(int lf, int ri){
 		 * it should be a number
 		 * return the value of the number
 		 */
-		printf("1");
+
 		assert(tokens[lf].type==0);
 		return ch_to_int(tokens[lf].str); 
 	}
@@ -224,7 +225,7 @@ int eval(int lf, int ri){
 		/* The expression is surrounded by a matched pair of parentheses.
 		* If that is the case, just throw away the parentheses.
 		*/
-			printf("2");	return eval(lf + 1, ri - 1);
+		return eval(lf + 1, ri - 1);
 	}
 	else
 	{
