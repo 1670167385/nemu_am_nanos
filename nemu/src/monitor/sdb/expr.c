@@ -231,7 +231,7 @@ int eval(int lf, int ri){
 		/*miss matching of parenthess*/
 		if(match_st == MISS_MATCHING)
 			return MISS_MATCHING;
-				printf("3");
+				
 		/*find main token position*/
 		int lflag = 0, rflag = 0;
 		int op = fd_m_token(lf, ri, &lflag, &rflag);
