@@ -195,7 +195,7 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 			op = j;
 			type = '+';
 		}
-		printf("%d %c %c\n", cnt ,type ,tokens[j].type);
+		printf("%d %c %c %d\n", cnt ,type ,tokens[j].type,op);
 	}
 	
 
