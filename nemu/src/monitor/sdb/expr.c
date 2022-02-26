@@ -185,13 +185,14 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 		}
 		if(cnt == 0 && tokens[j].type == '-' && (tokens[j - 1].type != NUM && tokens[j - 1].type != ')') )
 			continue;
-		printf("%d %d %d\n",tokens[j].type,type,j);
+		printf("%d %d %d %d %d\n",tokens[j].type,type,j,lf,ri);
 
 		if(cnt == 0 && type != '+' && (tokens[j].type == '+'||tokens[j].type == '-') )
 		{
 			op = j;
 			type = '+';
 		}
+
 	}
 	
 
