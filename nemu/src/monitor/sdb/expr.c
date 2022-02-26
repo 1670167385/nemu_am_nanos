@@ -9,7 +9,7 @@
 enum {
   TK_NOTYPE = 256, TK_EQ,
   /* TODO: Add more token types */
-  NUM
+  NUM = 0
 };
 
 static struct rule {
@@ -108,7 +108,6 @@ static bool make_token(char *e) {
 				tokens[nr_token].type=NUM;
 				assert(substr_len<=29);
 				memcpy(tokens[nr_token].str,substr_start,substr_len);
-				tokens[nr_token].type=0;
 				tokens[nr_token].str[substr_len]=0;
 		}		
       nr_token++;
