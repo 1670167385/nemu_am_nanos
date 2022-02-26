@@ -189,7 +189,7 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 
 		if(cnt == 0 && type != '+' && (tokens[j].type == '+'||tokens[j].type == '-') )
 		{
-						op = j;
+			op = j;
 			type = '+';
 		}
 	}
