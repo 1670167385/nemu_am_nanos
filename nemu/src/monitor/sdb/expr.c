@@ -198,9 +198,9 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 
 	/* simplify the flag of l/r */	
 	for(int j = lf; tokens[j].type == '-'; j++)
-		*lflag = (*lflag + 1) % 2;
+		*lflag = *lflag + 1;
 	for(int j = op + 1; tokens[j].type == '-'; j++)
-		*rflag = (*rflag + 1) % 2;
+		*rflag = *rflag + 1 % 2;
 	
 	return op;	
 }
@@ -234,10 +234,10 @@ int eval(int lf, int ri){
 		int lflag = 0, rflag = 0;
 		int op = fd_m_token(lf, ri, &lflag, &rflag);
 		
-		int val1 = eval( lf, op - 1);
-		int val2 = eval( op + 1, ri);
-		if(lflag) val1 *= -1;
-		if(rflag) val2 *= -1;
+		int val1 = eval( lf + lflag, op - 1);
+		int val2 = eval( op + 1 + rflag, ri);
+		if(lflag % 2) val1 *= -1;
+		if(rflag % 2) val2 *= -1;
 
 		if(val1 != MISS_MATCHING && val2 != MISS_MATCHING)
 		{
