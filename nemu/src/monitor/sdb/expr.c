@@ -157,7 +157,6 @@ int check_parentheses(int l, int r)
 				false_flag = 1;
 			if(cnt<0)
 				return MISS_MATCHING;
-			printf("%d ",cnt);
 		}
 		if(cnt == 0 && false_flag == 0)
 			return true;
@@ -210,7 +209,7 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 }
 
 int eval(int lf, int ri){
-	printf("%d %d\n",lf,ri);
+	printf("\t%d %d\n",lf,ri);
 	assert(lf <= ri);
 	/*wrong case ,  quit*/
 	int match_st = check_parentheses(lf, ri);
@@ -240,6 +239,7 @@ int eval(int lf, int ri){
 		int lflag = 0, rflag = 0;
 		int op = fd_m_token(lf, ri, &lflag, &rflag);
 		
+		printf("%d \n",lflag);
 		int val1 = eval( lf + lflag, op - 1);
 		int val2 = eval( op + 1 + rflag, ri);
 		if(lflag % 2) val1 *= -1;
