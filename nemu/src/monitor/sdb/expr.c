@@ -114,9 +114,7 @@ static bool make_token(char *e) {
 	  break;								//break when found one exist
 	  }
     }
-	for(int j = 0; j < nr_token; j++){
-		printf("%c\n",tokens[j].type);
-	}
+
 
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
@@ -222,7 +220,6 @@ int eval(int lf, int ri){
 		/* The expression is surrounded by a matched pair of parentheses.
 		* If that is the case, just throw away the parentheses.
 		*/
-		printf("in\n");
 		return eval(lf + 1, ri - 1);
 	}
 	else
@@ -262,8 +259,7 @@ word_t expr(char *e, bool *success) {
 		return 0;
 	}
 
-	/* TODO: Insert codes to evaluate the expression. */
-	printf("%d\n",nr_token);	
+	/* TODO: Insert codes to evaluate the expression. */	
 	word_t ans = eval(0, nr_token - 1); 
 	if(ans == MISS_MATCHING)
 		*success = false;
