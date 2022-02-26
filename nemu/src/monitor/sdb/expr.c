@@ -205,18 +205,19 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 int eval(int lf, int ri){
 	assert(lf <= ri);
 	/*wrong case ,  quit*/
-	printf("%d %d\n",lf,ri);
 	int match_st = check_parentheses(lf, ri);
 	if(lf ==ri){
 		/*single token.
 		 * it should be a number
 		 * return the value of the number
 		 */
+		printf("1");
 		assert(tokens[lf].type==0);
 		return ch_to_int(tokens[lf].str); 
 	}
 	else if(match_st == true)
 	{
+		printf("2");
 		/* The expression is surrounded by a matched pair of parentheses.
 		* If that is the case, just throw away the parentheses.
 		*/
@@ -224,6 +225,7 @@ int eval(int lf, int ri){
 	}
 	else
 	{
+		printf("3");
 		/*miss matching of parenthess*/
 		if(match_st == MISS_MATCHING)
 			return MISS_MATCHING;
