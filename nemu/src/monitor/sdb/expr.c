@@ -187,7 +187,6 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 			continue;
 		if(tokens[j].type == '-' && j == 0)
 			continue;
-		printf("%d %d %d %d %d\n",tokens[j].type,type,j,lf,ri);
 
 		if(cnt == 0 && type != '+' && (tokens[j].type == '+'||tokens[j].type == '-') )
 		{
