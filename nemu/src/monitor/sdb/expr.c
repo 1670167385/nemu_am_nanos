@@ -262,9 +262,9 @@ word_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
-	*success = false;
+	
 	word_t ans = eval(0, nr_token - 1); 
 	if(ans == MISS_MATCHING)
-		*success = true;
+		*success = false;
 	return ans;
 }
