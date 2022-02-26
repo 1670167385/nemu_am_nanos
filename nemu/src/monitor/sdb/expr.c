@@ -151,7 +151,7 @@ int check_parentheses(int l, int r)
 				cnt++;
 			if(tokens[i].type == ')')
 				cnt--;
-			if(cnt == 0)					//'(...) + (...)'   will make cnt = 0  , but '(..(..) + (..)..)'  won't
+			if(cnt == 0 && i < r)					//'(...) + (...)'   will make cnt = 0  , but '(..(..) + (..)..)'  won't
 				false_flag = 1;
 			if(cnt<0)
 				return MISS_MATCHING;
@@ -211,13 +211,11 @@ int eval(int lf, int ri){
 		 * it should be a number
 		 * return the value of the number
 		 */
-		printf("1");
 		assert(tokens[lf].type==0);
 		return ch_to_int(tokens[lf].str); 
 	}
 	else if(match_st == true)
 	{
-		printf("2");
 		/* The expression is surrounded by a matched pair of parentheses.
 		* If that is the case, just throw away the parentheses.
 		*/
@@ -225,7 +223,6 @@ int eval(int lf, int ri){
 	}
 	else
 	{
-		printf("3");
 		/*miss matching of parenthess*/
 		if(match_st == MISS_MATCHING)
 			return MISS_MATCHING;
