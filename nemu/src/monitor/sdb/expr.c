@@ -234,6 +234,7 @@ int eval(int lf, int ri){
 		int lflag = 0, rflag = 0;
 		int op = fd_m_token(lf, ri, &lflag, &rflag);
 		
+		printf("%d\t%d\t%d\n",lf,lflag,op - 1);	
 		int val1 = eval( lf + lflag, op - 1);
 		int val2 = eval( op + 1 + rflag, ri);
 		if(lflag % 2) val1 *= -1;
