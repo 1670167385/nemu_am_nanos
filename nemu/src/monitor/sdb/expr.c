@@ -124,8 +124,6 @@ static bool make_token(char *e) {
       return false;
     }
   }
-	for(int i=0;i<nr_token;i++)
-		printf("%d\t",tokens[i].type);
   return true;
 }
 
@@ -197,7 +195,6 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 			op = j;
 			type = '+';
 		}
-		printf("%d %c %c %d\n", cnt ,type ,tokens[j].type,op);
 	}
 	
 
@@ -211,7 +208,6 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 }
 
 int eval(int lf, int ri){
-	printf("\t%d %d\n",lf,ri);
 	assert(lf <= ri);
 	/*wrong case ,  quit*/
 	int match_st = check_parentheses(lf, ri);
@@ -239,9 +235,7 @@ int eval(int lf, int ri){
 				
 		/*find main token position*/
 		int lflag = 0, rflag = 0;
-		int op = fd_m_token(lf, ri, &lflag, &rflag);
-		
-		printf("%d \n",lflag);
+		int op = fd_m_token(lf, ri, &lflag, &rflag);	
 		int val1 = eval( lf + lflag, op - 1);
 		int val2 = eval( op + 1 + rflag, ri);
 		if(lflag % 2) val1 *= -1;
