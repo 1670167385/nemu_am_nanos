@@ -71,7 +71,6 @@ static bool make_token(char *e) {
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
-		printf("%d %d\n",i,nr_token);
   		if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
@@ -110,6 +109,7 @@ static bool make_token(char *e) {
 				memcpy(tokens[nr_token].str,substr_start,substr_len);
 				tokens[nr_token].type=0;
 				tokens[nr_token].str[substr_len]=0;
+				printf("%s\n",tokens[nr_token].str);
 		}		
       nr_token++;
 	  break;								//break when found one exist
@@ -258,8 +258,8 @@ word_t expr(char *e, bool *success) {
 	if (!make_token(e)) {
 		*success = false;
 		return 0;
-	}
-
+	}	
+	printf("OK\n");
 	/* TODO: Insert codes to evaluate the expression. */	
 	word_t ans = eval(0, nr_token - 1); 
 	if(ans == MISS_MATCHING)
