@@ -263,7 +263,7 @@ word_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
-	
+	printf("%d\n",nr_token);	
 	word_t ans = eval(0, nr_token - 1); 
 	if(ans == MISS_MATCHING)
 		*success = false;
