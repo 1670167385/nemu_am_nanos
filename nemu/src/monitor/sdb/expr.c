@@ -109,6 +109,7 @@ static bool make_token(char *e) {
 				assert(substr_len<=29);
 				memcpy(tokens[nr_token].str,substr_start,substr_len);
 				tokens[nr_token].str[substr_len]=0;
+				break;
 			default:
 				nr_token--;
 		}		
