@@ -104,11 +104,13 @@ static bool make_token(char *e) {
 			case ')':
 				tokens[nr_token].type=')';
 				break;
-			default:
+			case NUM:
 				tokens[nr_token].type=NUM;
 				assert(substr_len<=29);
 				memcpy(tokens[nr_token].str,substr_start,substr_len);
 				tokens[nr_token].str[substr_len]=0;
+			default:
+				;
 		}		
       nr_token++;
 	  break;								//break when found one exist
