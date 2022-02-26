@@ -115,7 +115,6 @@ static bool make_token(char *e) {
       nr_token++;
 	  break;								//break when found one exist
 	  }
-		printf("%d",nr_token);
     }
 
 
@@ -211,6 +210,7 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 }
 
 int eval(int lf, int ri){
+	printf("%d %d\n",lf,ri);
 	assert(lf <= ri);
 	/*wrong case ,  quit*/
 	int match_st = check_parentheses(lf, ri);
