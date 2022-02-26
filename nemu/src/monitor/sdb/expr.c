@@ -109,7 +109,6 @@ static bool make_token(char *e) {
 				memcpy(tokens[nr_token].str,substr_start,substr_len);
 				tokens[nr_token].type=0;
 				tokens[nr_token].str[substr_len]=0;
-				printf("%s\n",tokens[nr_token].str);
 		}		
       nr_token++;
 	  break;								//break when found one exist
@@ -206,7 +205,7 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 int eval(int lf, int ri){
 	assert(lf <= ri);
 	/*wrong case ,  quit*/
-
+	printf("%d %d\n",lf,ri);
 	int match_st = check_parentheses(lf, ri);
 	if(lf ==ri){
 		/*single token.
@@ -259,7 +258,7 @@ word_t expr(char *e, bool *success) {
 		*success = false;
 		return 0;
 	}	
-	printf("OK\n");
+
 	/* TODO: Insert codes to evaluate the expression. */	
 	word_t ans = eval(0, nr_token - 1); 
 	if(ans == MISS_MATCHING)
