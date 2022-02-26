@@ -183,7 +183,7 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 			op = j;
 			type = '*';
 		}
-		if(cnt == 0 && tokens[j].type == '-' && (tokens[j - 1].type != NUM && tokens[j - 1].type != ')') )
+		if(cnt == 0 && tokens[j].type == '-' && (j != 0 && tokens[j - 1].type != NUM && tokens[j - 1].type != ')') )
 			continue;
 		printf("%d %d %d %d %d\n",tokens[j].type,type,j,lf,ri);
 
