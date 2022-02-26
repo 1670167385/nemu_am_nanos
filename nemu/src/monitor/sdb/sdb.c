@@ -68,7 +68,11 @@ static int cmd_x(char *args) {
 
 static int cmd_p(char *args) {
 	bool sucs = true;
-	expr(args, &sucs);
+	word_t ans = expr(args, &sucs);
+	if(sucs)
+		printf("The ans is %d\n", ans);
+	else
+		printf("Pattern Wrong!\n");
 	return 0;
 }
 
