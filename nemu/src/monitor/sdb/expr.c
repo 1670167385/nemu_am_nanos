@@ -110,7 +110,7 @@ static bool make_token(char *e) {
 				memcpy(tokens[nr_token].str,substr_start,substr_len);
 				tokens[nr_token].str[substr_len]=0;
 			default:
-				;
+				nr_token--;
 		}		
       nr_token++;
 	  break;								//break when found one exist
