@@ -5,6 +5,7 @@
  */
 #include <regex.h>
 
+#define MISS_MATCHING 0x7fffffff
 enum {
   TK_NOTYPE = 256, TK_EQ,
   /* TODO: Add more token types */
@@ -126,27 +127,144 @@ static bool make_token(char *e) {
   return true;
 }
 
+int ch_to_int(char *str)
+{
+	int position = 0;
+	int m=0;
+	
+	while(str[position]!='\0')
+	{
+		m=m*10;
+		m=m+str[position++]-'0';
+	}
+	
+	return m;	
+}
+
+int check_parentheses(int l, int r)
+{
+	int cnt = 0;
+	int false_flag = 0;
+	if(tokens[l].type == '(' && tokens[r].type == ')')
+	{
+		for(int i=l;i<=r;i++)
+		{
+			if(tokens[i].type == '(')
+				cnt++;
+			if(tokens[i].type == ')')
+				cnt--;
+			if(cnt == 0)					//'(...) + (...)'   will make cnt = 0  , but '(..(..) + (..)..)'  won't
+				false_flag = 1;
+			if(cnt<0)
+				return MISS_MATCHING;
+		}
+		if(cnt == 0 && false_flag == 0)
+			return true;
+		else if(cnt == 0)					//only when miss matching not happen , consider false case
+			return false;
+		else//cnt != 0
+			return MISS_MATCHING;
+	}	
+	return false;
+}
+
+int fd_m_token(int lf, int ri, int *lflag, int *rflag)
+{
+	int cnt = 0, op = ri + 1;
+	int type = 0;
+
+	/* find the position */
+	for(int j = ri; j >= lf; j--)
+	{
+		if(tokens[j].type == ')')
+			cnt++;
+		if(tokens[j].type == '(')
+			cnt--;
+		if(cnt == 0 && type == 0 && (tokens[j].type == '*'||tokens[j].type == '/'))
+		{
+			op = j;
+			type = '*';
+		}
+		if(tokens[j].type == '-' && (tokens[j - 1].type != NUM && tokens[j - 1].type != ')') )
+			continue;
+		if(cnt == 0 && type != '+' && (tokens[j].type == '+'||tokens[j].type == '-') )
+		{
+			op = j;
+			type = '+';
+		}
+	}
+	
+
+	/* simplify the flag of l/r */	
+	for(int j = lf; tokens[j].type == '-'; j++)
+		*lflag = (*lflag + 1) % 2;
+	for(int j = op + 1; tokens[j].type == '-'; j++)
+		*rflag = (*rflag + 1) % 2;
+	
+	return op;	
+}
+
 int eval(int lf, int ri){
 	assert(lf <= ri);
+	/*wrong case ,  quit*/
+
+	int match_st = check_parentheses(lf, ri);
 	if(lf ==ri){
 		/*single token.
 		 * it should be a number
 		 * return the value of the number
 		 */
 		assert(tokens[lf].type==0);
-		return 1; 
+		return ch_to_int(tokens[lf].str); 
 	}
-	return 0;		
+	else if(match_st == true)
+	{
+		/* The expression is surrounded by a matched pair of parentheses.
+		* If that is the case, just throw away the parentheses.
+		*/
+		return eval(lf + 1, ri - 1);
+	}
+	else
+	{
+		/*miss matching of parenthess*/
+		if(match_st == MISS_MATCHING)
+			return MISS_MATCHING;
+		
+		/*find main token position*/
+		int lflag = 0, rflag = 0;
+		int op = fd_m_token(lf, ri, &lflag, &rflag);
+		
+		int val1 = eval( lf, op - 1);
+		int val2 = eval( op + 1, ri);
+		if(lflag) val1 *= -1;
+		if(rflag) val2 *= -1;
+
+		if(val1 != MISS_MATCHING && val2 != MISS_MATCHING)
+		{
+			switch (tokens[op].type) {
+			case '+': return val1 + val2;
+			case '-': return val1 - val2;
+			case '*': return val1 * val2;
+			case '/': return val1 / val2;
+			default: assert(0);
+			}
+		}	
+		else
+			return MISS_MATCHING;
+	}
+	return MISS_MATCHING;		
 }
 
 word_t expr(char *e, bool *success) {
-  if (!make_token(e)) {
-    *success = false;
-    return 0;
-  }
+	if (!make_token(e)) {
+		*success = false;
+		return 0;
+	}
 
-  /* TODO: Insert codes to evaluate the expression. */
-  eval(0,nr_token); 
-
-  return 0;
+	/* TODO: Insert codes to evaluate the expression. */
+	*success = false;
+	word_t ans = eval(0, nr_token - 1); 
+	if(ans == MISS_MATCHING)
+		*success = true;
+	return ans;
 }
