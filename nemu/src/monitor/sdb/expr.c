@@ -222,6 +222,7 @@ int eval(int lf, int ri){
 		/* The expression is surrounded by a matched pair of parentheses.
 		* If that is the case, just throw away the parentheses.
 		*/
+		printf("in\n");
 		return eval(lf + 1, ri - 1);
 	}
 	else
