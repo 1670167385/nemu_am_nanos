@@ -185,9 +185,9 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 			op = j;
 			type = '*';
 		}
-		if(cnt == 0 && tokens[j].type == '-' && (j && tokens[j - 1].type != NUM && tokens[j - 1].type != ')') )
+		if(cnt == 0 && tokens[j].type == '-' && (j != lf && tokens[j - 1].type != NUM && tokens[j - 1].type != ')') )
 			continue;
-		if(tokens[j].type == '-' && j == 0)
+		if(tokens[j].type == '-' && j == lf)
 			continue;
 
 		if(cnt == 0 && type != '+' && (tokens[j].type == '+'||tokens[j].type == '-') )
@@ -195,7 +195,7 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 			op = j;
 			type = '+';
 		}
-
+		printf("%d %c %c\n", cnt ,type ,tokens[j].type);
 	}
 	
 
