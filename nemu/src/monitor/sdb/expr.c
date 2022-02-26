@@ -115,6 +115,7 @@ static bool make_token(char *e) {
       nr_token++;
 	  break;								//break when found one exist
 	  }
+		printf("%d",nr_token);
     }
 
 
