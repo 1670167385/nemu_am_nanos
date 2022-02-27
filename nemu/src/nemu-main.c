@@ -10,8 +10,8 @@ int main(int argc, char *argv[]) {
 for(int i=0; i < argc; i++)
 {
 	char tmp[65536] = {0};
-	word_t ans ,exout;
-	sscanf(argv[i],"%d%s",&ans,tmp);
+	word_t ans=0 ,exout;
+	sscanf(argv[i],"%s",tmp);
 	printf("%s\n",tmp);
 	bool sucs = true;
 	exout = expr(tmp, &sucs);
