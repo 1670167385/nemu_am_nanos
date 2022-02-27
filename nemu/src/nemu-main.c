@@ -11,7 +11,7 @@ for(int i=0; i < argc; i++)
 {
 	char tmp[65536] = {0};
 	word_t ans=0 ,exout;
-	sscanf(argv[i],"%s",tmp);
+	//sscanf(argv[i],"%s",tmp);
 	printf("%s\n",argv[0]);
 	bool sucs = true;
 	exout = expr(tmp, &sucs);
