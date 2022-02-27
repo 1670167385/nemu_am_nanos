@@ -7,13 +7,12 @@ int is_exit_status_bad();
 
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
-	printf("1111");
+
 for(int i=0; i < argc; i++)
 {
 	char tmp[65536] = {0};
 	word_t ans=0 ,exout;
-	//sscanf(argv[i],"%s",tmp);
-	printf("11111111111111111");
+	sscanf(argv[i],"%s",tmp);
 	bool sucs = true;
 	exout = expr(tmp, &sucs);
 	if(sucs)

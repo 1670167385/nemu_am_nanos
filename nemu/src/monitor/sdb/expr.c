@@ -58,7 +58,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[10000] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -258,11 +258,12 @@ int eval(int lf, int ri){
 }
 
 word_t expr(char *e, bool *success) {
+	printf("%s\n",e);
 	if (!make_token(e)) {
 		*success = false;
 		return 0;
 	}	
-
+	
 	/* TODO: Insert codes to evaluate the expression. */	
 	word_t ans = eval(0, nr_token - 1); 
 	if(ans == MISS_MATCHING)
