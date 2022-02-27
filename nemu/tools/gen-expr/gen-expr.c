@@ -16,8 +16,78 @@ static char *code_format =
 "  return 0; "
 "}";
 
+static void gen_num()
+{
+	int len = strlen(buf), str_len = 0;
+	int num = rand()%20000-10000;
+	char str[6] = { 0 };
+
+	if(len + 7 >= 65536)
+		return;
+	buf[len++] = ' ';
+
+	while(num)
+	{
+		str[str_len++] = (num % 10) + '0';
+		if(num < 0 && num > -10)
+			buf[len++] = '-';
+		num /= 10;
+	}
+
+	while(str_len)
+	{
+		buf[len++] = str[str_len - 1];
+		str_len--;
+	}
+
+	buf[len] = '\0';
+}
+
+static void gen(char pair)
+{
+	int len = strlen(buf);
+	if(len + 2 >= 65536)return;
+
+	buf[len++] = ' ';
+	buf[len++] = pair;
+	buf[len] = '\0';
+}
+
+static void gen_rand_op()
+{
+	switch(rand()%4){
+	case 0:
+		gen('+');
+		break;
+	case 1:
+		gen('-');
+		break;
+	case 2:
+		gen('*');
+		break;
+	default:
+		gen('/');
+		break;
+	}
+}
+
 static void gen_rand_expr() {
-  buf[0] = '\0';
+	srand(time(NULL));
+	switch(rand()%3){
+	case 0:
+		gen_num();
+		break;
+	case 1:
+		gen('(');
+		gen_rand_expr();
+		gen(')');
+		break;
+	default:
+		gen_rand_expr();
+		gen_rand_op();
+		gen_rand_expr();
+		break;
+	}	
 }
 
 int main(int argc, char *argv[]) {
