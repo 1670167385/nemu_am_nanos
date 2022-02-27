@@ -5,6 +5,8 @@
 #include <assert.h>
 #include <string.h>
 
+#define LEN_MAX 65000
+#define NUM_MAX 100
 // this should be enough
 static char buf[65536] = {};
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
@@ -19,19 +21,22 @@ static char *code_format =
 static void gen_num()
 {
 	int len = strlen(buf), str_len = 0;
-	int num = rand()%20000-10000;
+	int num = rand()%NUM_MAX;
 	char str[6] = { 0 };
 
-	if(len + 7 >= 65536)
+	if(len + 7 >= LEN_MAX)
 		return;
 	buf[len++] = ' ';
-
-	while(num)
+	
+	if(num == 0)
+		str[str_len++] = '0';
+	else
 	{
-		str[str_len++] = (num % 10) + '0';
-		if(num < 0 && num > -10)
-			buf[len++] = '-';
-		num /= 10;
+		while(num)
+		{
+			str[str_len++] = (num % 10) + '0';
+			num /= 10;
+		}
 	}
 
 	while(str_len)
@@ -46,7 +51,7 @@ static void gen_num()
 static void gen(char pair)
 {
 	int len = strlen(buf);
-	if(len + 2 >= 65536)return;
+	if(len + 2 >= LEN_MAX)return;
 
 	buf[len++] = ' ';
 	buf[len++] = pair;
@@ -72,8 +77,8 @@ static void gen_rand_op()
 }
 
 static void gen_rand_expr() {
-	srand(time(NULL));
-	switch(rand()%3){
+	int ch = rand()%3;
+	switch(ch){
 	case 0:
 		gen_num();
 		break;
@@ -100,7 +105,6 @@ int main(int argc, char *argv[]) {
   int i;
   for (i = 0; i < loop; i ++) {
     gen_rand_expr();
-
     sprintf(code_buf, code_format, buf);
 
     FILE *fp = fopen("/tmp/.code.c", "w");
@@ -119,6 +123,8 @@ int main(int argc, char *argv[]) {
     pclose(fp);
 
     printf("%u %s\n", result, buf);
+
+	memset(buf,0,65536*sizeof(char));
   }
   return 0;
 }
