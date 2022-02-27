@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
 
   /* Start engine. */
-	for(int i=2; i < argc; i++)
+/*	for(int i=2; i < argc; i++)
 	{
 		char tmp[65536] = {0};
 		word_t ans=0 ,exout;
@@ -29,8 +29,8 @@ int main(int argc, char *argv[]) {
 		else
 			printf("wrong\n");
 	}
-
-	//engine_start();
+*/
+	engine_start();
 
   return is_exit_status_bad();
 	
