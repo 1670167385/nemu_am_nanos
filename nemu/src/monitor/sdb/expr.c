@@ -263,7 +263,7 @@ word_t expr(char *e, bool *success) {
 										    || tokens[i - 1].type == '-'  || tokens[i - 1].type == '*'
 										    || tokens[i - 1].type == '/'))
 			tokens[i].type = MINUS;
-		
+		printf("%c\t",tokens[i].type);	
 	}	
 	/* TODO: Insert codes to evaluate the expression. */	
 	word_t ans = eval(0, nr_token - 1); 
