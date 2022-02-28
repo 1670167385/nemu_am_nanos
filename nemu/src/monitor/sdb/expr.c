@@ -202,7 +202,9 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 }
 
 int eval(int lf, int ri){
-	assert(lf <= ri);
+	printf("%d %d\n",lf,ri);
+	if(lf>ri)return 0;
+	//assert(lf <= ri);
 	/*wrong case ,  quit*/
 	int match_st = check_parentheses(lf, ri);
 	if(lf ==ri){
