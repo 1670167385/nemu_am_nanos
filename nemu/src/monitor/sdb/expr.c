@@ -263,10 +263,10 @@ word_t expr(char *e, bool *success) {
 										    || tokens[i - 1].type == '-' || tokens[i - 1].type == '*'
 										    || tokens[i - 1].type == '/' || tokens[i - 1].type == MINUS))
 			tokens[i].type = MINUS;
-		printf("%c\t",tokens[i].type);	
+		//printf("%c\t",tokens[i].type);	
 	}	
 	/* TODO: Insert codes to evaluate the expression. */	
-	word_t ans = 100;//eval(0, nr_token - 1); 
+	word_t ans = eval(0, nr_token - 1); 
 	if(ans == MISS_MATCHING)
 		*success = false;
 	return ans;
