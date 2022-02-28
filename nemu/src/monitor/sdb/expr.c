@@ -266,7 +266,7 @@ word_t expr(char *e, bool *success) {
 		printf("%c\t",tokens[i].type);	
 	}	
 	/* TODO: Insert codes to evaluate the expression. */	
-	word_t ans = 100;//eval(0, nr_token - 1); 
+	word_t ans = eval(0, nr_token - 1); 
 	if(ans == MISS_MATCHING)
 		*success = false;
 	return ans;
