@@ -114,7 +114,7 @@ static bool make_token(char *e) {
 					assert(substr_len<=29);
 					memcpy(tokens[nr_token].str, substr_start + 1, substr_len - 1);
 					tokens[nr_token].str[substr_len - 1] = 0;
-					printf("%s\n",tokens[nr_token].str);
+					break;
 				default:
 					nr_token--;
 				}		
