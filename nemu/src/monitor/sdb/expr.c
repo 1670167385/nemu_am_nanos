@@ -195,25 +195,23 @@ int fd_m_token(int lf, int ri)
 }
 
 int eval(int lf, int ri){
-	printf("%d %d\n",lf,ri);
-	if(lf>ri)return 0;
-	//assert(lf <= ri);
-	/*wrong case ,  quit*/
+	assert(lf <= ri);
+
 	int match_st = check_parentheses(lf, ri);
 	if(lf ==ri){
 		/*single token.
 		 * it should be a number
-		 * return the value of the number
-		 */
-
+		 * return the value of the number*/
 		assert(tokens[lf].type==0);
 		return ch_to_int(tokens[lf].str); 
 	}
+
 	else if(tokens[lf].type == MINUS)
 	{
 		/* The expression's head is MINUS flag */
 		return (-1) * eval(lf + 1, ri);
 	}
+
 	else if(match_st == true)
 	{
 		/* The expression is surrounded by a matched pair of parentheses.
@@ -221,6 +219,7 @@ int eval(int lf, int ri){
 		*/
 		return eval(lf + 1, ri - 1);
 	}
+
 	else
 	{
 		/*miss matching of parenthess*/
