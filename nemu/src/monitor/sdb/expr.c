@@ -166,7 +166,7 @@ int check_parentheses(int l, int r)
 	return false;
 }
 
-int fd_m_token(int lf, int ri, int *lflag, int *rflag)
+int fd_m_token(int lf, int ri)
 {
 	int cnt = 0, op = ri + 1;
 	int type = 0;
@@ -191,13 +191,6 @@ int fd_m_token(int lf, int ri, int *lflag, int *rflag)
 		}
 	}
 	
-
-	/* simplify the flag of l/r */	
-	for(int j = lf; tokens[j].type == MINUS; j++)
-		*lflag = *lflag + 1;
-	for(int j = op + 1; tokens[j].type == MINUS; j++)
-		*rflag = *rflag + 1;
-	
 	return op;	
 }
 
@@ -216,6 +209,10 @@ int eval(int lf, int ri){
 		assert(tokens[lf].type==0);
 		return ch_to_int(tokens[lf].str); 
 	}
+	else if(tokens[lf].type == MINUS)
+	{
+		return (-1) * eval(lf + 1, ri);
+	}
 	else if(match_st == true)
 	{
 		/* The expression is surrounded by a matched pair of parentheses.
@@ -230,12 +227,9 @@ int eval(int lf, int ri){
 			return MISS_MATCHING;
 				
 		/*find main token position*/
-		int lflag = 0, rflag = 0;
-		int op = fd_m_token(lf, ri, &lflag, &rflag);	
-		int val1 = eval( lf + lflag, op - 1);
-		int val2 = eval( op + 1 + rflag, ri);
-		if(lflag % 2) val1 *= -1;
-		if(rflag % 2) val2 *= -1;
+		int op = fd_m_token(lf, ri);	
+		int val1 = eval( lf , op - 1);
+		int val2 = eval( op + 1, ri);
 
 		if(val1 != MISS_MATCHING && val2 != MISS_MATCHING)
 		{
