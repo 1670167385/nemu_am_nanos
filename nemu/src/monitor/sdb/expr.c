@@ -181,11 +181,15 @@ int fd_m_token(int lf, int ri)
 			op = j;
 			type = '*';
 		}
-
-		if(cnt == 0 && type != '+' && (tokens[j].type == '+'||tokens[j].type == '-') )
+		else if(cnt == 0 && (type == 0|| type == '*') && (tokens[j].type == '+'||tokens[j].type == '-') )
 		{
 			op = j;
 			type = '+';
+		}
+		else if(cnt == 0 && (type == 0|| type == '*'|| type == '+') && tokens[j].type == TK_EQ)
+		{
+			op = j;
+			type = '=';
 		}
 	}
 	
@@ -252,6 +256,7 @@ word_t eval(int lf, int ri){
 			case '-': return val1 - val2;
 			case '*': return val1 * val2;
 			case '/': return val1 / val2;
+			case TK_EQ : return val1 == val2;
 			default: assert(0);
 			}
 		}	
