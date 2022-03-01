@@ -197,8 +197,10 @@ int fd_m_token(int lf, int ri)
 int eval(int lf, int ri){
 	assert(lf <= ri);
 	bool success;
-	word_t val = isa_reg_str2val("t0", &success);
-	printf("%d\n\n", val);
+	word_t val = isa_reg_str2val("s4", &success);
+	printf("%d %d\n\n", val, success);
+	val = isa_reg_str2val("9",&success);
+	printf("%d %d\n\n", val, success);
 	int match_st = check_parentheses(lf, ri);
 	if(lf ==ri){
 		/*single token.
