@@ -28,7 +28,8 @@ static struct rule {
 	{"\\)", ')'},			// )
 	{"[0-9]+", NUM},		// num
 	{"==", TK_EQ},          // equal
-	{"\\$[a-z][a-z0-9]+", REG}//REG
+	{"\\$[a-z][a-z0-9]+", REG},//REG
+	{"0x[0-9A-F]+", HEX_NUM}	//HEX
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -103,6 +104,12 @@ static bool make_token(char *e) {
 				case ')':
 					tokens[nr_token].type=')';
 					break;
+				case HEX_NUM:
+					tokens[nr_token].type = HEX_NUM;
+					assert(substr_len<=29);
+					memcpy(tokens[nr_token].str, substr_start,substr_len);
+					tokens[nr_token].str[substr_len]=0;	
+					break;
 				case NUM:
 					tokens[nr_token].type=NUM;
 					assert(substr_len<=29);
@@ -122,28 +129,12 @@ static bool make_token(char *e) {
 				break;								//break when found one exist
 			}
 		}
-
-
 		if (i == NR_REGEX) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
 		}
 	}
 	return true;
-}
-
-int ch_to_int(char *str)
-{
-	int position = 0;
-	int m=0;
-	
-	while(str[position]!='\0')
-	{
-		m=m*10;
-		m=m+str[position++]-'0';
-	}
-	
-	return m;	
 }
 
 int check_parentheses(int l, int r)
@@ -216,8 +207,16 @@ word_t eval(int lf, int ri){
 			if(success)	return val;
 			else return MISS_MATCHING;
 		}
-		else
-			return ch_to_int(tokens[lf].str);	
+		else if(tokens[lf].type == HEX_NUM){
+			word_t val;
+			sscanf(tokens[lf].str,"0x%x",&val);
+			return val;
+		}
+		else{
+	        word_t val;
+			sscanf(tokens[lf].str,"%x",&val);
+			return val;
+		}	
 	}
 
 	else if(tokens[lf].type == MINUS)
