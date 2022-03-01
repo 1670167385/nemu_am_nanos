@@ -104,6 +104,9 @@ static bool make_token(char *e) {
 				case ')':
 					tokens[nr_token].type=')';
 					break;
+				case TK_EQ:
+					tokens[nr_token].type=TK_EQ;
+					break;
 				case HEX_NUM:
 					tokens[nr_token].type = HEX_NUM;
 					assert(substr_len<=29);
