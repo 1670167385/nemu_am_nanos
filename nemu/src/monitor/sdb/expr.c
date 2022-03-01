@@ -199,7 +199,8 @@ word_t eval(int lf, int ri){
 		/*single token.
 		 * it should be a number or a reg
 		 * return the value of the number*/
-		assert(tokens[lf].type == NUM || tokens[lf].type == REG);
+		assert(tokens[lf].type == NUM || tokens[lf].type == REG
+				|| tokens[lf].type == HEX_NUM);
 		if(tokens[lf].type == REG)
 		{
 			bool success = true;
