@@ -25,11 +25,11 @@ static struct rule {
 	{"\\*", '*'},			// mul 
 	{"\\/", '/'},			// div
 	{"\\(", '('},			// (
+	{"0x[0-9A-F]+", HEX_NUM},	//HEX
 	{"\\)", ')'},			// )
 	{"[0-9]+", NUM},		// num
 	{"==", TK_EQ},          // equal
-	{"\\$[a-z][a-z0-9]+", REG},//REG
-	{"0x[0-9A-F]+", HEX_NUM}	//HEX
+	{"\\$[a-z][a-z0-9]+", REG}//REG
 };
 
 #define NR_REGEX ARRLEN(rules)
