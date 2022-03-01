@@ -28,7 +28,7 @@ static struct rule {
 	{"\\)", ')'},			// )
 	{"[0-9]+", NUM},		// num
 	{"==", TK_EQ},          // equal
-	{"\\$[a-z][a-z0-9]+", REG}
+	{"\\$[a-z][a-z0-9]+", REG}//REG
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -201,15 +201,23 @@ int fd_m_token(int lf, int ri)
 	return op;	
 }
 
-int eval(int lf, int ri){
+word_t eval(int lf, int ri){
 	assert(lf <= ri);
 	int match_st = check_parentheses(lf, ri);
 	if(lf ==ri){
 		/*single token.
-		 * it should be a number
+		 * it should be a number or a reg
 		 * return the value of the number*/
-		assert(tokens[lf].type==0);
-		return ch_to_int(tokens[lf].str); 
+		assert(tokens[lf].type == NUM || tokens[lf].type == REG);
+		if(tokens[lf].type == REG)
+		{
+			bool success = true;
+			word_t val = isa_reg_str2val(tokens[lf].str, &success);
+			if(success)	return val;
+			else return MISS_MATCHING;
+		}
+		else
+			return ch_to_int(tokens[lf].str);	
 	}
 
 	else if(tokens[lf].type == MINUS)
