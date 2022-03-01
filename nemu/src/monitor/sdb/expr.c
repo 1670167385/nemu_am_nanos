@@ -28,6 +28,7 @@ static struct rule {
 	{"\\)", ')'},			// )
 	{"[0-9]+", NUM},		// num
 	{"==", TK_EQ},          // equal
+	{"\\$[a-z][a-z0-9]+", REG}
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -105,9 +106,15 @@ static bool make_token(char *e) {
 				case NUM:
 					tokens[nr_token].type=NUM;
 					assert(substr_len<=29);
-					memcpy(tokens[nr_token].str,substr_start,substr_len);
+					memcpy(tokens[nr_token].str, substr_start,substr_len);
 					tokens[nr_token].str[substr_len]=0;
 					break;
+				case REG:
+					tokens[nr_token].type=REG;
+					assert(substr_len<=29);
+					memcpy(tokens[nr_token].str, substr_start + 1, substr_len - 1);
+					tokens[nr_token].str[substr_len - 1] = 0;
+					printf("%s\n",tokens[nr_token].str);
 				default:
 					nr_token--;
 				}		
@@ -196,11 +203,6 @@ int fd_m_token(int lf, int ri)
 
 int eval(int lf, int ri){
 	assert(lf <= ri);
-	bool success;
-	word_t val = isa_reg_str2val("t0", &success);
-	printf("%d %d\n\n", val, success);
-	val = isa_reg_str2val("9",&success);
-	printf("%d %d\n\n", val, success);
 	int match_st = check_parentheses(lf, ri);
 	if(lf ==ri){
 		/*single token.
