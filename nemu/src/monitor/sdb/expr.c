@@ -211,6 +211,7 @@ int eval(int lf, int ri){
 	}
 	else if(tokens[lf].type == MINUS)
 	{
+		/* The expression's head is MINUS flag */
 		return (-1) * eval(lf + 1, ri);
 	}
 	else if(match_st == true)
@@ -258,8 +259,9 @@ word_t expr(char *e, bool *success) {
 		if(tokens[i].type == '-' && (i == 0 || tokens[i - 1].type == '(' || tokens[i - 1].type == '+'
 										    || tokens[i - 1].type == '-' || tokens[i - 1].type == '*'
 										    || tokens[i - 1].type == '/' || tokens[i - 1].type == MINUS))
+		{
 			tokens[i].type = MINUS;
-		printf("%c\t",tokens[i].type);	
+		}
 	}	
 	/* TODO: Insert codes to evaluate the expression. */	
 	word_t ans = eval(0, nr_token - 1); 
