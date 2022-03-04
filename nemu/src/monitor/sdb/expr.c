@@ -222,7 +222,7 @@ word_t eval(int lf, int ri){
 		}
 		else{
 	        word_t val;
-			sscanf(tokens[lf].str,"%x",&val);
+			sscanf(tokens[lf].str,"%d",&val);
 			return val;
 		}	
 	}
