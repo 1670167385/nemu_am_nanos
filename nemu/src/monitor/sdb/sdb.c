@@ -86,7 +86,7 @@ static int cmd_w(char *args) {
 
 static int cmd_d(char *args) {
 	bool success = delete_wp(args);
-	if(!success) printf("No such watchpoint!");
+	if(!success) printf("No such watchpoint!\n");
 	return 0;
 }
 
