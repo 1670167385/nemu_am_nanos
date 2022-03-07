@@ -77,12 +77,16 @@ static int cmd_p(char *args) {
 }
 
 static int cmd_w(char *args) {
-
+	WP *point = new_wp();
+	point->expr = malloc((strlen(args) + 1) * sizeof(char));
+	memcpy(point->expr, args, (strlen(args) + 1) * sizeof(char));
+	*(point->expr + strlen(args) + 1) = 0;
 	return 0;
 }
 
 static int cmd_d(char *args) {
-
+	bool success = delete_wp(args);
+	if(!success) printf("No such watchpoint!");
 	return 0;
 }
 
