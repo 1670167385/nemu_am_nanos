@@ -23,10 +23,25 @@ void fetch_decode(Decode *s, vaddr_t pc);
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND) log_write("%s\n", _this->logbuf);
+	if (ITRACE_COND) log_write("%s\n", _this->logbuf);
 #endif
-  if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
-  IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
+	if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
+	IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
+
+	//run a function about look through all the wp , and the mode is update
+	int i = 0;
+	int state = WP_REMAIN;
+	while(true){
+		state = check_wp(i, NULL);//2's is NULL, means don't need the result
+		if(state = WP_CHANGED){
+			nemu_state.state = NEMU_STOP;
+			printf("user's watchpoint has been triggered!\n");
+			return;
+		}
+		else if(state = WP_END)
+			break;
+	}
+
 }
 
 #include <isa-exec.h>

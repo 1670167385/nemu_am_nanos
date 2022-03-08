@@ -3,6 +3,10 @@
 
 #include <common.h>
 
+#define WP_REAMIN 1
+#define WP_CHANGED 2
+#define WP_END 0
+
 typedef struct watchpoint {
 	int NO;
 	struct watchpoint *next;
@@ -14,4 +18,5 @@ typedef struct watchpoint {
 word_t expr(char *e, bool *success);
 WP* new_wp();
 bool delete_wp(char *args);
+word_t check_wp(int num,int *result);
 #endif

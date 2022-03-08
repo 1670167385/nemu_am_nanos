@@ -64,3 +64,33 @@ bool delete_wp(char *args)
 	}
 	return false;
 }
+
+word_t check_wp(int num, word_t *result)
+{
+	WP *p = head;
+	for(int i = 0; i < num; i++)
+	{
+		if(p->next)
+			p = p->next;
+		else
+			return WP_END;
+	}
+	if(p)
+	{
+		bool success = true;
+		word_t tmp_res = expr(p->expr, &success);
+		//all the expression has been checked when input it.
+		//so we don't need to check it again
+		if(result != NULL)
+			result = tmp_res;
+		if(tmp_res == p->last_result)
+			return WP_REMAIN;
+		else
+		{
+			p->last_result = tmp_res;
+			return WP_CHANGED;
+		}
+	}
+	else
+		return WP_END;
+}
