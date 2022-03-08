@@ -53,7 +53,14 @@ static int cmd_info(char *args) {
 		isa_reg_display();
 	}
 	else if(strcmp(args,"w")==0){
-		
+		int i = 0;
+		word_t result;
+		int state = WP_REMAIN, no;
+		while(true){
+			state = check_wp(i++, &result, &no);//2's is NULL, means don't need the result
+			printf("NO:%d\t %d\n", no, result);
+			if(state == WP_END)	break;
+		}
 	}
 	else{
 		printf("Invalid argument!\n");
@@ -77,10 +84,18 @@ static int cmd_p(char *args) {
 }
 
 static int cmd_w(char *args) {
-	WP *point = new_wp();
-	point->expr = malloc((strlen(args) + 1) * sizeof(char));
-	memcpy(point->expr, args, (strlen(args) + 1) * sizeof(char));
-	*(point->expr + strlen(args) + 1) = 0;
+	bool sucs = true;
+	expr(args, &sucs);
+    if(sucs)
+	{
+		WP *point = new_wp();
+		point->expr = malloc((strlen(args) + 1) * sizeof(char));
+		memcpy(point->expr, args, (strlen(args) + 1) * sizeof(char));
+		*(point->expr + strlen(args) + 1) = 0;
+		printf("watchpoint has been built successfully!\n");
+	}
+	else
+		printf("Pattern Wrong!\n"); 
 	return 0;
 }
 

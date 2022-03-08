@@ -283,6 +283,13 @@ word_t expr(char *e, bool *success) {
 		{
 			tokens[i].type = MINUS;
 		}
+		//else if(token[i].type == '*' && (i == 0 || tokens[i - 1].type == '(' || tokens[i - 1].type == '+'
+		//								    || tokens[i - 1].type == '-' || tokens[i - 1].type == '*'
+		//								    || tokens[i - 1].type == '/' || tokens[i - 1].type == MINUS))
+		//{
+		//means fetch the value in this address	
+		//}
+
 	}	
 	/* TODO: Insert codes to evaluate the expression. */	
 	word_t ans = eval(0, nr_token - 1); 

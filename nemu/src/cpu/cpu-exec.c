@@ -3,6 +3,9 @@
 #include <cpu/difftest.h>
 #include <isa-all-instr.h>
 #include <locale.h>
+#include "../monitor/sdb/sdb.h"
+
+
 
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
@@ -32,13 +35,13 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 	int i = 0;
 	int state = WP_REMAIN;
 	while(true){
-		state = check_wp(i, NULL);//2's is NULL, means don't need the result
-		if(state = WP_CHANGED){
+		state = check_wp(i++, NULL, NULL);//2's is NULL, means don't need the result
+		if(state == WP_CHANGED){
 			nemu_state.state = NEMU_STOP;
 			printf("user's watchpoint has been triggered!\n");
 			return;
 		}
-		else if(state = WP_END)
+		else if(state == WP_END)
 			break;
 	}
 
