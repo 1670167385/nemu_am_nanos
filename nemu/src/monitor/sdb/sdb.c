@@ -58,8 +58,8 @@ static int cmd_info(char *args) {
 		int state = WP_REMAIN, no;
 		while(true){
 			state = check_wp(i++, &result, &no);//2's is NULL, means don't need the result
-			printf("NO:%d\t %d\n", no, result);
 			if(state == WP_END)	break;
+			printf("NO:%d\t %d\n", no, result);
 		}
 	}
 	else{
