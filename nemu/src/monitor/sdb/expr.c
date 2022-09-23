@@ -164,7 +164,6 @@ int fd_m_token(int lf, int ri){
 		if(tokens[i].type == ')') cnt++;
 		else if(tokens[i].type == '(') cnt--;
 		else if(cnt == 0){
-			Log("lf = %d , ri = %d , cnt = %d", lf, ri, cnt);
 			in_par = 0;
 			if(i > lf && (tokens[i - 1].type == ')' || tokens[i - 1].type == NUM
 				   	 ||tokens[i - 1].type == REG || tokens[i - 1].type == HEX_NUM) ){
@@ -197,7 +196,7 @@ word_t eval(int lf, int ri){
 		{
 			bool success = true;
 			word_t val = isa_reg_str2val(tokens[lf].str, &success);
-			assert(!success);
+			assert(success);
 			return val;
 		}
 		else if(tokens[lf].type == HEX_NUM){
