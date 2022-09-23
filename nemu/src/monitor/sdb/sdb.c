@@ -107,7 +107,7 @@ static int cmd_x(char *args) {
     for(int i = 0; i < N; i++){
         if(i % 4 == 0) printf("0x%08x:\t",addr + (i * 4));
         val = vaddr_read(addr + (i * 4), 4);
-        printf("0x%04x\t0x%04x\t", val>>16, val / 0x10000);
+        printf("0x%04x\t0x%04x\t", val>>16, val % 0x10000);
         if(i % 4 == 3 || i + 1 == N) printf("\n");
     }
 	return 0;
