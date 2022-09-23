@@ -16,6 +16,7 @@ typedef struct watchpoint {
 	word_t last_result;
 } WP;
 
+
 word_t expr(char *e, bool *success);
 WP* new_wp();
 bool delete_wp(char *args);

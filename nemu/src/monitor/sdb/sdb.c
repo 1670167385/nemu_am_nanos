@@ -8,8 +8,37 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+static int cmd_c(char *args);
+static int cmd_q(char *args);
+static int cmd_si(char *args);
+static int cmd_si(char *args);
+static int cmd_info(char *args);
+static int cmd_x(char *args);
+static int cmd_p(char *args);
+static int cmd_w(char *args);
+static int cmd_d(char *args);
+static int cmd_help(char *args);
 
-/* We use the `readline' library to provide more flexibility to read from stdin. */
+
+static struct {
+  const char *name;
+  const char *description;
+  int (*handler) (char *);
+} cmd_table [] = {
+  { "help", "Display informations about all supported commands", cmd_help },
+  { "c", "Continue the execution of the program", cmd_c },
+  { "q", "Exit NEMU", cmd_q },
+
+  /* TODO: Add more commands */
+  
+  { "si","Execute the program for N step ,then pause it ( default N = 1" ,cmd_si},
+  { "info", "print status of regs/watchpoint", cmd_info},
+  { "x", "print the value of a block of memory", cmd_x},
+  { "p", "compute the expression", cmd_p},
+  { "w", "pause the program when the value of EXPR change", cmd_w},
+  { "d", "delete NO.N watchopoint", cmd_d}
+};
+/* Read from stdin */
 static char* rl_gets() {
   static char *line_read = NULL;
 
@@ -27,17 +56,16 @@ static char* rl_gets() {
   return line_read;
 }
 
+#define NR_CMD ARRLEN(cmd_table)
+
 static int cmd_c(char *args) {
   cpu_exec(-1);
   return 0;
 }
 
-
 static int cmd_q(char *args) {
   return -1;
 }
-
-static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
 	int exec_step;
@@ -105,29 +133,6 @@ static int cmd_d(char *args) {
 	return 0;
 }
 
-
-
-static struct {
-  const char *name;
-  const char *description;
-  int (*handler) (char *);
-} cmd_table [] = {
-  { "help", "Display informations about all supported commands", cmd_help },
-  { "c", "Continue the execution of the program", cmd_c },
-  { "q", "Exit NEMU", cmd_q },
-
-  /* TODO: Add more commands */
-  
-  { "si","Execute the program for N step ,then pause it ( default N = 1" ,cmd_si},
-  { "info", "print status of regs/watchpoint", cmd_info},
-  { "x", "print the value of a block of memory", cmd_x},
-  { "p", "compute the expression", cmd_p},
-  { "w", "pause the program when the value of EXPR change", cmd_w},
-  { "d", "delete NO.N watchopoint", cmd_d}
-};
-
-#define NR_CMD ARRLEN(cmd_table)
-
 static int cmd_help(char *args) {
   /* extract the first argument */
   char *arg = strtok(NULL, " ");
@@ -160,7 +165,7 @@ void sdb_mainloop() {
     cmd_c(NULL);
     return;
   }
-
+  /* str = (nemu) stdin*/
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
 

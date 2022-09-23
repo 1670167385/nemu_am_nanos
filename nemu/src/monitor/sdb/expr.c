@@ -1,8 +1,5 @@
 #include <isa.h>
-
-/* We use the POSIX regex functions to process regular expressions.
- * Type 'man regex' for more information about POSIX regex functions.
- */
+/* We use the POSIX regex functions to process regular expressions.*/
 #include <regex.h>
 
 #define MISS_MATCHING 0x7fffffff
@@ -33,24 +30,22 @@ static struct rule {
 };
 
 #define NR_REGEX ARRLEN(rules)
-
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
  * Therefore we compile them only once before any usage.
  */
 void init_regex() {
-	int i;
 	char error_msg[128];
 	int ret;
 
-	for (i = 0; i < NR_REGEX; i ++) {
-    ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
-    if (ret != 0) {
-      regerror(ret, &re[i], error_msg, 128);
-      panic("regex compilation failed: %s\n%s", error_msg, rules[i].regex);
+	for (int i = 0; i < NR_REGEX; i ++) {
+        ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
+        if (ret != 0) {
+            regerror(ret, &re[i], error_msg, 128);
+            panic("regex compilation failed: %s\n%s", error_msg, rules[i].regex);
+        }
     }
-  }
 }
 
 typedef struct token {
@@ -62,23 +57,22 @@ static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
-	int position = 0;
+	int p = 0;
 	int i;
 	regmatch_t pmatch;
 
 	nr_token = 0;
 
-	while (e[position] != '\0') {
-    /* Try all rules one by one. */
+	while (e[p] != '\0') {
 		for (i = 0; i < NR_REGEX; i ++) {
-			if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
-				char *substr_start = e + position;
+			if (regexec(&re[i], e + p, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
+				char *substr_start = e + p;
 				int substr_len = pmatch.rm_eo;
 
 				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
-					i, rules[i].regex, position, substr_len, substr_len, substr_start);
+					i, rules[i].regex, p, substr_len, substr_len, substr_start);
 
-				position += substr_len;
+				p += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
 				* to record the token in the array `tokens'. For certain types
@@ -133,7 +127,7 @@ static bool make_token(char *e) {
 			}
 		}
 		if (i == NR_REGEX) {
-			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
+			printf("no match at position %d\n%s\n%*.s^\n", p, e, p, "");
 			return false;
 		}
 	}
