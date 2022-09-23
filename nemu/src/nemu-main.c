@@ -23,13 +23,13 @@ int main(int argc, char *argv[]) {
 	}
 	return 0;
 */
-/*
+
 #ifdef CONFIG_TARGET_AM
   am_init_monitor();
 #else
   init_monitor(argc, argv);
 #endif
-*/
+
 
   /* Start engine. */
 /*	for(int i=2; i < argc; i++)
