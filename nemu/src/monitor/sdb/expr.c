@@ -2,12 +2,11 @@
 /* We use the POSIX regex functions to process regular expressions.*/
 #include <regex.h>
 
-#define MISS_MATCHING 0x7fffffff
 enum {
 	TK_NOTYPE = 256, TK_EQ = 255,
 	MINUS = 254, // -123
 	REFER = 253, // * pointer
-	HEX_NUM = 252, REG = 251,	
+	HEX_NUM = 252, REG = 251, POINTER = 250, RUB_PLUS = 249,	
 	/* TODO: Add more token types */
 	NUM = 0
 };
@@ -31,10 +30,14 @@ static struct rule {
 
 #define NR_REGEX ARRLEN(rules)
 static regex_t re[NR_REGEX] = {};
+typedef struct token {
+	int type;
+	char str[32];
+} Token;
+static Token tokens[32] __attribute__((used)) = {};
+static int nr_token __attribute__((used))  = 0;
 
-/* Rules are used for many times.
- * Therefore we compile them only once before any usage.
- */
+/* generate the RE */
 void init_regex() {
 	char error_msg[128];
 	int ret;
@@ -48,14 +51,7 @@ void init_regex() {
     }
 }
 
-typedef struct token {
-	int type;
-	char str[32];
-} Token;
-
-static Token tokens[32] __attribute__((used)) = {};
-static int nr_token __attribute__((used))  = 0;
-
+/* match the expresstion with RE */
 static bool make_token(char *e) {
 	int p = 0;
 	int i;
@@ -134,80 +130,73 @@ static bool make_token(char *e) {
 	return true;
 }
 
-int check_parentheses(int l, int r)
+/* check the total parentheses */
+bool check_parentheses(int l, int r)
 {
 	int cnt = 0;
-	int false_flag = 0;
-	if(tokens[l].type == '(' && tokens[r].type == ')')
-	{
-		for(int i=l;i<=r;i++)
-		{
-			if(tokens[i].type == '(')
-				cnt++;
-			if(tokens[i].type == ')')
-				cnt--;
-			if(cnt == 0 && i < r)					//'(...) + (...)'   will make cnt = 0  , but '(..(..) + (..)..)'  won't
-				false_flag = 1;
-			if(cnt<0)
-				return MISS_MATCHING;
-		}
-		if(cnt == 0 && false_flag == 0)
-			return true;
-		else if(cnt == 0)					//only when miss matching not happen , consider false case
-			return false;
-		else//cnt != 0
-			return MISS_MATCHING;
+	for(int i = l; i <= r; i++){
+		if(tokens[i].type == '(') cnt++;
+		if(tokens[i].type == ')') cnt--;
 	}	
-	return false;
+	if(cnt) return 1;
+	else return 0;
 }
 
-int fd_m_token(int lf, int ri)
-{
-	int cnt = 0, op = ri + 1;
-	int type = 0;
+/* get * con */
+int get_pointer(){
+	return 0;
+}
 
+/* ERROR code for p */
+enum {
+	IN_PARENTH = -1,
+	ONE_NUM = -2
+};
+
+
+int fd_m_token(int lf, int ri){
+	int cnt = 0, p = 0;
+	char type = 0;
+	bool in_par = 1;
 	/* find the position */
-	for(int j = ri; j >= lf; j--)
+	for(int i = lf; i < ri; i++)
 	{
-		if(tokens[j].type == ')')
-			cnt++;
-		if(tokens[j].type == '(')
-			cnt--;
-		if(cnt == 0 && type == 0 && (tokens[j].type == '*'||tokens[j].type == '/'))
-		{
-			op = j;
-			type = '*';
-		}
-		else if(cnt == 0 && (type == 0|| type == '*') && (tokens[j].type == '+'||tokens[j].type == '-') )
-		{
-			op = j;
-			type = '+';
-		}
-		else if(cnt == 0 && (type == 0|| type == '*'|| type == '+') && tokens[j].type == TK_EQ)
-		{
-			op = j;
-			type = '=';
-		}
+		if(tokens[i].type == ')') cnt++;
+		if(tokens[i].type == '(') cnt--;
+		if(cnt == 0){
+			in_par = 0;
+			if(i > lf && (tokens[i - 1].type == ')' || tokens[i - 1].type == NUM
+				   	 ||tokens[i - 1].type == REG || tokens[i - 1].type == HEX_NUM) ){
+					   	if(type == 0 && (tokens[i].type == '-' || tokens[i].type == '+'))
+						{
+							p=i;
+							type = tokens[i].type;
+						}
+						if(type != '*' && type != '/' && (tokens[i].type == '*' || tokens[i].type == '/'))
+						{
+							p=i;
+							type = tokens[i].type;
+						} 
+					 }
+			if(tokens[i].type == TK_EQ) return i;
+		}	
 	}
-	
-	return op;	
+	if(in_par) return IN_PARENTH;
+	else if(type != 0) return p;
+
+	return ONE_NUM;	
 }
 
 word_t eval(int lf, int ri){
-	assert(lf <= ri);
-	int match_st = check_parentheses(lf, ri);
-	if(lf ==ri){
-		/*single token.
-		 * it should be a number or a reg
-		 * return the value of the number*/
-		assert(tokens[lf].type == NUM || tokens[lf].type == REG
-				|| tokens[lf].type == HEX_NUM);
+	assert(lf < ri);
+	if(lf == ri - 1) {
+		assert(tokens[lf].type == NUM || tokens[lf].type == REG || tokens[lf].type == HEX_NUM);
 		if(tokens[lf].type == REG)
 		{
 			bool success = true;
 			word_t val = isa_reg_str2val(tokens[lf].str, &success);
-			if(success)	return val;
-			else return MISS_MATCHING;
+			assert(!success);
+			return val;
 		}
 		else if(tokens[lf].type == HEX_NUM){
 			word_t val;
@@ -220,74 +209,39 @@ word_t eval(int lf, int ri){
 			return val;
 		}	
 	}
-
-	else if(tokens[lf].type == MINUS)
-	{
-		/* The expression's head is MINUS flag */
-		return (-1) * eval(lf + 1, ri);
-	}
-
-	else if(match_st == true)
-	{
-		/* The expression is surrounded by a matched pair of parentheses.
-		* If that is the case, just throw away the parentheses.
-		*/
-		return eval(lf + 1, ri - 1);
-	}
-
-	else
-	{
-		/*miss matching of parenthess*/
-		if(match_st == MISS_MATCHING)
-			return MISS_MATCHING;
-				
-		/*find main token position*/
-		int op = fd_m_token(lf, ri);	
-		int val1 = eval( lf , op - 1);
-		int val2 = eval( op + 1, ri);
-
-		if(val1 != MISS_MATCHING && val2 != MISS_MATCHING)
+	else {
+		int p = fd_m_token(lf, ri);	
+		switch (p)
 		{
-			switch (tokens[op].type) {
-			case '+': return val1 + val2;
-			case '-': return val1 - val2;
-			case '*': return val1 * val2;
-			case '/': return val1 / val2;
-			case TK_EQ : return val1 == val2;
-			default: assert(0);
+		case IN_PARENTH:
+			return eval(lf + 1, ri - 1);
+		case ONE_NUM:
+			if(tokens[lf].type == '*') return get_pointer(eval(lf + 1, ri));
+			if(tokens[lf].type == '-') return (-1) * eval(lf + 1, ri);
+			if(tokens[lf].type == '+') return eval(lf + 1, ri);
+		default:
+			int val1 = eval(lf, p);
+			int val2 = eval(p + 1, ri);
+
+			switch (tokens[p].type) {
+				case '+': return val1 + val2;
+				case '-': return val1 - val2;
+				case '*': return val1 * val2;
+				case '/': return val1 / val2;
+				case TK_EQ : return val1 == val2;
+				default: assert(0);
 			}
 		}	
-		else
-			return MISS_MATCHING;
 	}
-	return MISS_MATCHING;		
 }
 
 word_t expr(char *e, bool *success) {
-	if (!make_token(e)) {
+	if (!make_token(e) || check_parentheses(0, nr_token - 1)) {
 		*success = false;
 		return 0;
 	}	
-	
-	for(int i = 0; i < nr_token; i++)
-	{
-		if(tokens[i].type == '-' && (i == 0 || tokens[i - 1].type == '(' || tokens[i - 1].type == '+'
-										    || tokens[i - 1].type == '-' || tokens[i - 1].type == '*'
-										    || tokens[i - 1].type == '/' || tokens[i - 1].type == MINUS))
-		{
-			tokens[i].type = MINUS;
-		}
-		//else if(token[i].type == '*' && (i == 0 || tokens[i - 1].type == '(' || tokens[i - 1].type == '+'
-		//								    || tokens[i - 1].type == '-' || tokens[i - 1].type == '*'
-		//								    || tokens[i - 1].type == '/' || tokens[i - 1].type == MINUS))
-		//{
-		//means fetch the value in this address	
-		//}
-
-	}	
 	/* TODO: Insert codes to evaluate the expression. */	
-	word_t ans = eval(0, nr_token - 1); 
-	if(ans == MISS_MATCHING)
-		*success = false;
+	word_t ans = eval(0, nr_token); 
+	
 	return ans;
 }
