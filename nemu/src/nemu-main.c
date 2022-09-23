@@ -1,5 +1,5 @@
 #include <common.h>
-word_t expr(char *e, bool *success);
+#include"./monitor/sdb/sdb.h"
 void init_monitor(int, char *[]);
 void am_init_monitor();
 void engine_start();
@@ -8,13 +8,24 @@ int is_exit_status_bad();
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
 
+	for(int i = 0; i < argc / 2 ; i++)
+	{
+		int ans;
+		sscanf(argv[i * 2 + 1],"%d",&ans);
+		int output;
+		bool sucs;
+		output = expr(argv[i * 2 + 2], &sucs);
+		printf("ans:%d output:%d \n", ans, output);
+	}
+	return 0;
 
+/*
 #ifdef CONFIG_TARGET_AM
   am_init_monitor();
 #else
   init_monitor(argc, argv);
 #endif
-
+*/
 
   /* Start engine. */
 /*	for(int i=2; i < argc; i++)
@@ -30,8 +41,8 @@ int main(int argc, char *argv[]) {
 			printf("wrong\n");
 	}
 */
-	engine_start();
+	//engine_start();
 
-  return is_exit_status_bad();
+  //return is_exit_status_bad();
 	
   }
