@@ -44,6 +44,7 @@ int main(int argc, char *argv[]) {
 			printf("wrong\n");
 	}
 */
+	printf("yes");
 	engine_start();
 
 	return is_exit_status_bad();
