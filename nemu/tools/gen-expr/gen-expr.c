@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
     fscanf(fp, "%d", &result);
     pclose(fp);
 
-    printf("%u %s\n", result, buf);
+	printf("%s\n", buf);
 
 	memset(buf,0,65536*sizeof(char));
   }
