@@ -4,6 +4,8 @@ void am_init_monitor();
 void engine_start();
 int is_exit_status_bad();
 
+#define CONFIG_TARGET_AM
+
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
 

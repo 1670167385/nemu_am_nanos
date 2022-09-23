@@ -237,7 +237,6 @@ word_t eval(int lf, int ri){
 }
 
 word_t expr(char *e, bool *success) {
-	printf("in");
 	if (!make_token(e) || check_parentheses(0, nr_token - 1)) {
 		*success = false;
 		return 0;
