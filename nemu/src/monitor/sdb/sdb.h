@@ -20,5 +20,5 @@ typedef struct watchpoint {
 word_t expr(char *e, bool *success);
 WP* new_wp();
 bool delete_wp(char *args);
-word_t check_wp(int num,word_t *result, int *no);
+word_t check_wp(bool pr_info);
 #endif

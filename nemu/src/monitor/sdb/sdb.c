@@ -82,14 +82,7 @@ static int cmd_info(char *args) {
 		isa_reg_display();
 	}
 	else if(strcmp(args,"w")==0){
-		int i = 0;
-		word_t result;
-		int state = WP_REMAIN, no;
-		while(true){
-			state = check_wp(i++, &result, &no);//2's is NULL, means don't need the result
-			if(state == WP_END)	break;
-			printf("NO:%d\t %d\n", no, result);
-		}
+		check_wp(true);
 	}
 	else{
 		printf("Invalid argument!\n");

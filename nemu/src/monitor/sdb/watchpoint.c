@@ -16,11 +16,12 @@ void init_wp_pool() {
   free_ = wp_pool;
 }
 
-/* TODO: Implement the functionality of watchpoint */
-
 WP* new_wp()
 {
-	if(free_ == NULL)assert(0);
+	if(free_ == NULL){
+		Log("No enough free wp");
+		assert(0);
+	}
 	WP *tmp = free_;
 	free_ = free_->next;
 	tmp->next = head;
@@ -33,13 +34,12 @@ void free_wp(WP *wp)
 {
 	WP *p = head;
 	if(head == wp)
-	{
 		head = wp->next;
-	}
 	else
 	{
 		while(p->next != wp)
 		{
+			p->NO--;
 			p = p->next;
 		}
 		p->next = wp->next;
@@ -47,6 +47,7 @@ void free_wp(WP *wp)
 	wp->next = free_;
 	free_ = wp;
 }
+
 bool delete_wp(char *args)
 {
 	int no;
@@ -64,34 +65,16 @@ bool delete_wp(char *args)
 	return false;
 }
 
-word_t check_wp(int num, word_t *result, int *no)
+word_t check_wp(bool pr_info)
 {
 	WP *p = head;
-	for(int i = 0; i < num; i++)
-	{
-		if(p->next)
-			p = p->next;
-		else
-			return WP_END;
+	while(p){
+		bool sucs = true;
+		word_t result = expr(p->expr, &sucs);
+		if(!pr_info && result != p->last_result)
+			return p->NO;
+		else if(pr_info)
+			printf("NO:%d\t %d\n", p->NO, result);
 	}
-	if(p)
-	{
-		bool success = true;
-		word_t tmp_res = expr(p->expr, &success);
-		//all the expression has been checked when input it.
-		//so we don't need to check it again
-		if(result != NULL){
-			*result = tmp_res;
-			*no = p->NO;
-		}
-		if(tmp_res == p->last_result)
-			return WP_REMAIN;
-		else
-		{
-			p->last_result = tmp_res;
-			return WP_CHANGED;
-		}
-	}
-	else
-		return WP_END;
+	return -1;
 }
