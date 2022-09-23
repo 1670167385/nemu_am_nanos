@@ -105,10 +105,10 @@ static int cmd_x(char *args) {
     addr = expr(args + N + 1, &sucs);
     sscanf(args,"%d", &N);
     for(int i = 0; i < N; i++){
-        if(i % 8 == 0) printf("0x%08x:\t",addr + (i * 4));
+        if(i % 4 == 0) printf("0x%08x:\t",addr + (i * 4));
         val = vaddr_read(addr + (i * 4), 4);
-        printf("%04x\t", val);
-        if(i % 8 == 7) printf("\n");
+        printf("%04x\t%04x\t", val>>16, val / 0x10000);
+        if(i % 4 == 3 || i + 1 == N) printf("\n");
     }
 	return 0;
 }
