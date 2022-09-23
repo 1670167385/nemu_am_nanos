@@ -159,7 +159,7 @@ int fd_m_token(int lf, int ri){
 	char type = 0;
 	bool in_par = 1;
 	/* find the position */
-	for(int i = lf; i < ri; i++)
+	for(int i = ri - 1; i >= lf; i--)
 	{
 		if(tokens[i].type == ')') cnt++;
 		else if(tokens[i].type == '(') cnt--;
