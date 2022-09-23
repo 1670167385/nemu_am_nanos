@@ -34,7 +34,7 @@ typedef struct token {
 	int type;
 	char str[32];
 } Token;
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[320] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 /* generate the RE */
@@ -65,8 +65,8 @@ static bool make_token(char *e) {
 				char *substr_start = e + p;
 				int substr_len = pmatch.rm_eo;
 
-				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
-					i, rules[i].regex, p, substr_len, substr_len, substr_start);
+				//Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
+				//	i, rules[i].regex, p, substr_len, substr_len, substr_start);
 
 				p += substr_len;
 
