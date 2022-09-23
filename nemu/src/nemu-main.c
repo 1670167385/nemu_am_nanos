@@ -14,9 +14,9 @@ int main(int argc, char *argv[]) {
 	{
 		int ans;
 		sscanf(argv[i * 2 + 1],"%d",&ans);
-		printf("%d\n",ans);
 		int output;
 		bool sucs;
+		printf("%s\n",argv[i * 2 + 2]);
 		output = expr(argv[i * 2 + 2], &sucs);
 		printf("ans:%d output:%d \n", ans, output);
 	}
