@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 		int output;
 		bool sucs=1;
 		printf("%s\n",argv[i * 2 + 2]);
-		output = expr(argv[i * 2 + 2], &sucs);
+		output = expr(argv[i * 2 + 1], &sucs);
 		printf("ans:%d output:%d \n", ans, output);
 	}
 	return 0;
