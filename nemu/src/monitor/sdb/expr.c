@@ -1,7 +1,7 @@
 #include <isa.h>
 /* We use the POSIX regex functions to process regular expressions.*/
 #include <regex.h>
-
+#include <memory/vaddr.h>
 enum {
 	TK_NOTYPE = 256, TK_EQ = 255,
 	MINUS = 254, // -123
@@ -119,8 +119,8 @@ bool check_parentheses(int l, int r)
 }
 
 /* get * con */
-int get_pointer(){
-	return 0;
+word_t get_pointer(word_t addr){
+	return vaddr_read(addr, 4);
 }
 
 /* ERROR code for p */
