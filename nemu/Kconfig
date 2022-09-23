@@ -1,7 +1,7 @@
 mainmenu "NEMU Configuration Menu"
 
 config WATCHPOINT
-  bool "wp"
+  bool 
   default y
 
 
