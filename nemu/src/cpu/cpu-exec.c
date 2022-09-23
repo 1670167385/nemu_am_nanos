@@ -32,12 +32,14 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 	IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 
 	//run a function about look through all the wp , and the mode is update
+#ifdef CONFIG_WATCHPOINT
     int no = check_wp(false);
     if(no != -1){
         nemu_state.state = NEMU_STOP;
 		printf("user's watchpoint has been triggered by WP:%d!\n", no);
 		return;
     }
+#endif
 }
 
 #include <isa-exec.h>

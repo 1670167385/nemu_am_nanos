@@ -1,5 +1,9 @@
 mainmenu "NEMU Configuration Menu"
 
+config WP
+  bool CONFIG_WATCHPOINT
+  default y
+
 choice
   prompt "Base ISA"
   default ISA_riscv32
