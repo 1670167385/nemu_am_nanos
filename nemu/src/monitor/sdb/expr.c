@@ -188,6 +188,7 @@ int fd_m_token(int lf, int ri){
 }
 
 word_t eval(int lf, int ri){
+	Log("lf = %d , ri = %d", lf, ri);
 	assert(lf < ri);
 	if(lf == ri - 1) {
 		assert(tokens[lf].type == NUM || tokens[lf].type == REG || tokens[lf].type == HEX_NUM);
