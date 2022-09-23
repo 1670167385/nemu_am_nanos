@@ -167,12 +167,12 @@ int fd_m_token(int lf, int ri){
 			in_par = 0;
 			if(i > lf && (tokens[i - 1].type == ')' || tokens[i - 1].type == NUM
 				   	 ||tokens[i - 1].type == REG || tokens[i - 1].type == HEX_NUM) ){
-					   	if(type == 0 && (tokens[i].type == '-' || tokens[i].type == '+'))
+					   	if(type == 0 && (tokens[i].type == '*' || tokens[i].type == '/'))
 						{
 							p=i;
 							type = tokens[i].type;
 						}
-						if(type != '*' && type != '/' && (tokens[i].type == '*' || tokens[i].type == '/'))
+						if(type != '+' && type != '-' && (tokens[i].type == '+' || tokens[i].type == '-'))
 						{
 							p=i;
 							type = tokens[i].type;
