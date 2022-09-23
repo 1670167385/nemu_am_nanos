@@ -223,7 +223,7 @@ word_t eval(int lf, int ri){
 		default:
 			int val1 = eval(lf, p);
 			int val2 = eval(p + 1, ri);
-
+			Log("%d %c %d",val1, tokens[p].type, val2);
 			switch (tokens[p].type) {
 				case '+': return val1 + val2;
 				case '-': return val1 - val2;

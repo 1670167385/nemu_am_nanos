@@ -8,7 +8,7 @@ int is_exit_status_bad();
 
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
-
+// ( 59 ) + ( ( ( 4 - 94 - ( ( ( 12 ) ) ) ) ) ) * ( ( ( 10 ) ) * 56 + ( ( 37 ) ) )
 
 /*
 	for(int i = 0; i < argc / 2 ; i++)
