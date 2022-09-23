@@ -162,8 +162,8 @@ int fd_m_token(int lf, int ri){
 	for(int i = lf; i < ri; i++)
 	{
 		if(tokens[i].type == ')') cnt++;
-		if(tokens[i].type == '(') cnt--;
-		if(cnt == 0){
+		else if(tokens[i].type == '(') cnt--;
+		else if(cnt == 0){
 			Log("lf = %d , ri = %d , cnt = %d", lf, ri, cnt);
 			in_par = 0;
 			if(i > lf && (tokens[i - 1].type == ')' || tokens[i - 1].type == NUM
