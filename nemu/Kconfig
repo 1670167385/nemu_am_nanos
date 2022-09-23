@@ -1,7 +1,7 @@
 mainmenu "NEMU Configuration Menu"
 
-config WP
-  bool CONFIG_WATCHPOINT
+config CONFIG_WATCHPOINT
+  bool WP
   default y
 
 choice
