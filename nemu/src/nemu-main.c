@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
 	for( int i=0; i <argc;i++)
 	printf("%s",argv[i]);
 	return 0;
-
+/*
 	for(int i = 0; i < argc / 2 ; i++)
 	{
 		int ans;
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 		printf("ans:%d output:%d \n", ans, output);
 	}
 	return 0;
-
+*/
 /*
 #ifdef CONFIG_TARGET_AM
   am_init_monitor();
