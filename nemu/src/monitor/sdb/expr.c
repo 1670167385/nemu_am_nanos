@@ -64,59 +64,35 @@ static bool make_token(char *e) {
 			if (regexec(&re[i], e + p, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + p;
 				int substr_len = pmatch.rm_eo;
-
-				//Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
-				//	i, rules[i].regex, p, substr_len, substr_len, substr_start);
-
 				p += substr_len;
 
-				/* TODO: Now a new token is recognized with rules[i]. Add codes
-				* to record the token in the array `tokens'. For certain types
-				* of tokens, some extra actions should be performed.
-				*/
-		
 				switch (rules[i].token_type) {
-				case '+':
-					tokens[nr_token].type='+';
-					break;
-				case '-':
-					tokens[nr_token].type='-';
-					break;
-				case '*':
-					tokens[nr_token].type='*';
-					break;
-				case '/':
-					tokens[nr_token].type='/';			
-					break;
-				case '(':
-					tokens[nr_token].type='(';
-					break;
-				case ')':
-					tokens[nr_token].type=')';
-					break;
-				case TK_EQ:
-					tokens[nr_token].type=TK_EQ;
-					break;
-				case HEX_NUM:
-					tokens[nr_token].type = HEX_NUM;
-					assert(substr_len<=29);
-					memcpy(tokens[nr_token].str, substr_start,substr_len);
-					tokens[nr_token].str[substr_len]=0;	
-					break;
-				case NUM:
-					tokens[nr_token].type=NUM;
-					assert(substr_len<=29);
-					memcpy(tokens[nr_token].str, substr_start,substr_len);
-					tokens[nr_token].str[substr_len]=0;
-					break;
-				case REG:
-					tokens[nr_token].type=REG;
-					assert(substr_len<=29);
-					memcpy(tokens[nr_token].str, substr_start + 1, substr_len - 1);
-					tokens[nr_token].str[substr_len - 1] = 0;
-					break;
-				default:
-					nr_token--;
+					case '+': tokens[nr_token].type='+'; break;
+					case '-': tokens[nr_token].type='-'; break;
+					case '*': tokens[nr_token].type='*'; break;
+					case '/': tokens[nr_token].type='/'; break;
+					case '(': tokens[nr_token].type='('; break;
+					case ')': tokens[nr_token].type=')'; break;
+					case TK_EQ: tokens[nr_token].type=TK_EQ; break;
+					case HEX_NUM:
+						tokens[nr_token].type = HEX_NUM;
+						assert(substr_len<=29);
+						memcpy(tokens[nr_token].str, substr_start,substr_len);
+						tokens[nr_token].str[substr_len]=0;	
+						break;
+					case NUM:
+						tokens[nr_token].type=NUM;
+						assert(substr_len<=29);
+						memcpy(tokens[nr_token].str, substr_start,substr_len);
+						tokens[nr_token].str[substr_len]=0;
+						break;
+					case REG:
+						tokens[nr_token].type=REG;
+						assert(substr_len<=29);
+						memcpy(tokens[nr_token].str, substr_start + 1, substr_len - 1);
+						tokens[nr_token].str[substr_len - 1] = 0;
+						break;
+					default: nr_token--; break;
 				}		
 				nr_token++;
 				break;								//break when found one exist
@@ -124,7 +100,7 @@ static bool make_token(char *e) {
 		}
 		if (i == NR_REGEX) {
 			printf("no match at position %d\n%s\n%*.s^\n", p, e, p, "");
-			return false;
+			assert(0);
 		}
 	}
 	return true;
