@@ -117,7 +117,7 @@ static int cmd_p(char *args) {
 	bool sucs = true;
 	word_t ans = expr(args, &sucs);
 	if(sucs)
-		printf("The ans is %d\n", ans);
+		printf("The ans is %u\n", ans);
 	else
 		printf("Pattern Wrong!\n");
 	return 0;
