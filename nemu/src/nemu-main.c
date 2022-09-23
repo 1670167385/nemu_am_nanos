@@ -8,6 +8,10 @@ int is_exit_status_bad();
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
 
+	for( int i=0; i <argc;i++)
+	printf("%s",argv[i]);
+	return 0;
+
 	for(int i = 0; i < argc / 2 ; i++)
 	{
 		int ans;
