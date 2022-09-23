@@ -164,6 +164,7 @@ int fd_m_token(int lf, int ri){
 		if(tokens[i].type == ')') cnt++;
 		if(tokens[i].type == '(') cnt--;
 		if(cnt == 0){
+			Log("lf = %d , ri = %d , cnt = %d", lf, ri, cnt);
 			in_par = 0;
 			if(i > lf && (tokens[i - 1].type == ')' || tokens[i - 1].type == NUM
 				   	 ||tokens[i - 1].type == REG || tokens[i - 1].type == HEX_NUM) ){
