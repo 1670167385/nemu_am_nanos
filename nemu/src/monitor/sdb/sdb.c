@@ -29,9 +29,6 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
-  /* TODO: Add more commands */
-  
   { "si","Execute the program for N step ,then pause it ( default N = 1" ,cmd_si},
   { "info", "print status of regs/watchpoint", cmd_info},
   { "x", "print the value of a block of memory", cmd_x},

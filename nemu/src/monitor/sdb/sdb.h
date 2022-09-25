@@ -11,7 +11,6 @@ typedef struct watchpoint {
 	int NO;
 	struct watchpoint *next;
 	
-  /* TODO: Add more members if necessary */
 	char *expr;        //expr to be read
 	word_t last_result;
 } WP;

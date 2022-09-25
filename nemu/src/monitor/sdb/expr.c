@@ -7,7 +7,6 @@ enum {
 	MINUS = 254, // -123
 	REFER = 253, // * pointer
 	HEX_NUM = 252, REG = 251, POINTER = 250, RUB_PLUS = 249,	
-	/* TODO: Add more token types */
 	NUM = 0
 };
 
@@ -217,7 +216,6 @@ word_t expr(char *e, bool *success) {
 		*success = false;
 		return 0;
 	}	
-	/* TODO: Insert codes to evaluate the expression. */	
 	word_t ans = eval(0, nr_token); 
 	
 	return ans;
