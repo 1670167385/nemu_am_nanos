@@ -4,7 +4,8 @@
 // this is not consistent with uint8_t
 // but it is ok since we do not access the array directly
 static const uint32_t img [] = {
-  0x01000113,  // addi 
+  0x01000113,  // addi sp,$0,16     li 
+  0x01008093,  // addi ra,sp,16
   0x800002b7,  // lui t0,0x80000
   0x0002a023,  // sw  zero,0(t0)
   0x0002a503,  // lw  a0,0(t0)
