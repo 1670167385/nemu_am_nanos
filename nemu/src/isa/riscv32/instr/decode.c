@@ -42,15 +42,13 @@ static def_DHelper(S) {
 
 static def_DHelper(J) {
   decode_op_r(s, id_dest, s->isa.instr.j.rd, true);
-  sword_t simm = (s->isa.instr.j.simm20 << 20) |  
-    (s->isa.instr.j.imm19_12 << 12) | (s->isa.instr.j.imm11 << 11) | (s->isa.instr.j.imm10_1 << 1);
+  sword_t simm = (s->isa.instr.j.simm20 << 20) |  (s->isa.instr.j.imm19_12 << 12)
+               | (s->isa.instr.j.imm11 << 11) | (s->isa.instr.j.imm10_1 << 1);
+  decode_op_i(s, id_src1, simm, false);
+  /*
   Log("20:0x%x 19_12:0x%x 11:0x%x 10:1 0x%x\n",s->isa.instr.j.simm20 ,
   s->isa.instr.j.imm19_12 , s->isa.instr.j.imm11 , s->isa.instr.j.imm10_1 );
-
-  /*sword_t simm = (!s->isa.instr.j.simm20 << 20) ? 
-    (s->isa.instr.j.imm19_12 << 12) | (s->isa.instr.j.imm11 << 11) | (s->isa.instr.j.imm10_1 << 1)
-  : (-1) * (s->isa.instr.j.imm19_12 << 12) | (s->isa.instr.j.imm11 << 11) | (s->isa.instr.j.imm10_1 << 1);*/
-  decode_op_i(s, id_src1, simm, false);
+  */
 }
 
 def_THelper(load) {
