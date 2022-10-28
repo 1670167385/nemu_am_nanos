@@ -43,7 +43,7 @@ typedef struct {
       uint32_t rd        : 5;
       uint32_t imm19_12  : 8;
       uint32_t imm11     : 1;
-      uint32_t imm10_1   :12;
+      uint32_t imm10_1   :10;
       int32_t  simm20    : 1;
     } j;
     uint32_t val;
