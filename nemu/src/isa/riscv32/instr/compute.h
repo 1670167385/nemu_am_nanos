@@ -13,4 +13,5 @@ def_EHelper(auipc) {
 def_EHelper(jal) {
   rtl_mv(s, ddest, &s->snpc);
   rtl_addi(s, &s->dnpc, &s->pc, id_src1->simm);
+  Log("simm = %d\n",id_src1->simm);
 }
