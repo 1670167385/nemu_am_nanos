@@ -7,5 +7,5 @@ def_EHelper(addi) {
 }
 
 def_EHelper(auipc) {
-  rtl_addi(s, ddest, &s->pc, id_src1->simm<<12);
+  rtl_addi(s, ddest, &s->pc, id_src1->simm);
 }
