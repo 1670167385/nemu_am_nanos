@@ -14,3 +14,9 @@ def_EHelper(jal) {
   rtl_mv(s, ddest, &s->snpc);
   rtl_addi(s, &s->dnpc, &s->pc, id_src1->simm);
 }
+
+def_EHelper(jalr) {
+  rtl_addi(s, &s->dnpc, dsrc1, id_src2->simm);
+  rtl_mv(s, ddest, &s->dnpc);
+}
+
