@@ -9,3 +9,8 @@ def_EHelper(addi) {
 def_EHelper(auipc) {
   rtl_addi(s, ddest, &s->pc, id_src1->simm);
 }
+
+def_EHelper(jal) {
+  rtl_mv(s, ddest, &s->snpc);
+  rtl_addi(s, &s->dnpc, &s->snpc, id_src1->simm);
+}
