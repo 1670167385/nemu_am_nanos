@@ -24,3 +24,17 @@ def_EHelper(beq) {
   if(*dsrc1 == *dsrc2)
     rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
 }
+
+def_EHelper(sltiu) {
+  if(*dsrc1 < id_src2->imm)
+    rtl_li(s, ddest, 1);
+  else
+    rtl_li(s, ddest, 0);
+}
+
+def_EHelper(slti) {
+  if(*dsrc1 < id_src2->simm)
+    rtl_li(s, ddest, 1);
+  else
+    rtl_li(s, ddest, 0);
+}

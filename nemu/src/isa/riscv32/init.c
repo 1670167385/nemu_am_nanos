@@ -5,6 +5,7 @@
 // but it is ok since we do not access the array directly
 static const uint32_t img [] = {
   0x01010093,  // addi ra,sp,16
+  0x00153513,  //seqz	a0,a0
   0x00008463,  //beqz	a0,80000018 <check+0x8>  
   0x00009117,  //auipc	sp,0x9
   0xffc10113,  //addi	sp,sp,-4 # 80009000 <_end>
