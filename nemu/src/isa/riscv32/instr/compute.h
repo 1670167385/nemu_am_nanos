@@ -37,6 +37,18 @@ def_EHelper(addi) {
   rtl_addi(s, ddest, dsrc1, id_src2->simm);
 }
 
+def_EHelper(srai) {
+  rtl_srai(s, ddest, dsrc1, (id_src2->imm && 0x3f));
+}
+
+def_EHelper(srli) {
+  rtl_srli(s, ddest, dsrc1, (id_src2->imm && 0x3f));
+}
+
+def_EHelper(slli) {
+  rtl_slli(s, ddest, dsrc1, (id_src2->imm && 0x3f));
+}
+
 def_EHelper(auipc) {
   rtl_addi(s, ddest, &s->pc, id_src1->simm);
 }
@@ -74,3 +86,4 @@ def_EHelper(bne) {
   if(*dsrc1 != *dsrc2)
     rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
 }
+
