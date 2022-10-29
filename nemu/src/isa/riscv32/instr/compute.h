@@ -24,6 +24,10 @@ def_EHelper(sltu) {
     rtl_li(s, ddest, 0);
 }
 
+def_EHelper(xor) {
+  rtl_xor(s, ddest, dsrc1, dsrc2);
+}
+
 def_EHelper(addi) {
   rtl_addi(s, ddest, dsrc1, id_src2->simm);
 }
