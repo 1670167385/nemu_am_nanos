@@ -38,3 +38,8 @@ def_EHelper(slti) {
   else
     rtl_li(s, ddest, 0);
 }
+
+def_EHelper(bne) {
+  if(*dsrc1 != *dsrc2)
+    rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
+}
