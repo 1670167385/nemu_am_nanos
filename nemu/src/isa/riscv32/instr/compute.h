@@ -20,3 +20,7 @@ def_EHelper(jalr) {
   rtl_mv(s, ddest, &s->dnpc);
 }
 
+def_EHelper(beq) {
+  if(*dsrc1 == *dsrc2)
+    rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
+}
