@@ -54,15 +54,15 @@ def_EHelper(xori) {
 }
 
 def_EHelper(srai) {
-  rtl_srai(s, ddest, dsrc1, (id_src2->imm && 0x3f));
+  rtl_srai(s, ddest, dsrc1, (id_src2->imm & 0x3f));
 }
 
 def_EHelper(srli) {
-  rtl_srli(s, ddest, dsrc1, (id_src2->imm && 0x3f));
+  rtl_srli(s, ddest, dsrc1, (id_src2->imm & 0x3f));
 }
 
 def_EHelper(slli) {
-  rtl_slli(s, ddest, dsrc1, (id_src2->imm && 0x3f));
+  rtl_slli(s, ddest, dsrc1, (id_src2->imm & 0x3f));
 }
 
 def_EHelper(auipc) {
