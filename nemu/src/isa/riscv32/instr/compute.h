@@ -103,3 +103,7 @@ def_EHelper(bne) {
     rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
 }
 
+def_EHelper(bge) {
+  if(*dsrc1 >= *dsrc2)
+    rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
+}
