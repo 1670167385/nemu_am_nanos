@@ -33,7 +33,7 @@ char *strncpy(char *dst, const char *src, size_t n) {
 char *strcat(char *dst, const char *src) {
   size_t p = 0, s = strlen(dst);
   while(src[p] != '\0') dst[s++] = src[p++];
-  dst[s] = '0';
+  dst[s] = '\0';
   return dst;
 } 
 
