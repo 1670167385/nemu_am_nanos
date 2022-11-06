@@ -11,7 +11,7 @@ def_EHelper(sub) {
 }
 
 def_EHelper(slt) {
-  if(*dsrc1 < *dsrc2)
+  if((sword_t)*dsrc1 < (sword_t)*dsrc2)
     rtl_li(s, ddest, 1);
   else
     rtl_li(s, ddest, 0);
