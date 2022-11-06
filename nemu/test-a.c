@@ -1,31 +1,6 @@
 #include<stdio.h>
 #include<stdarg.h>
 
-int p(const char* fmt, ...) {
-	va_list ap;
-	int d;
-	char c;
-	char *s;
-	
-	va_start(ap, fmt);
-	//printf("%s\n",fmt);
-	while(*fmt)
-		switch(*fmt++) {
-			case 's':  /*string*/
-				s = va_arg(ap, char *);
-				printf("string is %s\n", s);
-				break;
-			case 'd':  /*int*/
-				d = va_arg(ap, int);
-				printf("int %d\n", d);
-				break;
-			case 'c':
-				c = (char) va_arg(ap, int);
-				break;
-		}
-	va_end(ap);
-}
-
 int sprintf(char *out, const char *fmt, ...) {
   size_t p = 0,pf = 0;
 
@@ -38,11 +13,12 @@ int sprintf(char *out, const char *fmt, ...) {
   va_start(ap, fmt);
   printf("%s\n\n\n",fmt);
   while(*fmt) {
-    while(*(char*)fmt != '%'&&*(char*)fmt != '\0'){
+    while(*(char*)fmt != '%' && *(char*)fmt != '\0'){
       out[p++] = *(char*)fmt;
-      printf("%c\n",out[p-1]);
+      printf("%c %d\n",out[p-1], out[p-1]);
       fmt++;
     }
+    if(*fmt=='\0')break;
     switch(*(++fmt)) {
       case 's':  /*string*/
         s = va_arg(ap, char *);

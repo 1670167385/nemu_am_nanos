@@ -27,6 +27,7 @@ int sprintf(char *out, const char *fmt, ...) {
       out[p++] = *(char*)fmt;
       fmt++;
     }
+    if(*fmt=='\0')break;
     switch(*(++fmt)) {
       case 's':  /*string*/
         n++;
