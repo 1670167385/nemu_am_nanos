@@ -48,12 +48,18 @@ int sprintf(char *out, const char *fmt, ...) {
   va_end(ap);
 }
 
+int mstrcmp(const char *s1, const char *s2) {
+  size_t p =0;
+  while(s1[p]==s2[p]&&s1[p]!='\0')p++;
+  return (s1[p] - s2[p]);
+}
+
 int main()
 {
 	
 	char s[1000] ="";
 sprintf(s, "%d + %d = %d\n", 1, 1, 2);	
-printf("%d\n", strcmp(s, "1 + 1 = 2\n"));
+printf("%d\n", mstrcmp(s, "1 + 1 = 2\n"));
 printf("--%s--\n",s);	
 	return 0;
 }
