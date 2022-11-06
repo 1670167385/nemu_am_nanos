@@ -1,35 +1,48 @@
-#include <am.h>
-#include <klib.h>
-#include <klib-macros.h>
-#include <stdarg.h>
+#include<stdio.h>
+#include<stdarg.h>
 
-#if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
-
-int printf(const char *fmt, ...) {
-  panic("Not implemented");
-}
-
-int vsprintf(char *out, const char *fmt, va_list ap) {
-  panic("Not implemented");
+int p(const char* fmt, ...) {
+	va_list ap;
+	int d;
+	char c;
+	char *s;
+	
+	va_start(ap, fmt);
+	printf("%s\n",fmt);
+	while(*fmt)
+		switch(*fmt++) {
+			case 's':  /*string*/
+				s = va_arg(ap, char *);
+				printf("string is %s\n", s);
+				break;
+			case 'd':  /*int*/
+				d = va_arg(ap, int);
+				printf("int %d\n", d);
+				break;
+			case 'c':
+				c = (char) va_arg(ap, int);
+				break;
+		}
+	va_end(ap);
 }
 
 int sprintf(char *out, const char *fmt, ...) {
   size_t p = 0,pf = 0;
 
   va_list ap;
-  int d, n = 0;
+  int d;
   int tmp_d;
+  char c;
   char *s;
  
   va_start(ap, fmt);
   while(*fmt) {
-    while(*(char*)fmt != '%' && *(char*)fmt !='\0'){
+    while(*(char*)fmt != '%'&&*(char*)fmt != '\0'){
       out[p++] = *(char*)fmt;
       fmt++;
     }
     switch(*(++fmt)) {
       case 's':  /*string*/
-        n++;
         s = va_arg(ap, char *);
         while(*(char*)s != '\0'){
           out[p++] = *(char*)s;
@@ -37,7 +50,6 @@ int sprintf(char *out, const char *fmt, ...) {
         }
         break;
       case 'd':  /*int*/
-        n++;
         d = va_arg(ap, int);
         tmp_d = d;
         while(tmp_d){
@@ -55,15 +67,13 @@ int sprintf(char *out, const char *fmt, ...) {
     fmt++;
   }
   va_end(ap);
-  return n;
 }
 
-int snprintf(char *out, size_t n, const char *fmt, ...) {
-  panic("Not implemented");
+int main()
+{
+	
+	char s[1000] ="";
+sprintf(s, "%d + %d = %d\n", 1, 1, 2);	
+printf("%s\n",s);	
+	return 0;
 }
-
-int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
-  panic("Not implemented");
-}
-
-#endif
