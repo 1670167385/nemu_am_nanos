@@ -8,7 +8,7 @@ int p(const char* fmt, ...) {
 	char *s;
 	
 	va_start(ap, fmt);
-	printf("%s\n",fmt);
+	//printf("%s\n",fmt);
 	while(*fmt)
 		switch(*fmt++) {
 			case 's':  /*string*/
@@ -36,9 +36,11 @@ int sprintf(char *out, const char *fmt, ...) {
   char *s;
  
   va_start(ap, fmt);
+  printf("%s\n\n\n",fmt);
   while(*fmt) {
     while(*(char*)fmt != '%'&&*(char*)fmt != '\0'){
       out[p++] = *(char*)fmt;
+      printf("%c\n",out[p-1]);
       fmt++;
     }
     switch(*(++fmt)) {
@@ -65,6 +67,7 @@ int sprintf(char *out, const char *fmt, ...) {
         break;
     }
     fmt++;
+//    printf("%s\n", out);
   }
   va_end(ap);
 }
