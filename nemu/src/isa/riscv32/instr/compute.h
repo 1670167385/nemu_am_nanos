@@ -96,7 +96,7 @@ def_EHelper(beq) {
 }
 
 def_EHelper(blt) {
-  if(*dsrc1 < *dsrc2)
+  if((sword_t)*dsrc1 < (sword_t)*dsrc2)
     rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
 }
 
@@ -120,6 +120,6 @@ def_EHelper(bne) {
 }
 
 def_EHelper(bge) {
-  if(*dsrc1 >= *dsrc2)
+  if((sword_t)*dsrc1 >= (sword_t)*dsrc2)
     rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
 }
