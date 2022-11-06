@@ -11,11 +11,11 @@ int sprintf(char *out, const char *fmt, ...) {
   char *s;
  
   va_start(ap, fmt);
-  printf("%s\n\n\n",fmt);
+  //printf("%s\n\n\n",fmt);
   while(*fmt) {
     while(*(char*)fmt != '%' && *(char*)fmt != '\0'){
       out[p++] = *(char*)fmt;
-      printf("%c %d\n",out[p-1], out[p-1]);
+      //printf("%c %d\n",out[p-1], out[p-1]);
       fmt++;
     }
     if(*fmt=='\0')break;
@@ -53,6 +53,7 @@ int main()
 	
 	char s[1000] ="";
 sprintf(s, "%d + %d = %d\n", 1, 1, 2);	
-printf("%s\n",s);	
+printf("%d\n", strcmp(s, "1 + 1 = 2\n"));
+printf("--%s--\n",s);	
 	return 0;
 }
