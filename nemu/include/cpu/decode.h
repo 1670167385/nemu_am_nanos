@@ -24,6 +24,8 @@ typedef struct Decode {
   Operand dest, src1, src2;
   ISADecodeInfo isa;
   IFDEF(CONFIG_ITRACE, char logbuf[128]);
+  IFDEF(CONFIG_ITRACE, char *be_logbuf[7]);
+  IFDEF(CONFIG_ITRACE, int log_tail);
 } Decode;
 
 #define id_src1 (&s->src1)
