@@ -163,7 +163,7 @@ void cpu_exec(uint64_t n)
     case NEMU_ABORT:
 #ifdef CONFIG_ITRACE
         for(int i=0;i<7&&s.be_logbuf[i];i++){
-            puts(s.be_logbuf[i]);
+            //puts(s.be_logbuf[i]);
         }
         const int end_inst_num = 7;
         for( int step = 0; step < end_inst_num; step++)
