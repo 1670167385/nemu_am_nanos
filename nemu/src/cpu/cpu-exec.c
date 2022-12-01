@@ -172,7 +172,7 @@ void cpu_exec(uint64_t n)
             s.pc += 4; 
             p += snprintf(p, 128, FMT_WORD ":", s.pc);
             int idx = isa_fetch_decode(&s);
-            Log("%d\n", idx);
+            if(idx == 3) break;
             int ilen = 4;
             int i;
             uint8_t *instr = (uint8_t *)&s.isa.instr.val;
