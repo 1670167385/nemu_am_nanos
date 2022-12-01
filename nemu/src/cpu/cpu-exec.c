@@ -163,6 +163,7 @@ void cpu_exec(uint64_t n)
     case NEMU_ABORT:
 #ifdef CONFIG_ITRACE
         int i;
+        puts("Around place at end/abort:");
         for(i=0;i<6&&s.be_logbuf[i+1];i++){
             printf("    ");
             puts(s.be_logbuf[i]);
