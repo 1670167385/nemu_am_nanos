@@ -161,7 +161,7 @@ void cpu_exec(uint64_t n)
 
     case NEMU_END:
     case NEMU_ABORT:
-#ifdef CONFIG_ITRACE1
+#ifdef CONFIG_ITRACE
         for(int i=0;i<7&&s.be_logbuf[i];i++){
             puts(s.be_logbuf[i]);
         }
@@ -171,7 +171,8 @@ void cpu_exec(uint64_t n)
             char *p = s.logbuf;
             s.pc += 4; 
             p += snprintf(p, 128, FMT_WORD ":", s.pc);
-            isa_fetch_decode(&s);
+            int idx = isa_fetch_decode(&s);
+            Log("%d\n", idx);
             int ilen = 4;
             int i;
             uint8_t *instr = (uint8_t *)&s.isa.instr.val;
