@@ -80,8 +80,8 @@ void init_FTRACE(const char* elf_file)
         {
             strcpy(func_table[p].name, &stringtb[sym[i].st_name]);
             func_table[p].func_st = sym[i].st_value;
-            func_table[p].func_end = sym[i].st_size;
-            printf("%d\t%s\t:%u\t%u\n", i, func_table[p].name, func_table[p].func_st, func_table[p].func_end);
+            func_table[p].func_end = sym[i].st_value + sym[i].st_size;
+            printf("%d\t%s\t:0x%x\t0x%x\n", i, func_table[p].name, func_table[p].func_st, func_table[p].func_end);
             p++;
         }
 
