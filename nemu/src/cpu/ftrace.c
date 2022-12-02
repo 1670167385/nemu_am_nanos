@@ -29,7 +29,7 @@ void init_FTRACE(const char* elf_file)
     Log("has opened it ");
     //read string table
     char *stringtb;
-    stringtb = malloc(sizeof(char)*(shdr[ehdr.e_shstrndx].sh_size+1));
+    stringtb = malloc(sizeof(char)*shdr[ehdr.e_shstrndx].sh_size);
     assert(stringtb);
 
     assert(ehdr.e_shstrndx != SHN_UNDEF);//has no string table
