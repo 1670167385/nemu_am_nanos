@@ -100,17 +100,19 @@ void init_FTRACE(const char* elf_file)
 }
 
 void ftrace_call(word_t pc, word_t npc){
+    printf("0x%x", pc);
     for(int i=0;i<call_layer;i++)
         printf("  ");
-    printf("0x%x call [%s@0x%x]\n", pc, get_calling_name(npc), npc);
+    printf(" call [%s@0x%x]\n", get_calling_name(npc), npc);
     call_layer++;
 }
 
 void ftrace_ret(word_t pc, word_t npc){
     call_layer--;
+    printf("0x%x", pc);
     for(int i=0;i<call_layer;i++)
         printf("  ");
-    printf("0x%x ret [%s@0x%x]\n", pc, get_calling_name(npc), npc);
+    printf(" ret [%s@0x%x]\n", get_calling_name(npc), npc);
 }
 
 char *get_calling_name(word_t pc)
