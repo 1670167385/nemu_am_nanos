@@ -2,7 +2,7 @@
 #include <cpu/cpu.h>
 
 #include <elf.h>
-
+#define MSTT_FUNC 18
 
 typedef struct {
     char name[25];
@@ -67,7 +67,7 @@ void init_FTRACE(const char* elf_file)
     for(int i=0;i<sym_num;i++)
     {
         printf("%s\t%d\n", &stringtb[sym[i].st_name], sym[i].st_info);
-        if(sym[i].st_info == STT_FUNC)
+        if(sym[i].st_info == MSTT_FUNC)
             func_num++;
     }
     FUNCT *func_table = malloc(sizeof(FUNCT)*func_num);
@@ -76,7 +76,7 @@ void init_FTRACE(const char* elf_file)
     /* store in functable */
     int p=0;
     for(int i=0;i<sym_num;i++)
-        if(sym[i].st_info == STT_FUNC)
+        if(sym[i].st_info == MSTT_FUNC)
         {
             strcpy(func_table[p].name, &stringtb[sym[i].st_name]);
             func_table[p].func_st = sym[i].st_value;
