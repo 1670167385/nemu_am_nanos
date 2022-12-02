@@ -184,7 +184,7 @@ void cpu_exec(uint64_t n)
         for( int step = 0; step < end_inst_num; step++)
         {
             char *p = s.logbuf;
-            s.pc += 4; 
+            //s.pc += 4; 
             p += snprintf(p, 128, FMT_WORD ":", s.pc);
             int idx = isa_fetch_decode(&s);
             if(idx == 3) break;
