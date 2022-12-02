@@ -33,7 +33,7 @@ void init_FTRACE(const char* elf_file)
 
     assert(ehdr.e_shstrndx != SHN_UNDEF);//has no string table
     fseek(fp, shdr[ehdr.e_shstrndx].sh_offset, SEEK_SET);
-    printf("%x",shdr[ehdr.e_shstrndx].sh_size);
+    printf("%lx",sizeof(stringtb));
     fread_ret = fread(stringtb, shdr[ehdr.e_shstrndx].sh_size, 1, fp);
     assert(fread_ret == 1);
     //for(int i= 0;i<shdr[ehdr.e_shstrndx].sh_size;i++)
