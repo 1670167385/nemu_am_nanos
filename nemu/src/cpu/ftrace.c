@@ -12,13 +12,13 @@ void init_FTRACE(const char* elf_file)
   if(elf_file != NULL){
     FILE *fp = fopen(elf_file, "rb");
     Assert(fp, "Can not open '%s'", elf_file);
-    Log("has opened it ");
     Elf32_Ehdr ehdr;
     Elf32_Shdr *shdr;
     int fread_ret;
     //read Ehearder
     fread_ret = fread(&ehdr, sizeof(ehdr), 1, fp);
 
+    Log("has opened it ");
     if(ehdr.e_shoff)
         fseek(fp, ehdr.e_shoff, SEEK_SET);
     assert(ehdr.e_shoff);
