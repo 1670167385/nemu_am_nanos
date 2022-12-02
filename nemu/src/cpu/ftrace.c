@@ -20,7 +20,7 @@ void init_FTRACE(const char* elf_file)
 
     if(ehdr.e_shoff)
         fseek(fp, ehdr.e_shoff, SEEK_SET);
-    assert(ehdr.e_shoff);
+    assert(ehdr.e_shoff == 0);
     //read section header , number is e_shnum
     fread_ret = fread(&shdr, sizeof(shdr), ehdr.e_shnum, fp);
 
