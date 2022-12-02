@@ -75,7 +75,7 @@ static void fetch_decode_exec_updatepc(Decode *s)
     s->EHelper(s);
     cpu.pc = s->dnpc;
 //#ifdef CONFIG_FTRACE
-    if(s->EHelper == exec_jal || (s->EHelper == exec_jalr && s->src1.preg != &cpu.gpr[1]._32)){
+    if(s->EHelper == exec_jalr && s->src1.preg != &cpu.gpr[1]._32){
         ftrace_call(s->pc, cpu.pc);
     }
     if(s->EHelper == exec_jalr && s->src1.preg == &cpu.gpr[1]._32){
