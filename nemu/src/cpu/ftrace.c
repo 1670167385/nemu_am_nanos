@@ -46,7 +46,7 @@ void init_FTRACE(const char* elf_file)
 
     /* read symbol string */ 
     int symtab;
-    for(symtab = 0; symtab<ehdr.e_shnum && shdr[symtab+1].sh_type!=SHT_SYMTAB ;symtab++);
+    for(symtab = 0; symtab<ehdr.e_shnum && shdr[symtab].sh_type!=SHT_SYMTAB ;symtab++);
     char *stringtb;
     stringtb = malloc(sizeof(char)*shdr[symtab+1].sh_size);
     assert(stringtb);
