@@ -20,8 +20,10 @@ void init_FTRACE(const char* elf_file)
 
     if(ehdr.e_shoff)
         fseek(fp, ehdr.e_shoff, SEEK_SET);
-    assert(ehdr.e_shoff == 0);
+    assert(ehdr.e_shoff);
     //read section header , number is e_shnum
+    shdr = malloc(sizeof(Elf32_Shdr)*ehdr.e_shnum);
+    assert(shdr);
     fread_ret = fread(&shdr, sizeof(shdr), ehdr.e_shnum, fp);
 
     Log("has opened it ");
