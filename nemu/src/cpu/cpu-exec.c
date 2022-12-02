@@ -103,7 +103,7 @@ void fetch_decode(Decode *s, vaddr_t pc)
     s->EHelper = g_exec_table[idx];
 //#ifdef CONFIG_FTRACE
     if(s->EHelper == exec_jal){
-        //printf("call %s\n", get_calling_name(s->dnpc + s->src1.simm));
+        printf("call %s\n", get_calling_name(s->dnpc + s->src1.simm));
     }
 //#endif
 
