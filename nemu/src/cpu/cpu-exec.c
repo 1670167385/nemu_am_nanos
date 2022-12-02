@@ -101,6 +101,12 @@ void fetch_decode(Decode *s, vaddr_t pc)
     int idx = isa_fetch_decode(s);
     s->dnpc = s->snpc;
     s->EHelper = g_exec_table[idx];
+//#ifdef CONFIG_FTRACE
+    if(s->EHelper == exec_jal){
+        printf("call %s\n", get_calling_name(s->dnpc + s->src1.simm));
+    }
+//#endif
+
 #ifdef CONFIG_ITRACE
     char *p = s->logbuf;
     p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);

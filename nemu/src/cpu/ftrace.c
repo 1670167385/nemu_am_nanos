@@ -10,6 +10,9 @@ typedef struct {
     word_t func_end;
 }FUNCT;
 
+FUNCT *func_table;
+int func_num = 0;
+
 void init_FTRACE(const char* elf_file)
 {
 //#ifdef CONFIG_FTRACE
@@ -63,14 +66,14 @@ void init_FTRACE(const char* elf_file)
     assert(fread_ret == 1);
 
     /* alloc func_table*/
-    int func_num=0, sym_num = shdr[symtab].sh_size/sizeof(Elf32_Sym);
+    int sym_num = shdr[symtab].sh_size/sizeof(Elf32_Sym);
     for(int i=0;i<sym_num;i++)
     {
         //printf("%s\t%d\n", &stringtb[sym[i].st_name], sym[i].st_info);
         if(sym[i].st_info == MSTT_FUNC)
             func_num++;
     }
-    FUNCT *func_table = malloc(sizeof(FUNCT)*func_num);
+    func_table = malloc(sizeof(FUNCT)*func_num);
     assert(func_table);
 
     /* store in functable */
@@ -81,13 +84,24 @@ void init_FTRACE(const char* elf_file)
             strcpy(func_table[p].name, &stringtb[sym[i].st_name]);
             func_table[p].func_st = sym[i].st_value;
             func_table[p].func_end = sym[i].st_value + sym[i].st_size;
-            printf("%d\t%s\t:0x%x\t0x%x\n", i, func_table[p].name, func_table[p].func_st, func_table[p].func_end);
+            //printf("%d\t%s\t:0x%x\t0x%x\n", i, func_table[p].name, func_table[p].func_st, func_table[p].func_end);
             p++;
         }
 
+    /* free temp mem */
     free(shdr);
     free(stringtb);
     free(sym);
   }
 //#endif
+}
+
+char *get_calling_name(word_t pc)
+{
+    for(int i=0;i<func_num;i++){
+        if(func_table[i].func_st <= pc && pc < func_table[i].func_end){
+            return func_table[i].name;
+        }
+    }
+    return NULL;
 }

@@ -5,4 +5,5 @@
 
 void cpu_exec(uint64_t n);
 
+char *get_calling_name(word_t pc);
 #endif
