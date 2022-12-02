@@ -13,6 +13,9 @@ typedef struct {
 FUNCT *func_table;
 int func_num = 0;
 
+char *get_calling_name(word_t pc);
+int call_layer = 0;
+
 void init_FTRACE(const char* elf_file)
 {
 //#ifdef CONFIG_FTRACE
@@ -94,6 +97,20 @@ void init_FTRACE(const char* elf_file)
     free(sym);
   }
 //#endif
+}
+
+void ftrace_call(word_t pc, word_t npc){
+    for(int i=0;i<call_layer;i++)
+        printf("  ");
+    printf("0x%x call [%s@0x%x]\n", pc, get_calling_name(npc), npc);
+    call_layer++;
+}
+
+void ftrace_ret(word_t pc, word_t npc){
+    for(int i=0;i<call_layer;i++)
+        printf("  ");
+    printf("0x%x ret [%s@0x%x]\n", pc, get_calling_name(npc), npc);
+    call_layer--;
 }
 
 char *get_calling_name(word_t pc)
