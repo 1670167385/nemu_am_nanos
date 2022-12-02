@@ -78,8 +78,8 @@ static void fetch_decode_exec_updatepc(Decode *s)
     if(s->EHelper == exec_jalr || s->EHelper == exec_jal){
         if(s->EHelper == exec_jalr && s->isa.instr.i.rd == 0)
             ftrace_ret(s->pc, cpu.pc);
-        else;
-            //ftrace_call(s->pc, cpu.pc);
+        else
+            ftrace_call(s->pc, cpu.pc);
     }
 //#endif
 }
