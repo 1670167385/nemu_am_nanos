@@ -29,9 +29,12 @@ void init_FTRACE(const char* elf_file)
     Log("has opened it ");
     //read string table
     char *stringtb;
+    stringtb = malloc(sizeof(char)*(shdr[ehdr.e_shstrndx].sh_size+1));
+    assert(stringtb);
+
     assert(ehdr.e_shstrndx != SHN_UNDEF);//has no string table
     fseek(fp, shdr[ehdr.e_shstrndx].sh_offset, SEEK_SET);
-    fread_ret = fread(&stringtb, sizeof(char), shdr[ehdr.e_shstrndx].sh_size, fp);
+    fread_ret = fread(&stringtb, sizeof(stringtb), 1, fp);
     assert(fread_ret == 1);
     for(int i = 0;i<ehdr.e_shnum;i++)
     {
