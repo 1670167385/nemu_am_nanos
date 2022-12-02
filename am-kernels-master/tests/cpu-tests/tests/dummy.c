@@ -1,16 +1,13 @@
-void p2(int n){
-	n++;
+void hanoi(int n, int src,int dst,int via){
+	if(n>=1)
+	{
+		hanoi(n-1,src,via,dst);
+		hanoi(n-1,via,dst,src);
+	}
 }
 
-void p1(int n){
-	p2(n-1);
-}
 
-void p0(int n)
-{
-	p1(n-1);
-}
 int main() {
-	p0(5);
+	hanoi(5,1,3,2);
   return 0;
 }
