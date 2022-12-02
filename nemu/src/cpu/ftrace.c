@@ -24,7 +24,7 @@ void init_FTRACE(const char* elf_file)
     //read section header , number is e_shnum
     shdr = malloc(sizeof(Elf32_Shdr)*ehdr.e_shnum);
     assert(shdr);
-    fread_ret = fread(shdr, sizeof(shdr), ehdr.e_shnum, fp);
+    fread_ret = fread(shdr, sizeof(Elf32_Shdr), ehdr.e_shnum, fp);
 
     Log("has opened it ");
     //read string table
