@@ -1,10 +1,16 @@
-void re(int n)
+void p2(int n){
+	n++;
+}
+
+void p1(int n){
+	p2(n-1);
+}
+
+void p0(int n)
 {
-	if(n==0)
-	return;
-	re(n-1);
+	p1(n-1);
 }
 int main() {
-	re(5);
+	p0(5);
   return 0;
 }
