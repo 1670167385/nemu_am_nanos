@@ -38,7 +38,7 @@ void init_FTRACE(const char* elf_file)
     assert(fread_ret == 1);
     for(int i = 0;i<ehdr.e_shnum;i++)
     {
-        printf("[%d]%sq: 0x%x\n", i, &stringtb[shdr[i].sh_name], shdr[i].sh_addr);
+        printf("[%d]%d    %s: 0x%x\n", i, shdr[i].sh_name,&stringtb[shdr[i].sh_name], shdr[i].sh_addr);
     }
   }
 //#endif
