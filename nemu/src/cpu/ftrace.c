@@ -118,7 +118,7 @@ void ftrace_ret(word_t pc, word_t npc){
     printf("0x%x", pc);
     for(int i=0;i<call_layer;i++)
         printf("  ");
-    printf(" ret [%s@0x%x]\n", get_calling_name(npc), npc);
+    printf(" ret  [%s@0x%x]\n", get_calling_name(npc), npc);
 }
 
 char *get_calling_name(word_t pc)
