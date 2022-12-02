@@ -14,20 +14,6 @@ int main(int argc, char *argv[]) {
   init_monitor(argc, argv);
 #endif
 
-  /* Start engine. */
-/*	for(int i=2; i < argc; i++)
-	{
-		char tmp[65536] = {0};
-		word_t ans=0 ,exout;
-		sscanf(argv[i],"%s",tmp);
-		bool sucs = true;
-		exout = expr(tmp, &sucs);
-		if(sucs)
-			printf("%d %d %d\n",ans,exout,exout == ans);
-		else
-			printf("wrong\n");
-	}
-*/
 	engine_start();
 
 	return is_exit_status_bad();
