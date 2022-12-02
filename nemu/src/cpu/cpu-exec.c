@@ -76,10 +76,11 @@ static void fetch_decode_exec_updatepc(Decode *s)
     cpu.pc = s->dnpc;
 //#ifdef CONFIG_FTRACE
     if(s->EHelper == exec_jalr || s->EHelper == exec_jal){
+        printf("%ls : %ls\n", s->dest.preg, &cpu.gpr[0]._32);
         if(s->EHelper == exec_jalr && s->dest.preg == &cpu.gpr[0]._32)
             ftrace_ret(s->pc, cpu.pc);
-        else
-            ftrace_call(s->pc, cpu.pc);
+        else;
+            //ftrace_call(s->pc, cpu.pc);
     }
 //#endif
 }
@@ -184,7 +185,7 @@ void cpu_exec(uint64_t n)
         for( int step = 0; step < end_inst_num; step++)
         {
             char *p = s.logbuf;
-            //s.pc += 4; 
+            s.pc += 4; 
             p += snprintf(p, 128, FMT_WORD ":", s.pc);
             int idx = isa_fetch_decode(&s);
             if(idx == 3) break;
