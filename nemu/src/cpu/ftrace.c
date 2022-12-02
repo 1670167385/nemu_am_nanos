@@ -64,10 +64,12 @@ void init_FTRACE(const char* elf_file)
 
     /* alloc func_table*/
     int func_num=0, sym_num = shdr[symtab].sh_size/sizeof(Elf32_Sym);
-    printf("%d\n",sym_num);
     for(int i=0;i<sym_num;i++)
+    {
+        printf("%s\t%d\n", &stringtb[sym[i].st_name], sym[i].st_info);
         if(sym[i].st_info == STT_FUNC)
             func_num++;
+    }
     FUNCT *func_table = malloc(sizeof(FUNCT)*func_num);
     assert(func_table);
 
