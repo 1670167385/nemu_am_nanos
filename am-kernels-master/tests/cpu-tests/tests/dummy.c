@@ -8,6 +8,6 @@ void hanoi(int n, int src,int dst,int via){
 
 
 int main() {
-	hanoi(5,1,3,2);
+	hanoi(15,1,3,2);
   return 0;
 }
