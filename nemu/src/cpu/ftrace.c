@@ -24,13 +24,13 @@ void init_FTRACE(const char* elf_file)
     //read section header , number is e_shnum
     fread_ret = fread(&shdr, sizeof(shdr), ehdr.e_shnum, fp);
 
+    Log("has opened it ");
     //read string table
     char *stringtb;
     assert(ehdr.e_shstrndx != SHN_UNDEF);//has no string table
     fseek(fp, shdr[ehdr.e_shstrndx].sh_offset, SEEK_SET);
     fread_ret = fread(&stringtb, sizeof(char), shdr[ehdr.e_shstrndx].sh_size, fp);
     assert(fread_ret == 1);
-    Log("has opened it ");
     for(int i = 0;i<ehdr.e_shnum;i++)
     {
         printf("[%d]%sq: 0x%x\n", i, &stringtb[shdr[i].sh_name], shdr[i].sh_addr);
