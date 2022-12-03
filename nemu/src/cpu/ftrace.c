@@ -1,6 +1,8 @@
 #include <isa.h>
 #include <cpu/cpu.h>
 
+#ifdef CONFIG_FTRACE
+
 #include <elf.h>
 #define MSTT_FUNC 18
 
@@ -15,6 +17,7 @@ int func_num = 0;
 
 char *get_calling_name(word_t pc);
 int call_layer = 0;
+
 
 void init_FTRACE(const char* elf_file)
 {
@@ -130,3 +133,12 @@ char *get_calling_name(word_t pc)
     }
     return NULL;
 }
+
+#else
+
+void init_FTRACE(const char* elf_file)
+{
+    ;
+}
+
+#endif
