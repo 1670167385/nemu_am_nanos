@@ -35,7 +35,6 @@ static state_t *state = NULL;
 void sim_t::diff_init(int port) {
   p = get_core("0");
   state = p->get_state();
-  is_diff_ref = true;
 }
 
 void sim_t::diff_step(uint64_t n) {
