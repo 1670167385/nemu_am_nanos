@@ -7,7 +7,48 @@
 
 int printf(const char *fmt, ...) {
 
-  panic("Not implemented printf");
+  va_list ap;
+  int d, n = 0;
+  int tmp_d,n_d;
+  char *s;
+ 
+  va_start(ap, fmt);
+  while(*fmt) {
+    while(*(char*)fmt != '%' && *(char*)fmt !='\0'){
+      putch(*(char*)fmt);
+      fmt++;
+    }
+    if(*fmt=='\0')break;
+    switch(*(++fmt)) {
+      case 's':  /*string*/
+        n++;
+        s = va_arg(ap, char *);
+        while(*(char*)s != '\0'){
+          putch(*(char*)s);
+          s++;
+        }
+        break;
+      case 'd':  /*int*/
+        n++;
+        d = va_arg(ap, int);
+
+        n_d = 1;
+        tmp_d = d;
+        while(tmp_d>9){
+          n_d*=10;
+          tmp_d/=10;
+        }
+        while(n_d){
+          putch('0' + d/n_d);
+          d=d%n_d;
+          n_d/=10;
+        }
+        break;
+    }
+    fmt++;
+  }
+  va_end(ap);
+  return n;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
