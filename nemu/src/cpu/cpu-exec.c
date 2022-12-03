@@ -35,6 +35,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
     }
     else
     {
+        free(_this->be_logbuf[0]);
         for(int i=0; i<6; i++)
         {
             p = &_this->be_logbuf[i];
@@ -150,6 +151,9 @@ void cpu_exec(uint64_t n)
     }
     uint64_t timer_start = get_time();
     Decode s;
+    for(int i=0;i<7;i++)
+        s.be_logbuf[i]=NULL;
+
     for (; n > 0; n--)
     {
         fetch_decode_exec_updatepc(&s);
