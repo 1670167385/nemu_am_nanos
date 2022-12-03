@@ -212,11 +212,9 @@ void cpu_exec(uint64_t n)
             puts(s.logbuf);
         }
 #endif
-
-    Log("yes");
-        /*Log("nemu: %s at pc = " FMT_WORD,
+        Log("nemu: %s at pc = " FMT_WORD,
             (nemu_state.state == NEMU_ABORT ? ASNI_FMT("ABORT", ASNI_FG_RED) : (nemu_state.halt_ret == 0 ? ASNI_FMT("HIT GOOD TRAP", ASNI_FG_GREEN) : ASNI_FMT("HIT BAD TRAP", ASNI_FG_RED))),
-            nemu_state.halt_pc);*/
+            nemu_state.halt_pc);
         // fall through
     case NEMU_QUIT:
         statistic();
