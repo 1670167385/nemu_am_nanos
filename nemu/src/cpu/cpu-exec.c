@@ -52,7 +52,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
     IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 
     // run a function about look through all the wp , and the mode is update
-#ifndef CONFIG_WATCHPOINT
+#ifdef CONFIG_WATCHPOINT
     int no = check_wp(false);
     if (no != -1)
     {
@@ -159,7 +159,7 @@ void cpu_exec(uint64_t n)
             break;
         IFDEF(CONFIG_DEVICE, device_update());
     }
-
+    Log("yes");
     uint64_t timer_end = get_time();
     g_timer += timer_end - timer_start;
 
