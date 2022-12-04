@@ -18,7 +18,7 @@ static void drain_keys() {
   }
 
   if (has_kbd) {
-    printf("in kbd\n");
+    //printf("in kbd\n");
     while (1) {
       AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
       if (ev.keycode == AM_KEY_NONE) break;
