@@ -158,9 +158,9 @@ void cpu_exec(uint64_t n)
     {
         fetch_decode_exec_updatepc(&s);
         g_nr_guest_instr++;
-    Log("i am here");
+    //Log("i am here");
         trace_and_difftest(&s, cpu.pc);
-    Log("i am here");
+    //Log("i am here");
 
         if (nemu_state.state != NEMU_RUNNING)
             break;
