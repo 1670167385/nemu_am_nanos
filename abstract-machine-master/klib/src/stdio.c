@@ -10,7 +10,7 @@ int printf(const char *fmt, ...) {
   va_list ap;
   int tmp_d,n_d;
   char *s;
-   putch('0');
+
   va_start(ap, fmt);
   while(*fmt) {
     while(*(char*)fmt != '%' && *(char*)fmt !='\0'){
