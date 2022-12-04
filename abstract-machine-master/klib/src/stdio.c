@@ -7,7 +7,6 @@
 
 int printf(const char *fmt, ...) 
 {
-  putch('1');
   int d,n=0;
   int tmp_d,n_d;
   char *s;
