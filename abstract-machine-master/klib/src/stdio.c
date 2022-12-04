@@ -42,10 +42,10 @@ int printf(const char *fmt, ...) {
             assert(n_d);
             putch('0' + d/n_d);
             d=d%n_d;
-            n_d/=10;
           }
           else
             putch('0');
+          n_d/=10;
         }
         break;
     }
