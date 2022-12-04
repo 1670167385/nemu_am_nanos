@@ -23,7 +23,7 @@ static void alarm_sig_handler(int signum) {
 void init_alarm() {
   struct sigaction s;
   memset(&s, 0, sizeof(s));
-  s.sa_handler = alarm_sig_handler;
+  s.sa_handler = alarm_sig_handler;//when signal arrive ,do it
   int ret = sigaction(SIGVTALRM, &s, NULL);
   Assert(ret == 0, "Can not set signal handler");
 
