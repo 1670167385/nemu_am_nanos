@@ -8,11 +8,11 @@ void rtc_test() {
     rtc = io_read(AM_TIMER_RTC);
     printf("%d",rtc.year);
     //printf("%d-%d-%d %d:%d:%d GMT (", rtc.year, rtc.month, rtc.day, rtc.hour, rtc.minute, rtc.second);
-    if (sec == 1) {
+    /*if (sec == 1) {
       printf("%d second).\n", sec);
     } else {
       printf("%d seconds).\n", sec);
-    }
+    }*/
     sec ++;
   }
 }
