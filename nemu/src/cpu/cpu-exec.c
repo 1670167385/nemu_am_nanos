@@ -167,7 +167,7 @@ void cpu_exec(uint64_t n)
         IFDEF(CONFIG_DEVICE, device_update());
     }    
 
-    Log("i am here");
+    //Log("i am here");
     uint64_t timer_end = get_time();
     g_timer += timer_end - timer_start;
 
@@ -187,7 +187,10 @@ void cpu_exec(uint64_t n)
             puts(s.be_logbuf[i]);
         }
         printf(" -> ");
-        puts(s.be_logbuf[i]);
+        if(s.be_logbuf[i])
+            puts(s.be_logbuf[i]);
+        else
+            puts("No instruction!");
         const int end_inst_num = 7;
         for( int step = 0; step < end_inst_num; step++)
         {
