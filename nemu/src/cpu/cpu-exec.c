@@ -153,10 +153,10 @@ void cpu_exec(uint64_t n)
     Decode s;
     for(int i=0;i<7;i++)
         s.be_logbuf[i]=NULL;
-    Log("i am here");
     for (; n > 0; n--)
     {
         fetch_decode_exec_updatepc(&s);
+    Log("i am here");
         g_nr_guest_instr++;
         trace_and_difftest(&s, cpu.pc);
         if (nemu_state.state != NEMU_RUNNING)
