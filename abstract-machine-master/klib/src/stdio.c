@@ -7,12 +7,12 @@
 
 int printf(const char *fmt, ...) 
 {
+  putch('1');
   int d,n=0;
   int tmp_d,n_d;
   char *s;
   va_list ap;
   va_start(ap, fmt);
-  putch('1');
   while(*fmt) {
     while(*(char*)fmt != '%' && *(char*)fmt !='\0'){
       putch(*(char*)fmt);
