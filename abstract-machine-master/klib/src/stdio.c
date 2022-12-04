@@ -30,7 +30,9 @@ int printf(const char *fmt, ...) {
         break;
       case 'd':  /*int*/
         n++;
+        putch('1');
         d = va_arg(ap, int);
+        putch('2');
         n_d = 1;
         tmp_d = d;
         while(tmp_d>9){
