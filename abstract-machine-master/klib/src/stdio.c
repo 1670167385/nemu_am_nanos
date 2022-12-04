@@ -18,7 +18,6 @@ int printf(const char *fmt, ...) {
       putch(*(char*)fmt);
       fmt++;
     }
-    assert(0);
     if(*fmt=='\0')break;
     switch(*(++fmt)) {
       case 's':  /*string*/
@@ -32,7 +31,7 @@ int printf(const char *fmt, ...) {
       case 'd':  /*int*/
         n++;
         d = va_arg(ap, int);
-        assert(d==1900);
+        assert(d==0);
         n_d = 1;
         tmp_d = d;
         while(tmp_d>9){
