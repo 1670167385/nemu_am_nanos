@@ -25,13 +25,17 @@ void fetch_decode(Decode *s, vaddr_t pc);
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
 {
 #ifdef CONFIG_ITRACE_COND
+
     if (ITRACE_COND)
         log_write("%s\n", _this->logbuf);
     
+    Log("i am here");
     char **p;
     if(_this->log_tail < 6){
         p = &_this->be_logbuf[_this->log_tail];
+    Log("i am here");
         _this->log_tail++;
+    Log("i am here");
     }
     else
     {
@@ -43,9 +47,11 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
         }
         p = &_this->be_logbuf[6];
     }
+    Log("i am here");
     *p = malloc(128*sizeof(char));
-    assert(*p);
+    Log("i am here");
     strcpy(*p, _this->logbuf);
+    Log("i am here");
 #endif
     if (g_print_step)
     {
