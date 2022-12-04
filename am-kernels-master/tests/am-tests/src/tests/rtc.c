@@ -9,7 +9,7 @@ void rtc_test() {
     //printf("%d",rtc.day);
     //printf("%d-%d-%d ",rtc.year ,rtc.month,rtc.day);
     printf("%d:%d:%d",rtc.hour, rtc.minute, rtc.second);
-    //printf("%d-%d-%d %d:%d:%d GMT (", rtc.year, rtc.month, rtc.day, rtc.hour, rtc.minute, rtc.second);
+    printf("%d-%d-%d %d:%d:%d GMT (", rtc.year, rtc.month, rtc.day, rtc.hour, rtc.minute, rtc.second);
     if (sec == 1) {
       printf("%d second).\n", sec);
     } else {
