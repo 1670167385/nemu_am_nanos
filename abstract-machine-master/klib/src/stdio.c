@@ -7,9 +7,10 @@
 
 int printf(const char *fmt, ...) {
   int d,n=0;
-  va_list ap;
   int tmp_d,n_d;
   char *s;
+  va_list ap;
+
 
   va_start(ap, fmt);
   while(*fmt) {
