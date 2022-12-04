@@ -153,7 +153,7 @@ void cpu_exec(uint64_t n)
     Decode s;
     for(int i=0;i<7;i++)
         s.be_logbuf[i]=NULL;
-    Log("i am here");
+    //Log("i am here");
     for (; n > 0; n--)
     {
         fetch_decode_exec_updatepc(&s);
