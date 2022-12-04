@@ -5,14 +5,14 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-int printf(const char *fmt, ...) {
+int printf(const char *fmt, ...) 
+{
   int d,n=0;
   int tmp_d,n_d;
   char *s;
   va_list ap;
-
-
   va_start(ap, fmt);
+  putch('1');
   while(*fmt) {
     while(*(char*)fmt != '%' && *(char*)fmt !='\0'){
       putch(*(char*)fmt);
