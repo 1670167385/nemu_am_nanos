@@ -50,6 +50,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
     {
         IFDEF(CONFIG_ITRACE, puts(_this->logbuf));
     }
+    Log("i am here");
     IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 
     // run a function about look through all the wp , and the mode is update
