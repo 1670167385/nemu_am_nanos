@@ -80,6 +80,10 @@ def_EHelper(xori) {
   rtl_xori(s, ddest, dsrc1, id_src2->simm);
 }
 
+def_EHelper(ori) {
+  rtl_ori(s, ddest, dsrc1, id_src2->simm);
+}
+
 def_EHelper(srai) {
   rtl_srai(s, ddest, dsrc1, (id_src2->imm & 0x3f));
 }
