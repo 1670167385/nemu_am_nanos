@@ -44,6 +44,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
         p = &_this->be_logbuf[6];
     }
     *p = malloc(128*sizeof(char));
+    assert(*p);
     strcpy(*p, _this->logbuf);
 #endif
     if (g_print_step)
