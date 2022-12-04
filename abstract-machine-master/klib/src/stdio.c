@@ -40,6 +40,7 @@ int printf(const char *fmt, ...) {
         }
         while(n_d){
           if(d){
+            assert(n_d);
             putch('0' + d/n_d);
             d=d%n_d;
             n_d/=10;
