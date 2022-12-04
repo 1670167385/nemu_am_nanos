@@ -140,6 +140,8 @@ void fetch_decode(Decode *s, vaddr_t pc)
 void cpu_exec(uint64_t n)
 {
     g_print_step = (n < MAX_INSTR_TO_PRINT);
+    Log("i am here");
+
     switch (nemu_state.state)
     {
     case NEMU_END:
@@ -153,7 +155,7 @@ void cpu_exec(uint64_t n)
     Decode s;
     for(int i=0;i<7;i++)
         s.be_logbuf[i]=NULL;
-    //Log("i am here");
+    Log("i am here");
     for (; n > 0; n--)
     {
         fetch_decode_exec_updatepc(&s);
