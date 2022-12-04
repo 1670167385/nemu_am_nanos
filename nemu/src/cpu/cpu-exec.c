@@ -30,10 +30,10 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
         log_write("%s\n", _this->logbuf);
     
     Log("i am here");
-    char **p;
+    char *p;
     if(_this->log_tail < 6){
-        p = &_this->be_logbuf[_this->log_tail];
-    Log("i am here");
+        _this->be_logbuf[_this->log_tail] = malloc(128*sizeof(char));
+        p=_this->be_logbuf[_this->log_tail];
         _this->log_tail++;
     Log("i am here");
     }
@@ -41,16 +41,13 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
     {
         free(_this->be_logbuf[0]);
         for(int i=0; i<6; i++)
-        {
-            p = &_this->be_logbuf[i];
-            *p = _this->be_logbuf[i+1];
-        }
-        p = &_this->be_logbuf[6];
+            _this->be_logbuf[i] = _this->be_logbuf[i+1];
+        
+        _this->be_logbuf[6] = malloc(128*sizeof(char));
+        p = _this->be_logbuf[6];
     }
     Log("i am here");
-    *p = malloc(128*sizeof(char));
-    Log("i am here");
-    strcpy(*p, _this->logbuf);
+    strcpy(p, _this->logbuf);
     Log("i am here");
 #endif
     if (g_print_step)
