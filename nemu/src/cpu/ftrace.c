@@ -25,6 +25,7 @@ void init_FTRACE(const char* elf_file)
   if(elf_file != NULL){
     FILE *fp = fopen(elf_file, "rb");
     Assert(fp, "Can not open '%s'", elf_file);
+    Log("load ELF file successfully! FROM %s",elf_file);
     Elf32_Ehdr ehdr;
     Elf32_Shdr *shdr;
     int fread_ret;
