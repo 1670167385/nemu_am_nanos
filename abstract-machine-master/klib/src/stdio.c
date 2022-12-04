@@ -31,7 +31,6 @@ int printf(const char *fmt, ...) {
       case 'd':  /*int*/
         n++;
         d = va_arg(ap, int);
-        assert(d==0);
         n_d = 1;
         tmp_d = d;
         while(tmp_d>9){
