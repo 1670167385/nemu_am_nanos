@@ -23,7 +23,7 @@ typedef struct Decode {
   void (*EHelper)(struct Decode *);
   Operand dest, src1, src2;
   ISADecodeInfo isa;
-  char *be_logbuf[7];
+  char be_logbuf[7][128];
   IFDEF(CONFIG_ITRACE, char logbuf[128]);
   IFDEF(CONFIG_ITRACE, int log_tail);
 } Decode;

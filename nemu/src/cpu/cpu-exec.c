@@ -32,18 +32,15 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
     Log("i am here");
     char *p;
     if(_this->log_tail < 6){
-        _this->be_logbuf[_this->log_tail] = malloc(128*sizeof(char));
         p=_this->be_logbuf[_this->log_tail];
         _this->log_tail++;
     Log("i am here");
     }
     else
     {
-        free(_this->be_logbuf[0]);
         for(int i=0; i<6; i++)
-            _this->be_logbuf[i] = _this->be_logbuf[i+1];
+            strcpy(_this->be_logbuf[i], _this->be_logbuf[i+1]);
         
-        _this->be_logbuf[6] = malloc(128*sizeof(char));
         p = _this->be_logbuf[6];
     }
     Log("i am here");
@@ -157,8 +154,6 @@ void cpu_exec(uint64_t n)
     }
     uint64_t timer_start = get_time();
     Decode s;
-    for(int i=0;i<7;i++)
-        s.be_logbuf[i]=NULL;
     for (; n > 0; n--)
     {
         fetch_decode_exec_updatepc(&s);
@@ -192,10 +187,7 @@ void cpu_exec(uint64_t n)
             puts(s.be_logbuf[i]);
         }
         printf(" -> ");
-        if(s.be_logbuf[i])
-            puts(s.be_logbuf[i]);
-        else
-            puts("No instruction!");
+        puts(s.be_logbuf[i]);
         const int end_inst_num = 7;
         for( int step = 0; step < end_inst_num; step++)
         {
