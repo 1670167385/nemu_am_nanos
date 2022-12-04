@@ -5,7 +5,7 @@ int main() {
 
 	printf("%d + %d = %d\n", 1, 1, 2);
 
-	printf("%d + %d = %d\n", 2, 10, 12);
+	printf("%d + %d = %d%d\n", 2, 10, 12,13);
 
   return 0;
 }
