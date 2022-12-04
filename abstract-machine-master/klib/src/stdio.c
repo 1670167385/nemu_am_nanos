@@ -10,6 +10,7 @@ int printf(const char *fmt, ...)
   int d,n=0;
   int tmp_d,n_d;
   char *s;
+  char c;
   va_list ap;
   va_start(ap, fmt);
   while(*fmt) {
@@ -19,6 +20,11 @@ int printf(const char *fmt, ...)
     }
     if(*fmt=='\0')break;
     switch(*(++fmt)) {
+      case 'c':
+        n++;
+        c = va_arg(ap, int);
+        putch(c);
+        break;
       case 's':  /*string*/
         n++;
         s = va_arg(ap, char *);
@@ -64,6 +70,7 @@ int sprintf(char *out, const char *fmt, ...) {
   int d, n = 0;
   int tmp_d;
   char *s;
+  char c;
  
   va_start(ap, fmt);
   while(*fmt) {
@@ -73,6 +80,11 @@ int sprintf(char *out, const char *fmt, ...) {
     }
     if(*fmt=='\0')break;
     switch(*(++fmt)) {
+      case 'c':
+        n++;
+        c = va_arg(ap, int);
+        out[p++] = c;
+        break;
       case 's':  /*string*/
         n++;
         s = va_arg(ap, char *);
