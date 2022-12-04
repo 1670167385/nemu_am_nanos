@@ -6,9 +6,8 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 int printf(const char *fmt, ...) {
-
+  int d,n=0;
   va_list ap;
-  int d, n = 0;
   int tmp_d,n_d;
   char *s;
    putch('0');
