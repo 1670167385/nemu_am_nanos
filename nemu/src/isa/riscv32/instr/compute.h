@@ -144,3 +144,8 @@ def_EHelper(bge) {
   if((sword_t)*dsrc1 >= (sword_t)*dsrc2)
     rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
 }
+
+def_EHelper(bgeu) {
+  if((word_t)*dsrc1 >= (word_t)*dsrc2)
+    rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
+}
