@@ -41,7 +41,7 @@ int printf(const char *fmt, ...) {
         while(n_d){
           putch('0');
           //putch(!n_d? '0' : '0' + d/n_d);
-          d=d%n_d;
+          //d=d%n_d;
           n_d/=10;
         }
         break;
