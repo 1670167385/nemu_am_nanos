@@ -6,12 +6,12 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 int printf(const char *fmt, ...) {
-  putch('0');
+
   va_list ap;
   int d, n = 0;
   int tmp_d,n_d;
   char *s;
- 
+   putch('0');
   va_start(ap, fmt);
   while(*fmt) {
     while(*(char*)fmt != '%' && *(char*)fmt !='\0'){
