@@ -2,11 +2,10 @@
 
 void rtc_test() {
   AM_TIMER_RTC_T rtc;
-  rtc.year=0;
   int sec = 1;
   while (1) {
-    while(io_read(AM_TIMER_UPTIME).us / 1000000 < sec);
-    //rtc = io_read(AM_TIMER_RTC);
+    //while(io_read(AM_TIMER_UPTIME).us / 1000000 < sec);
+    rtc = io_read(AM_TIMER_RTC);
     printf("%d\n",rtc.year);
     //printf("%d-%d-%d %d:%d:%d GMT (", rtc.year, rtc.month, rtc.day, rtc.hour, rtc.minute, rtc.second);
     if (sec == 1) {
