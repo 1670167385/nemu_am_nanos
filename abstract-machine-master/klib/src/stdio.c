@@ -18,6 +18,7 @@ int printf(const char *fmt, ...) {
       putch(*(char*)fmt);
       fmt++;
     }
+    assert(0);
     if(*fmt=='\0')break;
     switch(*(++fmt)) {
       case 's':  /*string*/
