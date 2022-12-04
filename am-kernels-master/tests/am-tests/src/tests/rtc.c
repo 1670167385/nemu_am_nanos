@@ -3,7 +3,7 @@
 void rtc_test() {
   //AM_TIMER_RTC_T rtc;
   int sec = 1;
-  while (1) {
+  while (sec>3) {
     int a = io_read(AM_TIMER_UPTIME).us;
     printf("%d",a);
     //while(io_read(AM_TIMER_UPTIME).us / 1000000 < sec) printf("%d",io_read(AM_TIMER_UPTIME).us);
