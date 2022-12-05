@@ -34,7 +34,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl)
     uint32_t *fb = NULL;
     for(int i=0;i<ctl->h;i++)
     {
-      fb = (uint32_t *)(FB_ADDR+(ctl->y+i)*config.width+ctl->x);
+      fb = (uint32_t *)(FB_ADDR+((ctl->y+i)*config.width+ctl->x)*4);
       //printf("fb start: (%d,%d)  end : ()\n", ctl->y+i, ctl->x ,ctl->y+i);
       for(int j=0;j<ctl->w;j++,fb++){
           *fb = *(uint32_t*)(ctl->pixels+i*ctl->w+j);
