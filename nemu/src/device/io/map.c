@@ -59,6 +59,8 @@ void map_write(paddr_t addr, int len, word_t data, IOMap *map) {
     if(old!=addr-4)
       printf("warning:%x %xlen=%d\n",old+4, addr,len);
     old=addr;
+    if(data!=0xffffff)
+      printf("error:%x\n",data);
   }
   check_bound(map, addr);
   paddr_t offset = addr - map->low;
