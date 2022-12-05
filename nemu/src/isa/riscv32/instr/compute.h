@@ -4,6 +4,7 @@ def_EHelper(lui) {
 
 def_EHelper(add) {
   rtl_add(s, ddest, dsrc1, dsrc2);
+  Log("ddest=%x,dsrc1=%x,dsrc2%x",*ddest,*dsrc1,*dsrc2);
 }
 
 def_EHelper(sub) {
