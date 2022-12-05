@@ -13,22 +13,13 @@ void __am_gpu_init() {
   uint32_t h = hei_wei & 0xffff;  
   config.width = w;
   config.height = h;
-
-  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  //for (i = 0; i < w * h; i ++) fb[i] = i;
-  for(int i=0;i<h;i++){
-    for(int j=0;j<w;j++){
-      fb[i*w+j] = ((((i%255<<8)+i%255)<<8)+i%255);
-    }
-  }
-  outl(SYNC_ADDR, 1);
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   cfg->present = true;
   cfg->has_accel = false;
   cfg->vmemsz = 0;
-  cfg->height=config.height;
+  cfg->height= config.height;
   cfg->width = config.width;
 }
 
