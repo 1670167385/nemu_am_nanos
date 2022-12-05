@@ -25,13 +25,29 @@ void fetch_decode(Decode *s, vaddr_t pc);
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
 {
 #ifdef CONFIG_ITRACE_COND
+
     if (ITRACE_COND)
         log_write("%s\n", _this->logbuf);
+    
+    char *p;
+    if(_this->log_tail < 6){
+        p=_this->be_logbuf[_this->log_tail];
+        _this->log_tail++;
+    }
+    else
+    {
+        for(int i=0; i<6; i++)
+            strcpy(_this->be_logbuf[i], _this->be_logbuf[i+1]);
+        
+        p = _this->be_logbuf[6];
+    }
+    strcpy(p, _this->logbuf);
 #endif
     if (g_print_step)
     {
         IFDEF(CONFIG_ITRACE, puts(_this->logbuf));
     }
+
     IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 
     // run a function about look through all the wp , and the mode is update
@@ -57,6 +73,14 @@ static void fetch_decode_exec_updatepc(Decode *s)
     fetch_decode(s, cpu.pc);
     s->EHelper(s);
     cpu.pc = s->dnpc;
+#ifdef CONFIG_FTRACE
+    if(s->EHelper == exec_jalr || s->EHelper == exec_jal){
+        if(s->EHelper == exec_jalr && s->isa.instr.i.rd == 0)
+            ftrace_ret(s->pc, cpu.pc);
+        else
+            ftrace_call(s->pc, cpu.pc);
+    }
+#endif
 }
 
 static void statistic()
@@ -84,6 +108,8 @@ void fetch_decode(Decode *s, vaddr_t pc)
     int idx = isa_fetch_decode(s);
     s->dnpc = s->snpc;
     s->EHelper = g_exec_table[idx];
+
+
 #ifdef CONFIG_ITRACE
     char *p = s->logbuf;
     p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
@@ -123,7 +149,6 @@ void cpu_exec(uint64_t n)
     }
 
     uint64_t timer_start = get_time();
-
     Decode s;
     for (; n > 0; n--)
     {
@@ -133,8 +158,9 @@ void cpu_exec(uint64_t n)
         if (nemu_state.state != NEMU_RUNNING)
             break;
         IFDEF(CONFIG_DEVICE, device_update());
-    }
+    }    
 
+    Log("i am here");
     uint64_t timer_end = get_time();
     g_timer += timer_end - timer_start;
 
@@ -146,6 +172,44 @@ void cpu_exec(uint64_t n)
 
     case NEMU_END:
     case NEMU_ABORT:
+#ifdef CONFIG_ITRACE
+        int i;
+        puts("Around place at end/abort:");
+        for(i=0;i<6&&s.be_logbuf[i+1];i++){
+            printf("    ");
+            puts(s.be_logbuf[i]);
+        }
+        printf(" -> ");
+        puts(s.be_logbuf[i]);
+        const int end_inst_num = 7;
+        for( int step = 0; step < end_inst_num; step++)
+        {
+            char *p = s.logbuf;
+            s.pc += 4; 
+            p += snprintf(p, 128, FMT_WORD ":", s.pc);
+            int idx = isa_fetch_decode(&s);
+            if(idx == 3) break;
+            int ilen = 4;
+            int i;
+            uint8_t *instr = (uint8_t *)&s.isa.instr.val;
+            for (i = 0; i < ilen; i++)
+                p += snprintf(p, 4, " %02x", instr[i]);
+            
+            int ilen_max = MUXDEF(CONFIG_ISA_x86, 8, 4);
+            int space_len = ilen_max - ilen;
+            if (space_len < 0)
+                space_len = 0;
+            space_len = space_len * 3 + 1;
+            memset(p, ' ', space_len);
+            p += space_len;
+
+            void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+            disassemble(p, p + sizeof(s.logbuf) - p,
+                        MUXDEF(CONFIG_ISA_x86, s.snpc, s.pc), (uint8_t *)&s.isa.instr.val, ilen);
+            printf("    ");
+            puts(s.logbuf);
+        }
+#endif
         Log("nemu: %s at pc = " FMT_WORD,
             (nemu_state.state == NEMU_ABORT ? ASNI_FMT("ABORT", ASNI_FG_RED) : (nemu_state.halt_ret == 0 ? ASNI_FMT("HIT GOOD TRAP", ASNI_FG_GREEN) : ASNI_FMT("HIT BAD TRAP", ASNI_FG_RED))),
             nemu_state.halt_pc);

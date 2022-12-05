@@ -26,6 +26,7 @@ int main(const char *args) {
     CASE('v', video_test, IOE);
     CASE('a', audio_test, IOE);
     CASE('p', vm_test, CTE(vm_handler), VME(simple_pgalloc, simple_pgfree));
+    CASE('f', fex, IOE);
     case 'H':
     default:
       printf("Usage: make run mainargs=*\n");

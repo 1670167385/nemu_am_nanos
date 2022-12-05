@@ -56,8 +56,20 @@ def_EHelper(mulh) {
   rtl_muls_hi(s, ddest, dsrc1, dsrc2);
 }
 
+def_EHelper(mulhu) {
+  rtl_mulu_hi(s, ddest, dsrc1, dsrc2);
+}
+
 def_EHelper(div) {
   rtl_divs_q(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(divu) {
+  rtl_divu_q(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(remu) {
+  rtl_divu_r(s, ddest, dsrc1, dsrc2);
 }
 
 def_EHelper(rem) {
@@ -74,6 +86,10 @@ def_EHelper(andi) {
 
 def_EHelper(xori) {
   rtl_xori(s, ddest, dsrc1, id_src2->simm);
+}
+
+def_EHelper(ori) {
+  rtl_ori(s, ddest, dsrc1, id_src2->simm);
 }
 
 def_EHelper(srai) {
@@ -98,7 +114,7 @@ def_EHelper(jal) {
 }
 
 def_EHelper(jalr) {
-  rtl_mv(s, ddest, &s->dnpc);
+  rtl_mv(s, ddest, &s->snpc);
   rtl_addi(s, &s->dnpc, dsrc1, id_src2->simm);
 }
 
@@ -138,5 +154,10 @@ def_EHelper(bne) {
 
 def_EHelper(bge) {
   if((sword_t)*dsrc1 >= (sword_t)*dsrc2)
+    rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
+}
+
+def_EHelper(bgeu) {
+  if((word_t)*dsrc1 >= (word_t)*dsrc2)
     rtl_addi(s, &s->dnpc, &s->pc, id_dest->simm);
 }

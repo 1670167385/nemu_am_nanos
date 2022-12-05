@@ -18,6 +18,7 @@ static uint32_t color_buf[32 * 32];
 void redraw() {
   int w = io_read(AM_GPU_CONFIG).width / N;
   int h = io_read(AM_GPU_CONFIG).height / N;
+  //printf("w=%d h=%d\n",io_read(AM_GPU_CONFIG).width, io_read(AM_GPU_CONFIG).height);
   int block_size = w * h;
   assert((uint32_t)block_size <= LENGTH(color_buf));
 
@@ -27,6 +28,7 @@ void redraw() {
       for (k = 0; k < block_size; k ++) {
         color_buf[k] = canvas[y][x];
       }
+      //printf("x=%d y=%d w=%d h=%d\n",x*w, y*h, w, h);
       io_write(AM_GPU_FBDRAW, x * w, y * h, color_buf, w, h, false);
     }
   }
@@ -71,7 +73,6 @@ void video_test() {
   unsigned long last = 0;
   unsigned long fps_last = 0;
   int fps = 0;
-
   while (1) {
     unsigned long upt = io_read(AM_TIMER_UPTIME).us / 1000;
     if (upt - last > 1000 / FPS) {
@@ -87,4 +88,16 @@ void video_test() {
       fps = 0;
     }
   }
+  /*int w = io_read(AM_GPU_CONFIG).width;
+  int h = io_read(AM_GPU_CONFIG).height;
+  static unsigned int p[400*300];
+  printf("%d %d\n",h,w);
+  for(int i=0;i<h;i++)
+  for(int j=0;j<w;j++)
+    p[i*400+j]=0xffffff;
+  
+  io_write(AM_GPU_FBDRAW, 0, 0, &p, 400, 300, false);
+
+  io_write(AM_GPU_FBDRAW, 0, 0, NULL, 400, 300, true);*/
+
 }
