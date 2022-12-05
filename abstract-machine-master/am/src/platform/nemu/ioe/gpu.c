@@ -1,5 +1,6 @@
 #include <am.h>
 #include <nemu.h>
+#include<klib.h>
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 
@@ -32,10 +33,9 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl)
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
-  else{
-
+  
+  if(ctl->pixels){
   uint32_t *fb = NULL;
-    //putch('0' + ctl->y+ctl->h <= config.height && ctl->x+ctl->w<= config.width);
     for(int i=0;i<ctl->h;i++)
     {
       fb = (uint32_t *)(uintptr_t)(FB_ADDR+(ctl->y+i)*config.width+ctl->x);
