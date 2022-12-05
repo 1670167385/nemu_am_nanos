@@ -55,9 +55,10 @@ void map_write(paddr_t addr, int len, word_t data, IOMap *map) {
 #ifdef CONFIG_DTRACE
   printf("\33[1;34mDevice writing--%s at addr=0x%x\33[0m\n",map->name, addr);
 #endif
-  if(addr-old!=4 && len>1){
-    printf("warning:%x %xlen=%d\n",old+4, addr,len);
-  old=addr;
+  if(len==4){
+    if(old!=addr-4)
+      printf("warning:%x %xlen=%d\n",old+4, addr,len);
+    old=addr;
   }
   check_bound(map, addr);
   paddr_t offset = addr - map->low;
