@@ -44,9 +44,9 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl)
     for(int i=0;i<ctl->h;i++)
     {
       fb = (uint32_t *)(uintptr_t)(FB_ADDR+(ctl->y+i)*config.width+ctl->x);
-      printf("fb start: %d*%d+%d\n", ctl->y+i, config.width, ctl->x );
+      //printf("fb start: (%d,%d)  end : ()\n", ctl->y+i, ctl->x ,ctl->y+i);
       for(int j=0;j<ctl->w;j++,fb++){
-          *fb = *(uint32_t*)ctl->pixels+i*ctl->w+j;
+          *fb = *(uint32_t*)(ctl->pixels+i*ctl->w+j);
       }
     }
   }
