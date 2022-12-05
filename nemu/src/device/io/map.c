@@ -49,7 +49,7 @@ word_t map_read(paddr_t addr, int len, IOMap *map) {
   return ret;
 }
 
-static paddr_t old;
+paddr_t old;
 void map_write(paddr_t addr, int len, word_t data, IOMap *map) {
   assert(len >= 1 && len <= 8);
 #ifdef CONFIG_DTRACE
