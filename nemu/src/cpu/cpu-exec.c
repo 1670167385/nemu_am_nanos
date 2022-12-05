@@ -83,7 +83,7 @@ static void fetch_decode_exec_updatepc(Decode *s)
     }
 #endif
 if(s->EHelper == exec_lw){
-Log("%d %d ddest=%x,dsrc1=%x,dsrc2=%x",(s->isa.instr.r.rd),s->isa.instr.r.rs1,*ddest,*dsrc1,*dsrc2);
+//Log("%d %d ddest=%x,dsrc1=%x,dsrc2=%x",(s->isa.instr.r.rd),s->isa.instr.r.rs1,*ddest,*dsrc1,*dsrc2);
 Log("cpu.15=%x",cpu.gpr[15]._32);}
 }
 
