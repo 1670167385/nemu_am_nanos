@@ -8,8 +8,8 @@ AM_GPU_CONFIG_T config;
 void __am_gpu_init() {
   int i;
   uint32_t hei_wei = inl(VGACTL_ADDR);
-  int w = config.width = hei_wei >> 16;  
-  int h = config.height = hei_wei & 0xffff;  
+  uint32_t w = config.width = hei_wei >> 16;  
+  uint32_t h = config.height = hei_wei & 0xffff;  
   
 
 
