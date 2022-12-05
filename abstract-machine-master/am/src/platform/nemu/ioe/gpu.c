@@ -14,15 +14,15 @@ void __am_gpu_init() {
 
 
   int n_d = 1;
-  int tmp_d = w;
+  int tmp_d = hei_wei;
   while(tmp_d>9){
     n_d*=10;
     tmp_d/=10;
   }
   while(n_d){
-    if(w){
-      putch('0' + w/n_d);
-      w=w%n_d;
+    if(hei_wei){
+      putch('0' + hei_wei/n_d);
+      hei_wei=hei_wei%n_d;
     }
     else
       putch('0');
