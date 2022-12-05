@@ -73,20 +73,31 @@ void video_test() {
   unsigned long last = 0;
   unsigned long fps_last = 0;
   int fps = 0;
+  if(fps)
+    while (1) {
+      unsigned long upt = io_read(AM_TIMER_UPTIME).us / 1000;
+      if (upt - last > 1000 / FPS) {
+        update();
+        redraw();
+        last = upt;
+        fps ++;
+      }
+      if (upt - fps_last > 1000) {
+        // display fps every 1s
+        printf("%d: FPS = %d\n", upt, fps);
+        fps_last = upt;
+        fps = 0;
+      }
+    }
+  int w = io_read(AM_GPU_CONFIG).width;
+  int h = io_read(AM_GPU_CONFIG).height;
+  unsigned int p[400*300];
+  for(int i=0;i<h;i++)
+  for(int j=0;j<w;j++)
+    p[i*400+j]=0xffffff;
+  
+  io_write(AM_GPU_FBDRAW, 0, 0, &p, 400, 300, false);
 
-  while (1) {
-    unsigned long upt = io_read(AM_TIMER_UPTIME).us / 1000;
-    if (upt - last > 1000 / FPS) {
-      update();
-      redraw();
-      last = upt;
-      fps ++;
-    }
-    if (upt - fps_last > 1000) {
-      // display fps every 1s
-      printf("%d: FPS = %d\n", upt, fps);
-      fps_last = upt;
-      fps = 0;
-    }
-  }
+  io_write(AM_GPU_FBDRAW, 0, 0, NULL, 400, 300, true);
+
 }
