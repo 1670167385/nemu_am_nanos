@@ -38,7 +38,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl)
       //printf("fb start: (%d,%d)  end : ()\n", ctl->y+i, ctl->x ,ctl->y+i);
       for(int j=0;j<ctl->w;j++,fb++){
           *fb = *(uint32_t*)(ctl->pixels+i*ctl->w+j);
-          if(*(uint32_t*)(ctl->pixels+i*ctl->w+j)!=0xffffff)
+          if(*(uint32_t*)(ctl->pixels+(i*ctl->w+j)*4)!=0xffffff)
             printf("addr %d data %d",(uint32_t)(uint32_t*)(ctl->pixels+i*ctl->w+j), *(uint32_t*)(ctl->pixels+i*ctl->w+j));
           //printf("out:y=%d x=%d  pix:y=%d x=%d addr=%d\n",ctl->y+i,j,i,j,((uint32_t)fb-FB_ADDR));
       }
