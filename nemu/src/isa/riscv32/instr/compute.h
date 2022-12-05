@@ -3,10 +3,7 @@ def_EHelper(lui) {
 }
 
 def_EHelper(add) {
-Log("%d %d ddest=%x,dsrc1=%x,dsrc2=%x",(s->isa.instr.r.rd),s->isa.instr.r.rs1,*ddest,*dsrc1,*dsrc2);
-
   rtl_add(s, ddest, dsrc1, dsrc2);
-Log("%d %d ddest=%x,dsrc1=%x,dsrc2=%x",(s->isa.instr.r.rd),s->isa.instr.r.rs1,*ddest,*dsrc1,*dsrc2);
 }
 
 def_EHelper(sub) {
