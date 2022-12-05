@@ -3,13 +3,15 @@
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 
-
+  static AM_GPU_CONFIG_T config;
 
 void __am_gpu_init() {
   int i;
   uint32_t hei_wei = inl(VGACTL_ADDR);
   uint32_t w = hei_wei >> 16;  
   uint32_t h = hei_wei & 0xffff;  
+  config.width = w;
+  config.height = h;
 
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
@@ -17,20 +19,16 @@ void __am_gpu_init() {
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
-  static AM_GPU_CONFIG_T config;
-  uint32_t hei_wei = inl(VGACTL_ADDR);
-  config.width = (uint32_t)hei_wei >> 16;  
-  config.height = (uint32_t)hei_wei & 0xffff;  
-  config.present = true;
-  config.has_accel = false;
-  config.vmemsz = 0;
-  cfg=&config;
-  putch('*');
+  cfg->present = true;
+  cfg->has_accel = false;
+  cfg->vmemsz = 0;
+  cfg->height=config.height;
+  cfg->width = config.width;
 }
 
-void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  static AM_GPU_CONFIG_T config;
 
+void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl)
+{
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
