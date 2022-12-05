@@ -91,7 +91,7 @@ void video_test() {
     }
   int w = io_read(AM_GPU_CONFIG).width;
   int h = io_read(AM_GPU_CONFIG).height;
-  unsigned int p[400*300];
+  static unsigned int p[400*300];
   printf("%d %d\n",h,w);
   for(int i=0;i<h;i++)
   for(int j=0;j<w;j++)
