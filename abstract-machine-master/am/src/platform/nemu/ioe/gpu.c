@@ -20,9 +20,9 @@ void __am_gpu_init() {
     tmp_d/=10;
   }
   while(n_d){
-    if(w){
-      putch('0' + w/n_d);
-      w=w%n_d;
+    if(h){
+      putch('0' + h/n_d);
+      h=h%n_d;
     }
     else
       putch('0');
