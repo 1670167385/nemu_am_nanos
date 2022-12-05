@@ -60,6 +60,11 @@ void vga_update_screen(uint32_t offset, int len, bool is_write) {
   if(vga_sync[0]==1 && is_write){
     update_screen();
     vga_sync[0] = 0;
+    static uint32_t old;
+    if(*(uint32_t*)vmem != old){
+      Log("changed");
+      old = *(uint32_t*)vmem;
+    }
     /*for(int i=0;i<screen_height();i++)
     {
       for(int j=0;j<screen_width();i++)
