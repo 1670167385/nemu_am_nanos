@@ -7,7 +7,7 @@
   static AM_GPU_CONFIG_T config;
 
 void __am_gpu_init() {
-  int i;
+  //int i;
   uint32_t hei_wei = inl(VGACTL_ADDR);
   uint32_t w = hei_wei >> 16;  
   uint32_t h = hei_wei & 0xffff;  
@@ -15,7 +15,12 @@ void __am_gpu_init() {
   config.height = h;
 
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for (i = 0; i < w * h; i ++) fb[i] = i;
+  //for (i = 0; i < w * h; i ++) fb[i] = i;
+  for(int i=0;i<h;i++){
+    for(int j=0;j<w;j++){
+      fb[i*w+j] = ((((i%255<<8)+i%255)<<8)+i%255);
+    }
+  }
   outl(SYNC_ADDR, 1);
 }
 
