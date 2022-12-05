@@ -33,7 +33,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl)
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
-  
+  printf("%d %d %d %d\n",ctl->x, ctl->y, ctl->w, ctl->h);
   if(ctl->pixels){
   uint32_t *fb = NULL;
     for(int i=0;i<ctl->h;i++)
