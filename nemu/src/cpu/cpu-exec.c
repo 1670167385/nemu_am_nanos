@@ -72,7 +72,6 @@ static void fetch_decode_exec_updatepc(Decode *s)
 {
     fetch_decode(s, cpu.pc);
     s->EHelper(s);
-    
     cpu.pc = s->dnpc;
 #ifdef CONFIG_FTRACE
     if(s->EHelper == exec_jalr || s->EHelper == exec_jal){
@@ -139,7 +138,6 @@ void fetch_decode(Decode *s, vaddr_t pc)
 void cpu_exec(uint64_t n)
 {
     g_print_step = (n < MAX_INSTR_TO_PRINT);
-
     switch (nemu_state.state)
     {
     case NEMU_END:
@@ -149,6 +147,7 @@ void cpu_exec(uint64_t n)
     default:
         nemu_state.state = NEMU_RUNNING;
     }
+
     uint64_t timer_start = get_time();
     Decode s;
     for (; n > 0; n--)
@@ -156,7 +155,6 @@ void cpu_exec(uint64_t n)
         fetch_decode_exec_updatepc(&s);
         g_nr_guest_instr++;
         trace_and_difftest(&s, cpu.pc);
-
         if (nemu_state.state != NEMU_RUNNING)
             break;
         IFDEF(CONFIG_DEVICE, device_update());
