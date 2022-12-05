@@ -10,6 +10,42 @@ void __am_gpu_init() {
   uint32_t hei_wei = inl(VGACTL_ADDR);
   int w = config.width = hei_wei >> 16;  
   int h = config.height = hei_wei & 0xffff;  
+  
+
+
+  int n_d = 1;
+  int tmp_d = w;
+  while(tmp_d>9){
+    n_d*=10;
+    tmp_d/=10;
+  }
+  while(n_d){
+    if(w){
+      putch('0' + w/n_d);
+      w=w%n_d;
+    }
+    else
+      putch('0');
+    n_d/=10;
+  }
+
+  putch(' ');
+  n_d = 1;
+  tmp_d = w;
+  while(tmp_d>9){
+    n_d*=10;
+    tmp_d/=10;
+  }
+  while(n_d){
+    if(h){
+      putch('0' + h/n_d);
+      h=h%n_d;
+    }
+    else
+      putch('0');
+    n_d/=10;
+  }
+
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
   outl(SYNC_ADDR, 1);
