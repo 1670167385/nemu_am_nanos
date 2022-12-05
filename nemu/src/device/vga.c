@@ -59,15 +59,15 @@ static inline void update_screen() {
 void vga_update_screen(uint32_t offset, int len, bool is_write) {
   if(vga_sync[0]==1 && is_write){
     update_screen();
-    vgactl_port_base[1] = 0;
-    for(int i=0;i<screen_height();i++)
+    vga_sync[0] = 0;
+    /*for(int i=0;i<screen_height();i++)
     {
       for(int j=0;j<screen_width();i++)
       {
         printf("%x ",*(uint32_t*)(vmem+i*screen_width()+j));
       }
       printf("\n");
-    }
+    }*/
   }
 }
 
