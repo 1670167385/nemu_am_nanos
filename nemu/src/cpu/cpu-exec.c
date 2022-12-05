@@ -47,6 +47,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
     {
         IFDEF(CONFIG_ITRACE, puts(_this->logbuf));
     }
+
     IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 
     // run a function about look through all the wp , and the mode is update
@@ -83,6 +84,7 @@ static void fetch_decode_exec_updatepc(Decode *s)
 #endif
 if(s->EHelper == exec_add)
 Log("%d %d ddest=%x,dsrc1=%x,dsrc2=%x",(s->isa.instr.r.rd),s->isa.instr.r.rs1,*ddest,*dsrc1,*dsrc2);
+Log("cpu.15=%x",cpu.gpr[15]._32);
 }
 
 static void statistic()
