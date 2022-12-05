@@ -79,7 +79,7 @@ void init_vga() {
   add_mmio_map("vmem", CONFIG_FB_ADDR, vmem, screen_size(), NULL);
 
   vga_sync = (uint32_t*)new_space(4);
-  add_mmio_map("sync", CONFIG_FB_ADDR+4, vga_sync, 4, vga_update_screen);
+  add_mmio_map("sync", CONFIG_VGA_CTL_MMIO+4, vga_sync, 4, vga_update_screen);
   IFDEF(CONFIG_VGA_SHOW_SCREEN, init_screen());
   IFDEF(CONFIG_VGA_SHOW_SCREEN, memset(vmem, 0, screen_size()));
 }
