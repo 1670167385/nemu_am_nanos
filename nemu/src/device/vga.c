@@ -58,7 +58,6 @@ static inline void update_screen() {
 
 void vga_update_screen(uint32_t offset, int len, bool is_write) {
   if(vga_sync[0]==1 && is_write){
-  Log("Iam in");
     update_screen();
     vgactl_port_base[1] = 0;
   }
