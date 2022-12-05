@@ -7,7 +7,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
     //printf("%d %d\n",ref_r->gpr[i]._32,cpu.gpr[i]._32);
     if(cpu.gpr[i]._32 != ref_r->gpr[i]._32)
     {
-        Log("reg%s different with ref=0x%x", reg_name(i,4), ref_r->gpr[i]._32);
+        Log("reg:%s different with ref=0x%x", reg_name(i,4), ref_r->gpr[i]._32);
         return false;
     }
     if(ref_r->pc != cpu.pc)
