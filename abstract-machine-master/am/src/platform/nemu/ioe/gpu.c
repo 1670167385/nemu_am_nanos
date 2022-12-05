@@ -31,16 +31,12 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl)
   }
   //printf("%d %d %d %d\n",ctl->x, ctl->y, ctl->w, ctl->h);
   if(ctl->pixels){
-    uint32_t *fb = NULL;
+    uint32_t *fb = NULL, *fp=ctl->pixels;
     for(int i=0;i<ctl->h;i++)
     {
       fb = (uint32_t *)(FB_ADDR+((ctl->y+i)*config.width+ctl->x)*4);
-      //printf("fb start: (%d,%d)  end : ()\n", ctl->y+i, ctl->x ,ctl->y+i);
-      for(int j=0;j<ctl->w;j++,fb++){
-          *fb = *(uint32_t*)(ctl->pixels+(i*ctl->w+j)*4);
-          if(*(uint32_t*)(ctl->pixels+(i*ctl->w+j)*4)!=0xffffff)
-            printf("addr %d data %d",(uint32_t)(uint32_t*)(ctl->pixels+i*ctl->w+j), *(uint32_t*)(ctl->pixels+i*ctl->w+j));
-          //printf("out:y=%d x=%d  pix:y=%d x=%d addr=%d\n",ctl->y+i,j,i,j,((uint32_t)fb-FB_ADDR));
+      for(int j=0;j<ctl->w;j++,fb++,fp++){
+          *fb = *fp;
       }
     }
   }
