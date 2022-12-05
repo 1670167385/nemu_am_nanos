@@ -33,12 +33,13 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl)
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
-  printf("%d %d %d %d\n",ctl->x, ctl->y, ctl->w, ctl->h);
+  //printf("%d %d %d %d\n",ctl->x, ctl->y, ctl->w, ctl->h);
   if(ctl->pixels){
   uint32_t *fb = NULL;
     for(int i=0;i<ctl->h;i++)
     {
       fb = (uint32_t *)(uintptr_t)(FB_ADDR+(ctl->y+i)*config.width+ctl->x);
+      printf("fb start: %d*%d+%d\n", ctl->y+i, config.width, ctl->x );
       for(int j=0;j<ctl->w;j++,fb++){
           *fb = *(uint32_t*)ctl->pixels+i*ctl->w+j;
       }
