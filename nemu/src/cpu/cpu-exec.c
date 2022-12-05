@@ -71,8 +71,7 @@ static void fetch_decode_exec_updatepc(Decode *s)
 {
     fetch_decode(s, cpu.pc);
     s->EHelper(s);
-    if(s->EHelper == exec_add)
-Log("%d %d ddest=%x,dsrc1=%x,dsrc2=%x",(s->isa.instr.r.rd),s->isa.instr.r.rs1,*ddest,*dsrc1,*dsrc2);
+    
     cpu.pc = s->dnpc;
 #ifdef CONFIG_FTRACE
     if(s->EHelper == exec_jalr || s->EHelper == exec_jal){
@@ -82,6 +81,8 @@ Log("%d %d ddest=%x,dsrc1=%x,dsrc2=%x",(s->isa.instr.r.rd),s->isa.instr.r.rs1,*d
             ftrace_call(s->pc, cpu.pc);
     }
 #endif
+if(s->EHelper == exec_add)
+Log("%d %d ddest=%x,dsrc1=%x,dsrc2=%x",(s->isa.instr.r.rd),s->isa.instr.r.rs1,*ddest,*dsrc1,*dsrc2);
 }
 
 static void statistic()
