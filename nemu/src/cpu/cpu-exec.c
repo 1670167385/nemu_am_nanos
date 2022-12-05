@@ -29,12 +29,10 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
     if (ITRACE_COND)
         log_write("%s\n", _this->logbuf);
     
-    //Log("i am here");
     char *p;
     if(_this->log_tail < 6){
         p=_this->be_logbuf[_this->log_tail];
         _this->log_tail++;
-    //Log("i am here");
     }
     else
     {
@@ -43,15 +41,12 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
         
         p = _this->be_logbuf[6];
     }
-    //Log("i am here");
     strcpy(p, _this->logbuf);
-    //Log("i am here");
 #endif
     if (g_print_step)
     {
         IFDEF(CONFIG_ITRACE, puts(_this->logbuf));
     }
-    //Log("i am here");
     IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 
     // run a function about look through all the wp , and the mode is update
@@ -76,6 +71,7 @@ static void fetch_decode_exec_updatepc(Decode *s)
 {
     fetch_decode(s, cpu.pc);
     s->EHelper(s);
+Log("%d %d ddest=%x,dsrc1=%x,dsrc2=%x",(s->isa.instr.r.rd),s->isa.instr.r.rs1,*ddest,*dsrc1,*dsrc2);
     cpu.pc = s->dnpc;
 #ifdef CONFIG_FTRACE
     if(s->EHelper == exec_jalr || s->EHelper == exec_jal){
@@ -158,9 +154,7 @@ void cpu_exec(uint64_t n)
     {
         fetch_decode_exec_updatepc(&s);
         g_nr_guest_instr++;
-    //Log("i am here");
         trace_and_difftest(&s, cpu.pc);
-    //Log("i am here");
 
         if (nemu_state.state != NEMU_RUNNING)
             break;
