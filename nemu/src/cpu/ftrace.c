@@ -7,7 +7,7 @@
 #define MSTT_FUNC 18
 
 typedef struct {
-    char name[25];
+    char name[40];
     word_t func_st;
     word_t func_end;
 }FUNCT;
@@ -86,7 +86,6 @@ void init_FTRACE(const char* elf_file)
     int p=0;
     for(int i=0;i<sym_num;i++)
     {
-        Log("%d",sym[i].st_info);
         if(sym[i].st_info == MSTT_FUNC)
         {
             strcpy(func_table[p].name, &stringtb[sym[i].st_name]);
