@@ -65,9 +65,7 @@ void init_FTRACE(const char* elf_file)
     assert(fread_ret == 1);
 
     /* read symbol table */
-    Log("%d",shdr[symtab].sh_size);
     Elf32_Sym *sym = malloc(shdr[symtab].sh_size*sizeof(char));
-    Log("%d",shdr[symtab].sh_size);
     assert(sym);
     fseek(fp, shdr[symtab].sh_offset, SEEK_SET);
     fread_ret = fread(sym, shdr[symtab].sh_size, 1, fp);
@@ -81,7 +79,10 @@ void init_FTRACE(const char* elf_file)
         if(sym[i].st_info == MSTT_FUNC)
             func_num++;
     }
+
+    Log("%d",func_num);
     func_table = malloc(sizeof(FUNCT)*func_num);
+    Log("%d",func_num);
     assert(func_table);
 
     /* store in functable */
