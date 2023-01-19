@@ -54,7 +54,6 @@ FCEUFILE * FCEU_fopen(const char *path, const char *ipsfn, const char *mode, cha
 			if (!fp->is_open())
 			{
 				//fp is new'ed so it has to be deleted
-				printf("mmmmmmmmmm %s\n", path);
 				free(fp);
 				return 0;
 			}
