@@ -40,7 +40,6 @@ void init_FTRACE(const char* elf_file)
     assert(shdr);
     fread_ret = fread(shdr, sizeof(Elf32_Shdr), ehdr.e_shnum, fp);
 
-    Log("111%d",ehdr.e_shnum);
     /* read section string table */
     //char *stringtb;
     //stringtb = malloc(sizeof(char)*shdr[ehdr.e_shstrndx].sh_size);
@@ -59,7 +58,9 @@ void init_FTRACE(const char* elf_file)
     int symtab;
     for(symtab = 0; symtab<ehdr.e_shnum && shdr[symtab].sh_type!=SHT_SYMTAB ;symtab++);
     char *stringtb;
+    Log("111%d",shdr[symtab+1].sh_size);
     stringtb = malloc(sizeof(char)*shdr[symtab+1].sh_size);
+    Log("111%d",ehdr.e_shnum);
     assert(stringtb);
     fseek(fp, shdr[symtab+1].sh_offset, SEEK_SET);
     fread_ret = fread(stringtb, shdr[symtab+1].sh_size, 1, fp);
