@@ -34,6 +34,7 @@ void init_FTRACE(const char* elf_file)
 
     if(ehdr.e_shoff)
         fseek(fp, ehdr.e_shoff, SEEK_SET);
+    Log("111");
     assert(ehdr.e_shoff);
     /* read section header , number is e_shnum */
     shdr = malloc(sizeof(Elf32_Shdr)*ehdr.e_shnum);
@@ -60,7 +61,6 @@ void init_FTRACE(const char* elf_file)
     char *stringtb;
     stringtb = malloc(sizeof(char)*shdr[symtab+1].sh_size);
     assert(stringtb);
-
     fseek(fp, shdr[symtab+1].sh_offset, SEEK_SET);
     fread_ret = fread(stringtb, shdr[symtab+1].sh_size, 1, fp);
     assert(fread_ret == 1);
