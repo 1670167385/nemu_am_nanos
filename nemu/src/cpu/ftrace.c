@@ -58,16 +58,16 @@ void init_FTRACE(const char* elf_file)
     int symtab;
     for(symtab = 0; symtab<ehdr.e_shnum && shdr[symtab].sh_type!=SHT_SYMTAB ;symtab++);
     char *stringtb;
-    Log("111%d",shdr[symtab+1].sh_size);
     stringtb = malloc(sizeof(char)*shdr[symtab+1].sh_size);
-    Log("111%d",ehdr.e_shnum);
     assert(stringtb);
     fseek(fp, shdr[symtab+1].sh_offset, SEEK_SET);
     fread_ret = fread(stringtb, shdr[symtab+1].sh_size, 1, fp);
     assert(fread_ret == 1);
 
     /* read symbol table */
+    Log("%d",shdr[symtab].sh_size);
     Elf32_Sym *sym = malloc(shdr[symtab].sh_size*sizeof(char));
+    Log("%d",shdr[symtab].sh_size);
     assert(sym);
     fseek(fp, shdr[symtab].sh_offset, SEEK_SET);
     fread_ret = fread(sym, shdr[symtab].sh_size, 1, fp);
