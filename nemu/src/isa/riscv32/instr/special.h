@@ -6,6 +6,10 @@ def_EHelper(nemu_trap) {
   rtl_hostcall(s, HOSTCALL_EXIT, NULL, &gpr(10), NULL, 0); // gpr(10) is $a0
 }
 
+def_EHelper(ecall) {
+  isa_raise_intr(1, 1);
+}
+
 def_EHelper(csrrw) {
 
   switch(id_src2->simm){
