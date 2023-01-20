@@ -11,7 +11,7 @@ def_EHelper(ecall) {
 }
 
 def_EHelper(mret) {
-  s->pc = cpu.mepc;
+  s->dnpc = cpu.mepc + 4;
 }
 
 def_EHelper(csrrw) {
