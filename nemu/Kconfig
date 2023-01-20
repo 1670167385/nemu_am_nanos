@@ -1,8 +1,6 @@
 mainmenu "NEMU Configuration Menu"
 
-config WATCHPOINT
-  bool "wp"
-  default y
+
 
 
 choice
@@ -124,6 +122,9 @@ endmenu
 
 menu "Testing and Debugging"
 
+config WATCHPOINT
+  bool "wp"
+  default y
 
 config TRACE
   bool "Enable tracer"
@@ -153,6 +154,9 @@ config FTRACE
   bool "Enable calling function tracer"
   default y
 
+config ETRACE
+  bool "Enable exception tracer"
+  default y
 
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
