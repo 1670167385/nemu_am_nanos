@@ -10,6 +10,10 @@ def_EHelper(ecall) {
   s->dnpc = isa_raise_intr(0xb, s->pc);
 }
 
+def_EHelper(mret) {
+  s->dnpc = cpu.mepc;
+}
+
 def_EHelper(csrrw) {
 
   switch(id_src2->simm){
