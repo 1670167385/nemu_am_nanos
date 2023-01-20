@@ -13,6 +13,8 @@ Context* __am_irq_handle(Context *c) {
     }
 
     c = user_handler(ev, c);
+    if(ev.event == EVENT_YIELD)
+      c->mepc += 4;
     assert(c != NULL);
   }
 
