@@ -55,7 +55,7 @@ int printf(const char *fmt, ...)
       case 'p':  /*addtress*/
       case 'x':  /*16*/
         n++;
-        unsigned int ud = (unsigned int)va_arg(ap, char *);
+        unsigned int ud = va_arg(ap, unsigned int);
         unsigned int un_d = 1;
         unsigned ut_d = ud;
         while(tmp_d>16){
@@ -64,6 +64,7 @@ int printf(const char *fmt, ...)
           putch('c');
           putch('\n');
         }
+
         while(un_d){
           if(0 < ud && ud < 10){
             putch('0' + ud/un_d);
