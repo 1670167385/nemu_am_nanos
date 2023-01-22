@@ -56,14 +56,14 @@ int printf(const char *fmt, ...)
       case 'x':  /*16*/
         n++;
         unsigned int ud = (unsigned int)va_arg(ap, int*);
-        //unsigned int un_d = 1;
-        //unsigned ut_d = ud;
+        unsigned int un_d = 1;
+        unsigned ut_d = ud;
         putch(ud%10+'0');
-        /*while(ut_d>16){
+        while(ut_d>16){
           un_d*=16;
           ut_d/=16;
         }
-
+/*
         while(un_d){
           if(ud){
             putch('a' + ud/un_d);
