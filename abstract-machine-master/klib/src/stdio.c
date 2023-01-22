@@ -71,7 +71,7 @@ int printf(const char *fmt, ...)
             }
             else{
               putch('0' + ud/un_d);
-              ud=ud%n_d;
+              ud=ud%un_d;
             }
           }
           else
