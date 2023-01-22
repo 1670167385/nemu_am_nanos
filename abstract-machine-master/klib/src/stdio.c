@@ -35,7 +35,7 @@ int printf(const char *fmt, ...)
         break;
       case 'd':  /*int*/
         n++;
-        d = va_arg(ap,unsigned int);
+        d = va_arg(ap, int);
         n_d = 1;
         tmp_d = d;
         while(tmp_d>9){
@@ -52,10 +52,10 @@ int printf(const char *fmt, ...)
           n_d/=10;
         }
         break;
-      //case 'p':  /*addtress*/
-      //case 'x':  /*16*/
+      case 'p':  /*addtress*/
+      case 'x':  /*16*/
         n++;
-        unsigned int ud = va_arg(ap, unsigned int);
+        unsigned int ud = (unsigned int)va_arg(ap, int*);
         unsigned int un_d = 1;
         unsigned ut_d = ud;
 
