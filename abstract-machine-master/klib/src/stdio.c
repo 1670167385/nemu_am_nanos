@@ -65,19 +65,15 @@ int printf(const char *fmt, ...)
 
         while(un_d){
           if(ud){
-            putch(ud/un_d+'A');
-            ud=ud%un_d;
+            if(ud/un_d >= 10){
+              putch('a' + ud/un_d - 10);
+              ud=ud%un_d;
+            }
+            else{
+              putch('0' + ud/un_d);
+              ud=ud%n_d;
+            }
           }
-          /*if(0 < ud && ud < 10){
-            putch('0' + ud/un_d);
-            putch(ud/un_d+'a');
-            ud=ud%n_d;
-          }
-          else if(ud >= 10){
-            putch('a' + ud/un_d - 10);
-            putch(ud/un_d+'a');
-            ud=ud%un_d;
-          }*/
           else
             putch('0');
           un_d/=16;
