@@ -61,14 +61,12 @@ int printf(const char *fmt, ...)
         while(ut_d>16){
           un_d*=16;
           ut_d/=16;
-          putch('^');
-          putch('\n');
         }
 
         while(un_d){
           if(ud){
+            putch(ud/un_d+'A');
             putch('a' + ud/un_d);
-            putch(ud/un_d+'a');
             ud=ud%n_d;
           }
           /*if(0 < ud && ud < 10){
