@@ -55,21 +55,21 @@ int printf(const char *fmt, ...)
       case 'p':  /*addtress*/
       case 'x':  /*16*/
         n++;
-        d = va_arg(ap, int);
+        unsigned int ud = (unsigned int)va_arg(ap, char *);
         n_d = 1;
-        tmp_d = d;
+        tmp_d = ud;
         while(tmp_d>16){
           n_d*=16;
           tmp_d/=16;
         }
         while(n_d){
-          if(0 < d && d < 10){
-            putch('0' + d/n_d);
-            d=d%n_d;
+          if(0 < ud && ud < 10){
+            putch('0' + ud/n_d);
+            ud=ud%n_d;
           }
-          else if(d >= 10){
-            putch('a' + d/n_d - 10);
-            d=d%n_d;
+          else if(ud >= 10){
+            putch('a' + ud/n_d - 10);
+            ud=ud%n_d;
           }
           else
             putch('0');
