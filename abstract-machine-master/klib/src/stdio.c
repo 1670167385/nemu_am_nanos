@@ -57,10 +57,10 @@ int printf(const char *fmt, ...)
         n++;
         unsigned int ud = (unsigned int)va_arg(ap, char *);
         unsigned int un_d = 1;
-        tmp_d = ud;
+        unsigned ut_d = ud;
         while(tmp_d>16){
           un_d*=16;
-          tmp_d/=16;
+          ut_d/=16;
           putch('c');
           putch('\n');
         }
