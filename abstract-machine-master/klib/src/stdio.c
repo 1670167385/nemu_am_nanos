@@ -69,12 +69,12 @@ int printf(const char *fmt, ...)
         while(un_d){
           if(0 < ud && ud < 10){
             putch('0' + ud/un_d);
-            if(ud/un_d < 0)
-              putch('i');
             ud=ud%n_d;
           }
           else if(ud >= 10){
             putch('a' + ud/un_d - 10);
+            if(ud/un_d < 0)
+              putch('i');
             ud=ud%un_d;
           }
           else
