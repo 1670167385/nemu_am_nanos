@@ -33,8 +33,8 @@ int printf(const char *fmt, ...)
           s++;
         }
         break;
-      case 'p':
       case 'd':  /*int*/
+      case 'p':
         n++;
         d = va_arg(ap, int);
         n_d = 1;
