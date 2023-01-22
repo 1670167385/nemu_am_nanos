@@ -73,7 +73,7 @@ int printf(const char *fmt, ...)
           }
           else if(ud >= 10){
             putch('a' + ud/un_d - 10);
-            if(ud/un_d < 0)
+            if(ud/un_d > 100)
               putch('i');
             ud=ud%un_d;
           }
