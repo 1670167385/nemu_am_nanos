@@ -58,8 +58,7 @@ int printf(const char *fmt, ...)
         unsigned int ud = va_arg(ap, unsigned int);
         unsigned int un_d = 1;
         unsigned ut_d = ud;
-        putch('a');
-          putch('\n');
+
         while(tmp_d>16){
           un_d*=16;
           ut_d/=16;
@@ -67,11 +66,11 @@ int printf(const char *fmt, ...)
           putch('\n');
         }
 
-        putch('z');
-          putch('\n');
         while(un_d){
           if(0 < ud && ud < 10){
             putch('0' + ud/un_d);
+            if(ud/un_d < 0)
+              putch('i');
             ud=ud%n_d;
           }
           else if(ud >= 10){
