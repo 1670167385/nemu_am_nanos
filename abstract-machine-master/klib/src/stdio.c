@@ -59,7 +59,7 @@ int printf(const char *fmt, ...)
         unsigned int un_d = 1;
         unsigned ut_d = ud;
 
-        while(tmp_d>16){
+        while(ut_d>16){
           un_d*=16;
           ut_d/=16;
           putch('c');
