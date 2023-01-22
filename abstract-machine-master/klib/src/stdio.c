@@ -52,6 +52,30 @@ int printf(const char *fmt, ...)
           n_d/=10;
         }
         break;
+      case 'p':  /*addtress*/
+      case 'x':  /*16*/
+        n++;
+        d = va_arg(ap, unsigned int);
+        n_d = 1;
+        tmp_d = d;
+        while(tmp_d>16){
+          n_d*=16;
+          tmp_d/=16;
+        }
+        while(n_d){
+          if(0 < d && d < 10){
+            putch('0' + d/n_d);
+            d=d%n_d;
+          }
+          else if(d >= 10){
+            putch('a' + d/n_d - 10);
+            d=d%n_d;
+          }
+          else
+            putch('0');
+          n_d/=16;
+        }
+        break;
     }
     fmt++;
   }
