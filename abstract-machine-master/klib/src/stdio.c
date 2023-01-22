@@ -53,6 +53,8 @@ int printf(const char *fmt, ...)
         }
         break;
       case 'p':  /*addtress*/
+        putch('0');
+        putch('x');
       case 'x':  /*16*/
         n++;
         unsigned int ud = (unsigned int)va_arg(ap, int*);
