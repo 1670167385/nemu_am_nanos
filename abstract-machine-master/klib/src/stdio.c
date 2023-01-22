@@ -33,7 +33,6 @@ int printf(const char *fmt, ...)
           s++;
         }
         break;
-      case 'p':
       case 'd':  /*int*/
         n++;
         d = va_arg(ap,unsigned int);
@@ -53,7 +52,7 @@ int printf(const char *fmt, ...)
           n_d/=10;
         }
         break;
-      //case 'p':  /*addtress*/
+      case 'p':  /*addtress*/
       case 'x':  /*16*/
         n++;
         unsigned int ud = (unsigned int)va_arg(ap, char *);
@@ -62,6 +61,8 @@ int printf(const char *fmt, ...)
         while(tmp_d>16){
           un_d*=16;
           tmp_d/=16;
+          putch('c');
+          putch('\n');
         }
         while(un_d){
           if(0 < ud && ud < 10){
