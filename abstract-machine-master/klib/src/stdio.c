@@ -58,29 +58,31 @@ int printf(const char *fmt, ...)
         unsigned int ud = (unsigned int)va_arg(ap, int*);
         unsigned int un_d = 1;
         unsigned ut_d = ud;
-        putch(ud%10+'0');
         while(ut_d>16){
           un_d*=16;
           ut_d/=16;
         }
-/*
+
         while(un_d){
           if(ud){
             putch('a' + ud/un_d);
+            putch(ud/un_d+'a');
             ud=ud%n_d;
           }
-          if(0 < ud && ud < 10){
+          /*if(0 < ud && ud < 10){
             putch('0' + ud/un_d);
+            putch(ud/un_d+'a');
             ud=ud%n_d;
           }
           else if(ud >= 10){
             putch('a' + ud/un_d - 10);
+            putch(ud/un_d+'a');
             ud=ud%un_d;
-          }
+          }*/
           else
             putch('0');
           un_d/=16;
-        }*/
+        }
         break;
     }
     fmt++;
