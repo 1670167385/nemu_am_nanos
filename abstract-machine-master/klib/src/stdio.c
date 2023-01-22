@@ -52,8 +52,8 @@ int printf(const char *fmt, ...)
           n_d/=10;
         }
         break;
-      case 'p':  /*addtress*/
-      case 'x':  /*16*/
+      //case 'p':  /*addtress*/
+      //case 'x':  /*16*/
         n++;
         unsigned int ud = va_arg(ap, unsigned int);
         unsigned int un_d = 1;
