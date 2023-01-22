@@ -61,6 +61,8 @@ int printf(const char *fmt, ...)
         while(ut_d>16){
           un_d*=16;
           ut_d/=16;
+          putch('^');
+          putch('\n');
         }
 
         while(un_d){
