@@ -66,8 +66,7 @@ int printf(const char *fmt, ...)
         while(un_d){
           if(ud){
             putch(ud/un_d+'A');
-            putch('a' + ud/un_d);
-            ud=ud%n_d;
+            ud=ud%un_d;
           }
           /*if(0 < ud && ud < 10){
             putch('0' + ud/un_d);
