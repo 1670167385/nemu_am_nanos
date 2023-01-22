@@ -33,6 +33,7 @@ int printf(const char *fmt, ...)
           s++;
         }
         break;
+      case 'p':
       case 'd':  /*int*/
         n++;
         d = va_arg(ap, int);
@@ -52,10 +53,11 @@ int printf(const char *fmt, ...)
           n_d/=10;
         }
         break;
-      case 'p':  /*addtress*/
+      //case 'p':  /*addtress*/
       case 'x':  /*16*/
         n++;
         d = va_arg(ap, unsigned int);
+        //Log("d = %d", d);
         n_d = 1;
         tmp_d = d;
         while(tmp_d>16){
