@@ -19,7 +19,7 @@ def_EHelper(lhu) {
 }
 
 def_EHelper(sw) {
-  rtl_sm(s, ddest, dsrc1, id_src2->simm, 4);
+  rtl_sm(s, ddest, dsrc1, id_src2->imm, 4);
 }
 
 
