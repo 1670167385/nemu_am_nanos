@@ -114,8 +114,9 @@ def_EHelper(jal) {
 }
 
 def_EHelper(jalr) {
-  rtl_mv(s, ddest, &s->snpc);
+  rtl_mv(s, s0, &s->snpc);
   rtl_addi(s, &s->dnpc, dsrc1, id_src2->simm);
+  rtl_mv(s, ddest, s0);
 }
 
 def_EHelper(beq) {
