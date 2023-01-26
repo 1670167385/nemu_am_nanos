@@ -41,13 +41,12 @@ void do_syscall(Context *c) {
   }
 }
 
-void sys_write(Context *c)
-{
-  if(c->GPR2==1 || c->GPR2==2){  //out/err
+void sys_write(Context *c){
+  if(c->GPR2==1 || c->GPR2==2){   //out/err
     for(int p=0; p < c->GPR4; p++){
       putch(*(char*)(c->GPR3 + p));
     }
-    c->GPRx = c->GPR4;  //return count;
+    c->GPRx = c->GPR4;            //return count;
   }
 }
 
