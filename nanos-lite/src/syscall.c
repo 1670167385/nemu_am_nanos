@@ -6,7 +6,26 @@ void do_syscall(Context *c) {
   a[0] = c->GPR1;
 
   switch (a[0]) {
-    case 1: sys_yield(c); break;
+    case 0: //exit
+#ifdef CONFIG_STRACE 
+      Log("syscall exit start with a0=0x%x", c->GPR1); 
+      sys_exit(c);
+      Log("syscall exit end"); //, ret=0x%x", c->GPRx)); 
+#else
+      sys_exit(c);
+#endif
+      break;
+    case 1: //yield
+#ifdef CONFIG_STRACE
+      Log("syscall yield start"); 
+      sys_yield(c); 
+      Log("syscall yield end, ret=0x%x", c->GPRx); 
+#else
+      sys_yield(c); 
+#endif
+      break;
+
+
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
@@ -14,5 +33,9 @@ void do_syscall(Context *c) {
 
 void sys_yield(Context *c){
   yield();
-  c->GPR1 = 0;
+  c->GPRx = 0;
+}
+
+void sys_exit(Context *c){
+  halt(c->GPR1);
 }
