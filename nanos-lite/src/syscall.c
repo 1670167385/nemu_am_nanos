@@ -37,8 +37,23 @@ void do_syscall(Context *c) {
 #endif
       break;
 
+    case SYS_brk:
+#ifdef CONFIG_STRACE
+      Log("syscall brk start with a0=0x%x", c->GPR2); 
+      sys_brk(c); 
+      Log("syscall brk end, ret=0x%x", c->GPRx); 
+#else
+      sys_brk(c); 
+#endif
+    break;
+
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
+}
+
+void sys_brk(Context *c)
+{
+  c->GPRx = 0;
 }
 
 void sys_write(Context *c){

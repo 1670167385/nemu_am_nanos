@@ -65,8 +65,14 @@ int _write(int fd, void *buf, size_t count) {
   return _syscall_(SYS_write, fd, buf, count);
 }
 
+extern char end;
+static intptr_t pg_end = &end;
 void *_sbrk(intptr_t increment) {
-  return (void *)-1;
+  pg_end = pg_end + increment;
+  if(_syscall_(SYS_brk, pg_end, 0, 0) == 0)
+    return (void *)(pg_end - increment);
+  else
+    return (void *)-1;
 }
 
 int _read(int fd, void *buf, size_t count) {
