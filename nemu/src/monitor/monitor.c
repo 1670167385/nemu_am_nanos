@@ -8,7 +8,7 @@ void init_difftest(char *ref_so_file, long img_size, int port);
 void init_device();
 void init_sdb();
 void init_disasm(const char *triple);
-void init_FTRACE(const char* elf_file);
+void init_FTRACE(const char* elf_file, int elf_no);
 
 static void welcome() {
   Log("Trace: %s", MUXDEF(CONFIG_TRACE, ASNI_FMT("ON", ASNI_FG_GREEN), ASNI_FMT("OFF", ASNI_FG_RED)));
@@ -109,7 +109,8 @@ void init_monitor(int argc, char *argv[]) {
   init_isa();
 
   /* CONFIG_FTRACE debug info with function calling procedure*/
-  init_FTRACE(elf_file);
+  init_FTRACE(elf_file, 0);
+  init_FTRACE("/home/xsr/ics-pa-2021/nanos-lite/build/ramdisk.img", 1);
 
   /* Load the image to memory. This will overwrite the built-in image. */
   long img_size = load_img();

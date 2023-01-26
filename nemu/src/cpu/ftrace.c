@@ -12,16 +12,15 @@ typedef struct {
     word_t func_end;
 }FUNCT;
 
-FUNCT *func_table;
+FUNCT *func_table[2];
 int func_num = 0;
 
 char *get_calling_name(word_t pc);
 int call_layer = 0;
 
 
-void init_FTRACE(const char* elf_file)
+void init_FTRACE(const char* elf_file, int elf_no)
 {
-//#ifdef CONFIG_FTRACE
   if(elf_file != NULL){
     FILE *fp = fopen(elf_file, "rb");
     Assert(fp, "Can not open '%s'", elf_file);
@@ -75,12 +74,11 @@ void init_FTRACE(const char* elf_file)
     int sym_num = shdr[symtab].sh_size/sizeof(Elf32_Sym);
     for(int i=0;i<sym_num;i++)
     {
-        //printf("%s\t%d\n", &stringtb[sym[i].st_name], sym[i].st_info);
         if(sym[i].st_info == MSTT_FUNC)
             func_num++;
     }
-    func_table = malloc(sizeof(FUNCT)*func_num);
-    assert(func_table);
+    func_table[elf_no] = malloc(sizeof(FUNCT)*func_num);
+    assert(func_table[elf_no]);
 
     /* store in functable */
     int p=0;
@@ -88,11 +86,11 @@ void init_FTRACE(const char* elf_file)
     {
         if(sym[i].st_info == MSTT_FUNC)
         {
-            strcpy(func_table[p].name, &stringtb[sym[i].st_name]);
-            //Log("func[%d]:%s", p, func_table[p].name);
-            func_table[p].func_st = sym[i].st_value;
-            func_table[p].func_end = sym[i].st_value + sym[i].st_size;
-            //printf("%d\t%s\t:0x%x\t0x%x\n", i, func_table[p].name, func_table[p].func_st, func_table[p].func_end);
+            strcpy(func_table[elf_no][p].name, &stringtb[sym[i].st_name]);
+            //Log("func[%d]:%s", p, func_table[elf_no][p].name);
+            func_table[elf_no][p].func_st = sym[i].st_value;
+            func_table[elf_no][p].func_end = sym[i].st_value + sym[i].st_size;
+            //printf("%d\t%s\t:0x%x\t0x%x\n", i, func_table[elf_no][p].name, func_table[elf_no][p].func_st, func_table[p].func_end);
             p++;
         }
     }
@@ -101,8 +99,9 @@ void init_FTRACE(const char* elf_file)
     free(stringtb);
     free(sym);
   }
-//#endif
 }
+
+static int rno = 0;
 
 void ftrace_call(word_t pc, word_t npc){
     char *now = get_calling_name(pc);
@@ -129,8 +128,14 @@ void ftrace_ret(word_t pc, word_t npc){
 char *get_calling_name(word_t pc)
 {
     for(int i=0;i<func_num;i++){
-        if(func_table[i].func_st <= pc && pc < func_table[i].func_end){
-            return func_table[i].name;
+        if(func_table[rno][i].func_st <= pc && pc < func_table[rno][i].func_end){
+            return func_table[rno][i].name;
+        }
+    }
+    rno = (rno+1)%2;
+    for(int i=0;i<func_num;i++){
+        if(func_table[rno][i].func_st <= pc && pc < func_table[rno][i].func_end){
+            return func_table[rno][i].name;
         }
     }
     return NULL;
@@ -138,7 +143,7 @@ char *get_calling_name(word_t pc)
 
 #else
 
-void init_FTRACE(const char* elf_file)
+void init_FTRACE(const char* elf_file, int elf_no)
 {
     ;
 }
