@@ -13,7 +13,7 @@ typedef struct {
 }FUNCT;
 
 FUNCT *func_table[2];
-int func_num = 0;
+int func_num[2] = {0};
 
 char *get_calling_name(word_t pc);
 int call_layer = 0;
@@ -75,9 +75,9 @@ void init_FTRACE(const char* elf_file, int elf_no)
     for(int i=0;i<sym_num;i++)
     {
         if(sym[i].st_info == MSTT_FUNC)
-            func_num++;
+            func_num[elf_no]++;
     }
-    func_table[elf_no] = malloc(sizeof(FUNCT)*func_num);
+    func_table[elf_no] = malloc(sizeof(FUNCT)*func_num[elf_no]);
     assert(func_table[elf_no]);
 
     /* store in functable */
@@ -129,13 +129,13 @@ void ftrace_ret(word_t pc, word_t npc){
 
 char *get_calling_name(word_t pc)
 {
-    for(int i=0;i<func_num;i++){
+    for(int i=0;i<func_num[rno];i++){
         if(func_table[rno][i].func_st <= pc && pc < func_table[rno][i].func_end){
             return func_table[rno][i].name;
         }
     }
     rno = (rno+1)%2;
-    for(int i=0;i<func_num;i++){
+    for(int i=0;i<func_num[rno];i++){
         if(func_table[rno][i].func_st <= pc && pc < func_table[rno][i].func_end){
             return func_table[rno][i].name;
         }
