@@ -62,11 +62,11 @@ int _open(const char *path, int flags, mode_t mode) {
 }
 
 int _write(int fd, void *buf, size_t count) {
-  return _syscall_(SYS_write, fd, buf, count);
+  return _syscall_(SYS_write, fd, (intptr_t)buf, count);
 }
 
 extern char end;
-static intptr_t pg_end = &end;
+static intptr_t pg_end = (intptr_t)&end;
 void *_sbrk(intptr_t increment) {
   pg_end = pg_end + increment;
   if(_syscall_(SYS_brk, pg_end, 0, 0) == 0)
