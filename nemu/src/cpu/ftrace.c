@@ -120,7 +120,7 @@ void ftrace_ret(word_t pc, word_t npc){
     char *call_name = get_calling_name(npc);
     if(now == call_name) return;
     if(rno == 0) return;
-    call_layer--;
+    call_layer = (call_layer>0)? call_layer-1 : 0;
     printf("0x%x", pc);
     for(int i=0;i<call_layer;i++)
         printf("  ");
