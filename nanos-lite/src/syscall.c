@@ -35,7 +35,7 @@ void do_syscall(Context *c) {
 #else
       sys_write(c); 
 #endif
-
+      break;
 
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
