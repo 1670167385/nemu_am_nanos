@@ -90,7 +90,7 @@ void init_FTRACE(const char* elf_file, int elf_no)
             //Log("func[%d]:%s", p, func_table[elf_no][p].name);
             func_table[elf_no][p].func_st = sym[i].st_value;
             func_table[elf_no][p].func_end = sym[i].st_value + sym[i].st_size;
-            printf("%d\t%s\t:0x%x\t0x%x\n", i, func_table[elf_no][p].name, func_table[elf_no][p].func_st, func_table[elf_no][p].func_end);
+            //printf("%d\t%s\t:0x%x\t0x%x\n", i, func_table[elf_no][p].name, func_table[elf_no][p].func_st, func_table[elf_no][p].func_end);
             p++;
         }
     }
