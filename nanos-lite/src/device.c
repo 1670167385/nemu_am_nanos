@@ -34,3 +34,17 @@ void init_device() {
   Log("Initializing devices...");
   ioe_init();
 }
+
+struct timeval
+{
+  size_t sec;
+  size_t microsec;
+};
+
+timeval get_time(){
+  timeval t;
+  t.microsec = io_read(AM_TIMER_UPTIME).us / 1000;
+  t.sec = t.microsec / 1000;
+  t.microsec = t.microsec % 1000;
+  return t;
+}

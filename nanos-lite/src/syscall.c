@@ -98,6 +98,16 @@ void do_syscall(Context *c) {
 #endif
     break;
 
+    case SYS_gettimeofday:
+#ifdef CONFIG_STRACE
+      Log("syscall lseek start with fd=0x%x offset=0x%x whence=0x%x", c->GPR2, c->GPR3, c->GPR4); 
+      sys_gettimeofday(c); 
+      Log("syscall lseek end, ret=0x%x", c->GPRx); 
+#else
+      sys_gettimeofday(c); 
+#endif
+    break;
+
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
@@ -138,3 +148,10 @@ void sys_yield(Context *c){
 void sys_exit(Context *c){
   halt(c->GPR1);
 }
+
+void sys_gettimeofday(Context *c){
+  get_time();
+}
+
+
+

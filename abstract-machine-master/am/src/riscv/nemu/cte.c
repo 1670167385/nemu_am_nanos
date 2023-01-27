@@ -18,6 +18,7 @@ Context* __am_irq_handle(Context *c) {
       case SYS_read:
       case SYS_write:
       case SYS_lseek:
+      case SYS_gettimeofday:
         ev.event = EVENT_SYSCALL; break;
 
       default: printf("cause:%d\n", c->mcause); ev.event = EVENT_ERROR; break;
