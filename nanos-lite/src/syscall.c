@@ -2,7 +2,7 @@
 #include "syscall.h"
 #include "ramdisk1.h"
 #include "fs.h"
-//#define CONFIG_STRACE
+#define CONFIG_STRACE
 
 void sys_open(Context *c);
 void sys_close(Context *c);
