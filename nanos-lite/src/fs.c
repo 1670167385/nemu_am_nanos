@@ -1,5 +1,6 @@
 #include <fs.h>
 #include "ramdisk1.h"
+#include "device.h"
 
 size_t invalid_read(void *buf, size_t offset, size_t len) {
   panic("should not reach here");
@@ -12,6 +13,9 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 }
 
 void init_fs() {
+  file_table[FD_STDOUT].write = serial_write;
+  file_table[FD_STDERR].write = serial_write;
+
   // TODO: initialize the size of /dev/fb
 }
 
@@ -82,11 +86,4 @@ size_t fs_lseek(int fd, size_t offset, int whence){
 
 int fs_close(int fd){
   return 0;
-}
-
-size_t serial_write(const void *buf, size_t offset, size_t len){
-  for(int p=0; p < len; p++){
-    putch(*(char*)(buf + p));
-  }
-  return len;
 }

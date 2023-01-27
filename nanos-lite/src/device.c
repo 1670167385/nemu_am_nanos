@@ -1,4 +1,5 @@
 #include <common.h>
+#include "device.h"
 
 #if defined(MULTIPROGRAM) && !defined(TIME_SHARING)
 # define MULTIPROGRAM_YIELD() yield()
@@ -15,7 +16,10 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
-  return 0;
+  for(int p=0; p < len; p++){
+    putch(*(char*)(buf + p));
+  }
+  return len;
 }
 
 size_t events_read(void *buf, size_t offset, size_t len) {
@@ -35,16 +39,10 @@ void init_device() {
   ioe_init();
 }
 
-struct timeval
-{
-  size_t sec;
-  size_t microsec;
-};
-
-timeval get_time(){
-  timeval t;
+timeval *get_time(){
+  static timeval t;
   t.microsec = io_read(AM_TIMER_UPTIME).us / 1000;
   t.sec = t.microsec / 1000;
   t.microsec = t.microsec % 1000;
-  return t;
+  return &t;
 }

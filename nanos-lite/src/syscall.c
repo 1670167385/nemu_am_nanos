@@ -1,6 +1,8 @@
 #include <common.h>
 #include "syscall.h"
 #include "ramdisk1.h"
+#include "fs.h"
+#include "device.h"
 #define CONFIG_STRACE
 
 void sys_open(Context *c);
@@ -149,7 +151,8 @@ void sys_exit(Context *c){
 }
 
 void sys_gettimeofday(Context *c){
-  get_time();
+  memcpy((void *)c->GPR2, (void *)get_time(), sizeof(timeval));
+  c->GPRx = 0;
 }
 
 
