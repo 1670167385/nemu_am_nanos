@@ -23,7 +23,6 @@ Finfo *get_file_table(){
 
 int fs_open(const char *pathname, int flags, int mode){
   for(int i=3;i<25;i++){
-          printf("%s\n",file_table[i].name);
     if(!strcmp(file_table[i].name, pathname)){
       file_table[i].open_offset = 0;
       return i;

@@ -31,6 +31,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Phdr *phdr =  (Elf_Phdr *)(get_ramdisk_st() + get_file_table()[fd].disk_offset + elf->e_phoff);
   for(int i=0; i<pnum ; i++, phdr++){
     if(phdr->p_type == PT_LOAD){
+      printf("%x %x %x\n",phdr->p_vaddr, phdr->p_offset, phdr->p_filesz);
       ramdisk_read((uint8_t*)phdr->p_vaddr, phdr->p_offset, phdr->p_filesz);
       for(uintptr_t set_p = phdr->p_filesz; set_p < phdr->p_memsz; set_p++)
         *(uint32_t*)(phdr->p_vaddr + set_p) = 0;
