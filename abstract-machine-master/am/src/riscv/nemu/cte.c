@@ -14,6 +14,8 @@ Context* __am_irq_handle(Context *c) {
       case SYS_exit:
       case SYS_write:
       case SYS_brk:
+      case SYS_open:
+      case SYS_close:
         ev.event = EVENT_SYSCALL; break;
 
       default: printf("cause:%d\n", c->mcause); ev.event = EVENT_ERROR; break;

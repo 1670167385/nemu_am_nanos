@@ -12,8 +12,4 @@
 #include <klib-macros.h>
 #include <debug.h>
 
-extern uint8_t ramdisk_start;
-extern uint8_t ramdisk_end;
-size_t ramdisk_read(void *buf, size_t offset, size_t len);
-size_t get_ramdisk_st();
 #endif

@@ -1,4 +1,5 @@
 #include <common.h>
+#include "ramdisk1.h"
 
 #define RAMDISK_SIZE ((&ramdisk_end) - (&ramdisk_start))
 

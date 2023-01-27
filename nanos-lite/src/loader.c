@@ -1,5 +1,7 @@
 #include <proc.h>
 #include <elf.h>
+#include "ramdisk1.h"
+#include "fs.h"
 
 #ifdef __LP64__
 # define Elf_Ehdr Elf64_Ehdr
@@ -18,14 +20,15 @@
 #endif
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-
-  Elf_Ehdr *elf = (Elf_Ehdr *)get_ramdisk_st();
+  int fd = fs_open(filename, 0, 0);
+  
+  Elf_Ehdr *elf = (Elf_Ehdr *)(get_ramdisk_st() + get_file_table()[fd].disk_offset);
 
   assert(*(uint32_t*)elf->e_ident == 0x464c457f);
   assert(elf->e_machine == EXPECT_TYPE);
 
   int pnum =  elf->e_phnum;
-  Elf_Phdr *phdr =  (Elf_Phdr *)(get_ramdisk_st() + elf->e_phoff);
+  Elf_Phdr *phdr =  (Elf_Phdr *)(get_ramdisk_st() + get_file_table()[fd].disk_offset + elf->e_phoff);
   for(int i=0; i<pnum ; i++, phdr++){
     if(phdr->p_type == PT_LOAD){
       ramdisk_read((uint8_t*)phdr->p_vaddr, phdr->p_offset, phdr->p_filesz);

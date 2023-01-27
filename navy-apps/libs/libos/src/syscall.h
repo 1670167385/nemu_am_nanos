@@ -1,6 +1,5 @@
 #ifndef __SYSCALL_H__
 #define __SYSCALL_H__
-
 enum {
   SYS_exit,
   SYS_yield,
@@ -23,5 +22,16 @@ enum {
   SYS_times,
   SYS_gettimeofday
 };
+
+void sys_open(Context *c);
+void sys_close(Context *c);
+void sys_read(Context *c);
+void sys_lseek(Context *c);
+void sys_brk(Context *c);
+void sys_write(Context *c);
+void sys_yield(Context *c);
+void sys_exit(Context *c);
+
+void do_syscall(Context *c);
 
 #endif
