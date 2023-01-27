@@ -55,13 +55,16 @@ size_t fs_write(int fd, const void *buf, size_t len){
     }
   }
   else{                       //file
-    if(file_table[fd].open_offset + len > file_table[fd].size)
-      panic("file %s writing is out of bound", file_table[fd].name);
+    if(file_table[fd].open_offset + len > file_table[fd].size){
+      len=file_table[fd].size-file_table[fd].open_offset;
+      ramdisk_write(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
+      //panic("file %s reading is out of bound", file_table[fd].name);
+    }
     else{
       ramdisk_write(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
-      file_table[fd].open_offset += len;
     } 
   }
+  file_table[fd].open_offset += len;
   return len;
 }
 
