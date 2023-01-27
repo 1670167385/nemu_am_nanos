@@ -1,7 +1,6 @@
 #include <common.h>
 #include "syscall.h"
 #include "ramdisk1.h"
-#include "fs.h"
 #define CONFIG_STRACE
 
 void sys_open(Context *c);
