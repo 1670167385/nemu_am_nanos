@@ -33,6 +33,10 @@ void sys_yield(Context *c);
 void sys_exit(Context *c);
 void sys_gettimeofday(Context *c);
 */
+#define NAVY_MK_NMSL
+
+#ifdef NAVY_MK_NMSL
 void do_syscall(Context *c);
+#endif
 
 #endif
