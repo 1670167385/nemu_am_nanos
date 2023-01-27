@@ -12,10 +12,12 @@ Context* __am_irq_handle(Context *c) {
       case -1: ev.event = EVENT_YIELD; break;
       case SYS_yield:
       case SYS_exit:
-      case SYS_write:
       case SYS_brk:
       case SYS_open:
       case SYS_close:
+      case SYS_read:
+      case SYS_write:
+      case SYS_lseek:
         ev.event = EVENT_SYSCALL; break;
 
       default: printf("cause:%d\n", c->mcause); ev.event = EVENT_ERROR; break;
