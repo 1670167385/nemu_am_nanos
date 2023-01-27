@@ -21,18 +21,18 @@
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
-  
-  Elf_Ehdr *elf = (Elf_Ehdr *)(get_ramdisk_st() + get_file_table()[fd].disk_offset);
+  size_t offset = get_file_table()[fd].disk_offset;
+  Elf_Ehdr *elf = (Elf_Ehdr *)(get_ramdisk_st() + offset);
 
   assert(*(uint32_t*)elf->e_ident == 0x464c457f);
   assert(elf->e_machine == EXPECT_TYPE);
 
   int pnum =  elf->e_phnum;
-  Elf_Phdr *phdr =  (Elf_Phdr *)(get_ramdisk_st() + get_file_table()[fd].disk_offset + elf->e_phoff);
+  Elf_Phdr *phdr =  (Elf_Phdr *)(get_ramdisk_st() + offset + elf->e_phoff);
   for(int i=0; i<pnum ; i++, phdr++){
     if(phdr->p_type == PT_LOAD){
-      printf("%x %x %x\n",phdr->p_vaddr, phdr->p_offset, phdr->p_filesz);
-      ramdisk_read((uint8_t*)phdr->p_vaddr, phdr->p_offset, phdr->p_filesz);
+      //printf("%x %x %x\n",phdr->p_vaddr, phdr->p_offset, phdr->p_filesz);
+      ramdisk_read((uint8_t*)phdr->p_vaddr, offset+phdr->p_offset, phdr->p_filesz);
       for(uintptr_t set_p = phdr->p_filesz; set_p < phdr->p_memsz; set_p++)
         *(uint32_t*)(phdr->p_vaddr + set_p) = 0;
     }
