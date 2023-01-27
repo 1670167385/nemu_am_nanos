@@ -102,9 +102,9 @@ void do_syscall(Context *c) {
 
     case SYS_gettimeofday:
 #ifdef CONFIG_STRACE
-      Log("syscall lseek start with fd=0x%x offset=0x%x whence=0x%x", c->GPR2, c->GPR3, c->GPR4); 
+      Log("syscall gettimeofday start with addr=0x%x", c->GPR2); 
       sys_gettimeofday(c); 
-      Log("syscall lseek end, ret=0x%x", c->GPRx); 
+      Log("syscall gettimeofday end, ret=0x%x", c->GPRx); 
 #else
       sys_gettimeofday(c); 
 #endif
