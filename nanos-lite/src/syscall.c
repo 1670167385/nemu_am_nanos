@@ -13,6 +13,7 @@ void sys_brk(Context *c);
 void sys_write(Context *c);
 void sys_yield(Context *c);
 void sys_exit(Context *c);
+void sys_gettimeofday(Context *c);
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
