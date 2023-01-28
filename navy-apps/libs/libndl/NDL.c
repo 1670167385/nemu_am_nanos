@@ -9,6 +9,7 @@ static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
 static int kb_dev;
 static int gpu_proc;
+static int wholew, wholeh;
 
 typedef struct{
     long sec;
@@ -26,7 +27,6 @@ int NDL_PollEvent(char *buf, int len) {
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
-  int wholew, wholeh;
   char gpu_info[40];
   read(gpu_proc, gpu_info, sizeof(gpu_info) - 1);
   sscanf(gpu_info,"WIDTH :%d\nHEIGHT:%d",&wholew, &wholeh);
@@ -61,7 +61,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 
   int offset = y*screen_w + x;
   for(int i=0;i<h;i++){
-    lseek(fbdev, i*w*4, SEEK_SET);
+    lseek(fbdev, i*wholew*4, SEEK_SET);
     write(fbdev, (void *)(pixels+i*w), 4*w);
   }
 }
