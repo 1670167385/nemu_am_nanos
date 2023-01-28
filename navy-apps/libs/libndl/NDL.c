@@ -8,12 +8,20 @@ static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
 
+typedef struct{
+    long sec;
+    long microsec;
+}timeval;
+
 uint32_t NDL_GetTicks() {
-  return 0;
+  timeval t;
+  _gettimeofday(&t, NULL);
+  return t.sec*1000+t.microsec;
 }
 
 int NDL_PollEvent(char *buf, int len) {
-  return 0;
+  int fd = _open("/dev/events",0 , 0);
+  return _read(fd, (void *)buf, len)? 1:0;
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
