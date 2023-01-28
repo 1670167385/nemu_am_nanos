@@ -32,6 +32,7 @@ static Finfo file_table[] __attribute__((used)) = {
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read},
   [FD_STDERR] = {"stderr", 0, 0, invalid_read},
 #include "/home/xsr/ics-pa-2021/nanos-lite/src/files.h"
+  {NULL}
 };
 
 int fs_open(const char *pathname, int flags, int mode);
