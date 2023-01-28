@@ -1,6 +1,5 @@
 #include <fs.h>
 #include "ramdisk1.h"
-#include "device.h"
 
 static size_t table_len;
 
@@ -20,7 +19,6 @@ void init_fs() {
   while(file_table[table_len++].name);
 
   // TODO: initialize the size of /dev/fb
-  file_table[table_len-1].read = events_read;
 }
 
 Finfo *get_file_table(){

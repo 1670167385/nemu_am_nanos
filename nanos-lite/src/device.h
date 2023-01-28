@@ -1,13 +1,7 @@
-typedef struct {
+typedef struct timevalue{
   size_t sec;
   size_t microsec;
 } timeval;
-
-typedef struct 
-{
-    bool keydown; 
-    int keycode;
-} kb_event;
 
 
 timeval *get_time();
