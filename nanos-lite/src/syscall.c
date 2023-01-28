@@ -3,7 +3,7 @@
 #include "ramdisk1.h"
 #include "fs.h"
 #include "device.h"
-//#define CONFIG_STRACE
+#define CONFIG_STRACE
 
 void sys_open(Context *c);
 void sys_close(Context *c);
