@@ -17,7 +17,7 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 void init_fs() {
   file_table[FD_STDOUT].write = serial_write;
   file_table[FD_STDERR].write = serial_write;
-  while(file_table[table_len++].name);
+  while(file_table[table_len++].name)printf("%s\n",file_table[table_len-1].name);
   //add event
   file_table[table_len].name = "/dev/events";
   file_table[table_len].read = events_read;
