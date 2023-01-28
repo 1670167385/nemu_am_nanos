@@ -1,4 +1,4 @@
-typedef struct timevalue{
+typedef struct {
   size_t sec;
   size_t microsec;
 } timeval;
