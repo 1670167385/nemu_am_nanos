@@ -55,7 +55,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
 void init_device() {
   Log("Initializing devices...");
   ioe_init();
-  for(int i = 0;i<128;i++)printf("%s\n",keyname[i]);
+  //for(int i = 0;i<128;i++)printf("%s\n",keyname[i]);
 }
 
 timeval *get_time(){
