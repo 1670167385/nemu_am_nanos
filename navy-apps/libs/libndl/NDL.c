@@ -34,6 +34,7 @@ void NDL_OpenCanvas(int *w, int *h) {
   if(*w == 0 || *w > wholew) *w = wholew;
   if(*h == 0 || *h > wholeh) *h = wholeh;
   printf("canvas : w=%d h=%d\n",*w, *h);
+  screen_h = *h; screen_w = *w;
 
   if (getenv("NWM_APP")) {
     int fbctl = 4;
@@ -55,6 +56,14 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
+  if(x+w > screen_w) printf("overwidth!\n");
+  if(y+h > screen_h) printf("overheight!\n");
+
+  int offset = y*screen_w + x;
+  for(int i=0;i<h;i++){
+    lseek(fbdev, i*w*4, SEEK_SET);
+    write(fbdev, (void *)(pixels+i*w), 4*w);
+  }
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
@@ -77,6 +86,7 @@ int NDL_Init(uint32_t flags) {
   }
   kb_dev = open("/dev/events");
   gpu_proc = open("/proc/dispinfo");
+  fbdev = open("/dev/fb");
   return 0;
 }
 

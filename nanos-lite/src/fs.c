@@ -18,7 +18,10 @@ void init_fs() {
   file_table[FD_STDERR].write = serial_write;
   while(file_table[table_len++].name);
 
-  // TODO: initialize the size of /dev/fb
+  int fd = fs_open("/dev/fb", 0, 0);
+  int fb_w = io_read(AM_GPU_CONFIG).width;
+  int fb_h = io_read(AM_GPU_CONFIG).height;
+  file_table[fd].size = fb_w * fb_h * 4;
 }
 
 Finfo *get_file_table(){
@@ -56,7 +59,7 @@ size_t fs_read(int fd, void *buf, size_t len){
 
 size_t fs_write(int fd, const void *buf, size_t len){
   if(file_table[fd].write)
-    return file_table[fd].write(buf, 0, len);
+    return file_table[fd].write(buf, file_table[fd].open_offset, len);
   if(file_table[fd].open_offset + len > file_table[fd].size){
     len=file_table[fd].size-file_table[fd].open_offset;
     ramdisk_write(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);

@@ -1,6 +1,9 @@
 #include <common.h>
 #include "device.h"
 
+static int fb_w=0;
+static int fb_h=0;
+
 #if defined(MULTIPROGRAM) && !defined(TIME_SHARING)
 # define MULTIPROGRAM_YIELD() yield()
 #else
@@ -43,11 +46,9 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  int w = io_read(AM_GPU_CONFIG).width;
-  int h = io_read(AM_GPU_CONFIG).height;
-  static char gpuinfo[30];
+  char gpuinfo[30];
 
-  sprintf(gpuinfo, "WIDTH : %d\nHEIGHT:%d",w, h);
+  sprintf(gpuinfo, "WIDTH : %d\nHEIGHT:%d", fb_w, fb_h);
   if(strlen(gpuinfo) > len) gpuinfo[len]=0;
 
   strcpy((char *)buf, gpuinfo);
@@ -55,12 +56,20 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  return 0;
+  offset = offset/4;
+  int h = offset/fb_w;
+  int w = offset%fb_w;
+  
+  //printf("x=%d y=%d w=%d h=%d\n",x*w, y*h, w, h);
+  io_write(AM_GPU_FBDRAW, w, h, (void *)buf, len/4, 1, true);
+  return 1;
 }
 
 void init_device() {
   Log("Initializing devices...");
   ioe_init();
+  fb_w = io_read(AM_GPU_CONFIG).width;
+  fb_h = io_read(AM_GPU_CONFIG).height;
 }
 
 timeval *get_time(){
