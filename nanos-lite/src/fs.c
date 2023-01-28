@@ -32,6 +32,7 @@ Finfo *get_file_table(){
 }
 
 int fs_open(const char *pathname, int flags, int mode){
+  printf("find %s\n", pathname);
   for(int i=3; i<table_len; i++){
     if(!strcmp(file_table[i].name, pathname)){
       file_table[i].open_offset = 0;
