@@ -33,6 +33,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   else
     sprintf(ev_str, "ku %s\n", keyname[ev.keycode]);
   l = strlen(ev_str);
+  printf("%s\n", ev_str);
   if(l > len){
     ev_str[len-1] = '\n';
     ev_str[len] = 0;
