@@ -7,6 +7,7 @@
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
+static int kb_dev;
 
 typedef struct{
     long sec;
@@ -20,8 +21,7 @@ uint32_t NDL_GetTicks() {
 }
 
 int NDL_PollEvent(char *buf, int len) {
-  int fd = _open("/dev/events",0 , 0);
-  return _read(fd, (void *)buf, len)? 1:0;
+  return _read(kb_dev, (void *)buf, len);
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
@@ -65,6 +65,7 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
+  kb_dev = _open("/dev/events",0 , 0);
   return 0;
 }
 
