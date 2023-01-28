@@ -8,6 +8,7 @@ static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
 static int kb_dev;
+static int gpu_proc;
 
 typedef struct{
     long sec;
@@ -16,7 +17,7 @@ typedef struct{
 
 uint32_t NDL_GetTicks() {
   timeval t;
-  gettimeofday(&t, NULL);
+  _gettimeofday(&t, NULL);
   return t.sec*1000+t.microsec;
 }
 
@@ -25,6 +26,15 @@ int NDL_PollEvent(char *buf, int len) {
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
+  int wholew, wholeh;
+  char gpu_info[40];
+  read(gpu_proc, gpu_info, sizeof(gpu_info) - 1);
+  sscanf(gpu_info,"WIDTH :%d\nHEIGHT:%d",&wholew, &wholeh);
+  printf("whole : w=%d h=%d\n",wholew, wholeh);
+  if(*w == 0 || *w > wholew) *w = wholew;
+  if(*h == 0 || *h > wholeh) *h = wholeh;
+  printf("canvas : w=%d h=%d\n",*w, *h);
+
   if (getenv("NWM_APP")) {
     int fbctl = 4;
     fbdev = 5;
@@ -66,6 +76,7 @@ int NDL_Init(uint32_t flags) {
     evtdev = 3;
   }
   kb_dev = open("/dev/events");
+  gpu_proc = open("/proc/dispinfo");
   return 0;
 }
 
