@@ -27,6 +27,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   static char ev_str[25];
   int l;
   ev = io_read(AM_INPUT_KEYBRD);
+  printf("%s\n", keyname[io_read(AM_INPUT_KEYBRD).keycode]);
   if (ev.keycode == AM_KEY_NONE) return 0;
   if (ev.keydown)
     sprintf(ev_str, "kd %s\n", keyname[ev.keycode]);
