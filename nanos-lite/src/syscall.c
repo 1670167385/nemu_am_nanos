@@ -52,7 +52,7 @@ void do_syscall(Context *c) {
 
     case SYS_open:
 #ifdef CONFIG_STRACE
-      Log("syscall open start with fd=0x%x", c->GPR2); 
+      Log("syscall open start with pathaddr=0x%x", c->GPR2); 
       sys_open(c); 
       Log("syscall open end, ret=0x%x", c->GPRx); 
 #else

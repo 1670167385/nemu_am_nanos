@@ -23,6 +23,7 @@ void init_fs() {
   file_table[table_len].read = events_read;
   file_table[table_len].write= invalid_write;
   table_len++;
+  printf("file_len = %d\n",table_len);
   // TODO: initialize the size of /dev/fb
 }
 
