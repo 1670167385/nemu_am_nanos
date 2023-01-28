@@ -18,12 +18,8 @@ void init_fs() {
   file_table[FD_STDOUT].write = serial_write;
   file_table[FD_STDERR].write = serial_write;
   while(file_table[table_len++].name);
-  //add event
-  file_table[table_len].name = "/dev/events";
-  file_table[table_len].read = events_read;
-  file_table[table_len].write= invalid_write;
+
   table_len++;
-  printf("file_len = %d\n",table_len);
   // TODO: initialize the size of /dev/fb
 }
 
