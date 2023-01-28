@@ -7,6 +7,9 @@
 enum {SEEK_SET, SEEK_CUR, SEEK_END};
 #endif
 
+
+#define CONFIG_FILETRACE
+
 typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 size_t invalid_write(const void *buf, size_t offset, size_t len);

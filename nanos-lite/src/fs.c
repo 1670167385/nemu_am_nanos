@@ -34,6 +34,9 @@ int fs_open(const char *pathname, int flags, int mode){
   for(int i=3; i<table_len; i++){
     if(!strcmp(file_table[i].name, pathname)){
       file_table[i].open_offset = 0;
+#ifdef CONFIG_FILETRACE
+      Log("open file %s", file_table[i].name);
+#endif
       return i;
     }
   }
