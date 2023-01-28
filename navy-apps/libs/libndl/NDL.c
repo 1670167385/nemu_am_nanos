@@ -16,12 +16,12 @@ typedef struct{
 
 uint32_t NDL_GetTicks() {
   timeval t;
-  _gettimeofday(&t, NULL);
+  gettimeofday(&t, NULL);
   return t.sec*1000+t.microsec;
 }
 
 int NDL_PollEvent(char *buf, int len) {
-  return _read(kb_dev, (void *)buf, len);
+  return read(kb_dev, (void *)buf, len);
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
@@ -65,7 +65,7 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
-  kb_dev = _open("/dev/events",0 , 0);
+  kb_dev = open("/dev/events");
   return 0;
 }
 
