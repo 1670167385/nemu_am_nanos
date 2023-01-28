@@ -19,8 +19,8 @@ void init_fs() {
   file_table[FD_STDERR].write = serial_write;
   while(file_table[table_len++].name);
 
-  table_len++;
   // TODO: initialize the size of /dev/fb
+  file_table[table_len-1].read = events_read;
 }
 
 Finfo *get_file_table(){
