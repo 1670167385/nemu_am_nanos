@@ -4,17 +4,15 @@
 #include <NDL.h>
 #include <BMP.h>
 #include <SDL.h>
+#include <fixedptc.h>
 
 int main() {
-  NDL_Init(0);
-  int w, h;
-  void *bmp = BMP_Load("/share/pictures/projectn.bmp", &w, &h);
-  assert(bmp);
-  NDL_OpenCanvas(&w, &h);
-  NDL_DrawRect(bmp, 0, 0, w, h);
-  free(bmp);
-  NDL_Quit();
-  printf("Test ends! Spinning...\n");
-  while (1);
+  fixedpt a = fixedpt_rconst(1.2);
+  fixedpt b = fixedpt_fromint(10);
+  int c = 0;
+  if (b > fixedpt_rconst(7.9)) {
+    c = fixedpt_toint(fixedpt_div(fixedpt_mul(a + FIXEDPT_ONE, b), fixedpt_rconst(2.3)));
+  }
+  printf("%d\n", c);
   return 0;
 }
